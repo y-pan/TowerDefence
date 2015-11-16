@@ -16,7 +16,6 @@
             this._height = this.getBounds().height;
             this.regX = this._width * .5;
             this.regY = this._height * .5;
-            console.log(this._width + ", regx " + this.regX);
             //this._isColliding = false;
 
         }

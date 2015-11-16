@@ -66,12 +66,14 @@
     <Content Include="Assets\images\exit_button.png" />
     <Content Include="Assets\images\grass_background.png" />
     <Content Include="Assets\images\direction_left.png" />
+    <Content Include="Assets\images\menu_bar.png" />
     <Content Include="Assets\images\menu_button.png" />
     <Content Include="Assets\images\next_button.png" />
     <Content Include="Assets\images\redDragon.png" />
     <Content Include="Assets\images\direction_right.png" />
     <Content Include="Assets\images\start_button.png" />
     <Content Include="Assets\images\direction_up.png" />
+    <Content Include="Assets\images\ta1.png" />
     <Content Include="Content\game.css" />
     <Content Include="Content\reset.css" />
     <Content Include="index.html" />
@@ -113,6 +115,7 @@
     <TypeScriptCompile Include="Scripts\objects\gameobject.ts" />
     <TypeScriptCompile Include="Scripts\objects\label.ts" />
     <TypeScriptCompile Include="Scripts\objects\scene.ts" />
+    <TypeScriptCompile Include="Scripts\objects\tower.ts" />
     <TypeScriptCompile Include="Scripts\states\over.ts" />
     <TypeScriptCompile Include="Scripts\states\level3.ts" />
     <TypeScriptCompile Include="Scripts\states\level2.ts" />

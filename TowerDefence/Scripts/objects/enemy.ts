@@ -22,8 +22,6 @@
 
         public update() {
             this._moveWith_Speed_Drection();  
-            console.log(this._direction);
-             
         }
 
         private _moveWith_Speed_Drection(): void {

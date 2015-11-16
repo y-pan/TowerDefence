@@ -12,6 +12,7 @@
 /// <reference path="../managers/collision.ts" />
 /// <reference path="../objects/gameobject.ts" />
 /// <reference path="../objects/enemy.ts" />
+/// <reference path="../objects/tower.ts" />
 /// <reference path="../objects/directiontile.ts" />
 /// <reference path="../managers/scoreboard.ts" />
 /// <reference path="../objects/scene.ts" />
@@ -41,11 +42,13 @@ var level3;
 var over;
 var manifest = [
     { id: "grass_background", src: "../../Assets/images/grass_background.png" },
+    { id: "menu_bar", src: "../../Assets/images/menu_bar.png" },
     { id: "start_button", src: "../../Assets/images/start_button.png" },
     { id: "menu_button", src: "../../Assets/images/menu_button.png" },
     { id: "next_button", src: "../../Assets/images/next_button.png" },
     { id: "again_button", src: "../../Assets/images/again_button.png" },
     { id: "exit_button", src: "../../Assets/images/exit_button.png" },
+    { id: "ta1", src: "../../Assets/images/ta1.png" },
     { id: "redDragon", src: "../../Assets/images/redDragon.png" },
     { id: "direction_up", src: "../../Assets/images/direction_up.png" },
     { id: "direction_down", src: "../../Assets/images/direction_down.png" },

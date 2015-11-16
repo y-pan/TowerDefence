@@ -18,7 +18,6 @@ var objects;
         }
         Enemy.prototype.update = function () {
             this._moveWith_Speed_Drection();
-            console.log(this._direction);
         };
         Enemy.prototype._moveWith_Speed_Drection = function () {
             switch (this._direction) {
