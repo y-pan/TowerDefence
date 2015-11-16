@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Tower Defence - Pan</title>
+    <link href="Content/reset.css" rel="stylesheet" />
+    <link href="Content/game.css" rel="stylesheet" />
+
+</head>
+<body onload="preload();">
+    <div class="game">
+        <canvas id="canvas" width="640" height="480"></canvas>
+    </div>
+
+    <!-- JavaScript Libraries-->
+    <script src="Scripts/lib/jquery-2.1.4.min.js"></script>
+    <script src="Scripts/lib/Stats.js"></script>
+    <script src="Scripts/lib/easeljs-0.8.1.min.js"></script>
+    <script src="Scripts/lib/tweenjs-0.6.1.min.js"></script>
+    <script src="Scripts/lib/soundjs-0.6.1.min.js"></script>
+    <script src="Scripts/lib/preloadjs-0.6.1.min.js"></script>
+
+    <!-- Game Scripts -->
+    <script src="Scripts/config/config.js"></script>
+    <script src="Scripts/objects/label.js"></script>
+    <script src="Scripts/objects/button.js"></script>
+
+
+    <script src="Scripts/objects/background.js"></script>
+    <script src="Scripts/objects/scene.js"></script>
+    <script src="Scripts/objects/gameobject.js"></script>
+    <script src="Scripts/objects/enemy.js"></script>
+
+    <script src="Scripts/managers/scoreboard.js"></script>
+    <script src="Scripts/managers/collision.js"></script>
+    <script src="Scripts/objects/directiontile.js"></script>
+
+    <!-- Game Scenes -->
+    <script src="Scripts/states/menu.js"></script>
+    <script src="Scripts/states/level1.js"></script>
+    <script src="Scripts/states/level2.js"></script>
+    <script src="Scripts/states/level3.js"></script>
+    <script src="Scripts/states/over.js"></script>
+
+    <!-- Game Control-->
+    <script src="Scripts/core/gameControl.js"></script>
+
+</body>
+</html>

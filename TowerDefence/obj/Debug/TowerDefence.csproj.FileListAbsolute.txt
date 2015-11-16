@@ -1,0 +1,6 @@
+s:\Documents\My Web Sites\TowerDefence\TowerDefence\bin\TowerDefence.dll.config
+s:\Documents\My Web Sites\TowerDefence\TowerDefence\bin\TowerDefence.dll
+s:\Documents\My Web Sites\TowerDefence\TowerDefence\bin\TowerDefence.pdb
+s:\Documents\My Web Sites\TowerDefence\TowerDefence\obj\Debug\TowerDefence.csprojResolveAssemblyReference.cache
+s:\Documents\My Web Sites\TowerDefence\TowerDefence\obj\Debug\TowerDefence.dll
+s:\Documents\My Web Sites\TowerDefence\TowerDefence\obj\Debug\TowerDefence.pdb
