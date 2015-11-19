@@ -12,6 +12,7 @@
 /// <reference path="../managers/collision.ts" />
 /// <reference path="../objects/gameobject.ts" />
 /// <reference path="../objects/enemy.ts" />
+/// <reference path="../objects/bullet.ts" />
 /// <reference path="../objects/tower.ts" />
 /// <reference path="../objects/directiontile.ts" />
 /// <reference path="../managers/scoreboard.ts" />
@@ -31,6 +32,7 @@ var scoreBoard;
 var collision;
 var canvasWidth = 640;
 var canvasHeight = 480;
+var bullets_green;
 // atlas & data
 var redDragonData;
 var redDragonAtlas;
@@ -49,6 +51,7 @@ var manifest = [
     { id: "again_button", src: "../../Assets/images/again_button.png" },
     { id: "exit_button", src: "../../Assets/images/exit_button.png" },
     { id: "ta1", src: "../../Assets/images/ta1.png" },
+    { id: "bullet_g8", src: "../../Assets/images/bullet_g8.png" },
     { id: "redDragon", src: "../../Assets/images/redDragon.png" },
     { id: "direction_up", src: "../../Assets/images/direction_up.png" },
     { id: "direction_down", src: "../../Assets/images/direction_down.png" },

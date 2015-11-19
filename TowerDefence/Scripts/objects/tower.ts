@@ -12,14 +12,11 @@
 
         protected _hasTarget: boolean;
         
-        //protected _target: objects.Enemy;
-
         constructor(imageString: string, x: number, y:number, attack:number, shootSpeed:number, level:number) {
             super(imageString);
 
             this.x = x;
-            this.y = y;
-                       
+            this.y = y;                       
            
             this._width = 50;
             this._height = 50;
@@ -28,15 +25,11 @@
             this.regY = this._height * .5;
 
             this.rotation = 0;
-
-            this._hasTarget = false;                    
-
+            this._hasTarget = false;
             this._attack = attack;
             this._shootSpeed = shootSpeed;
-
             this._level = level;
            
-
         }
 
 
@@ -58,22 +51,34 @@
 
             if (object.x > this.x) { this.rotation = temp; }
             else if (object.x < this.x) { this.rotation = 180 + temp; }
-            console.log("temp: " + temp + ", " + this.rotation);
+            //console.log("temp: " + temp + ", " + this.rotation);
                        
         }
 
         private _shoot(): void {
-
+            if (this._hasTarget) {
+                for (var i = 0; i < bullets_green.length; i++) {
+                    if (bullets_green[i].isReady) {
+                        bullets_green[i].fireBullet(this);
+                    }
+                }
+            }
         }
 
+        /** This is for centered tower */
+        public getGunpoint(): createjs.Point {
+            return new createjs.Point(this.x + this._width * .5, this.y);
+        };
+
+
         // may not need this
+        /*
         private _distanceToMouse(): number {
             return Math.floor(Math.sqrt(Math.pow((stage.mouseX - this.x), 2) + Math.pow((stage.mouseY - this.y), 2)));
         }
 
         private _distanceToTarget(object:objects.Enemy): number {
             return Math.floor(Math.sqrt(Math.pow((object.x - this.x), 2) + Math.pow((object.y - this.y), 2)));
-
-        }
+        }*/
     }
 }

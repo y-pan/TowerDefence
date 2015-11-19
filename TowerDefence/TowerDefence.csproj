@@ -62,6 +62,7 @@
     <Content Include="Assets\audio\horn.mp3" />
     <Content Include="Assets\audio\ta_buttonPress.mp3" />
     <Content Include="Assets\images\again_button.png" />
+    <Content Include="Assets\images\bullet_g8.png" />
     <Content Include="Assets\images\direction_down.png" />
     <Content Include="Assets\images\exit_button.png" />
     <Content Include="Assets\images\grass_background.png" />
@@ -109,6 +110,7 @@
     <TypeScriptCompile Include="Scripts\managers\collision.ts" />
     <TypeScriptCompile Include="Scripts\managers\scoreboard.ts" />
     <TypeScriptCompile Include="Scripts\objects\background.ts" />
+    <TypeScriptCompile Include="Scripts\objects\bullet.ts" />
     <TypeScriptCompile Include="Scripts\objects\button.ts" />
     <TypeScriptCompile Include="Scripts\objects\directiontile.ts" />
     <TypeScriptCompile Include="Scripts\objects\enemy.ts" />

@@ -8,13 +8,17 @@ var objects;
     var Enemy = (function (_super) {
         __extends(Enemy, _super);
         /** direction: up -1, down 1, west -2, east 2*/
-        function Enemy(atlas, imageString, x, y, lives, speed, direction) {
+        function Enemy(atlas, imageString, x, y, width, height, lives, speed, direction) {
             _super.call(this, atlas, imageString);
             this.x = x;
             this.y = y;
             this._lives = lives;
             this._speed = speed;
             this._direction = direction;
+            this._width = width ? width : 64;
+            this._height = height ? height : 64;
+            this.regX = this._width * .5;
+            this.regY = this._height * .5;
         }
         Enemy.prototype.update = function () {
             this._moveWith_Speed_Drection();

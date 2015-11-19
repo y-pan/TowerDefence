@@ -14,7 +14,11 @@
 
 /// <reference path="../managers/collision.ts" />
 /// <reference path="../objects/gameobject.ts" />
+
+
 /// <reference path="../objects/enemy.ts" />
+
+/// <reference path="../objects/bullet.ts" />
 /// <reference path="../objects/tower.ts" />
 
 
@@ -45,6 +49,8 @@ var collision: managers.Collsion;
 var canvasWidth: number = 640;
 var canvasHeight: number = 480;
 
+var bullets_green: objects.Bullet[];
+
 // atlas & data
 var redDragonData: {};
 var redDragonAtlas: createjs.SpriteSheet;
@@ -72,7 +78,7 @@ var manifest = [
 
     { id: "ta1", src: "../../Assets/images/ta1.png" },
     
-
+    { id: "bullet_g8", src: "../../Assets/images/bullet_g8.png" },
     { id: "redDragon", src: "../../Assets/images/redDragon.png" },
 
 

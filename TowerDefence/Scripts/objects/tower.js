@@ -7,7 +7,6 @@ var objects;
 (function (objects) {
     var Tower = (function (_super) {
         __extends(Tower, _super);
-        //protected _target: objects.Enemy;
         function Tower(imageString, x, y, attack, shootSpeed, level) {
             _super.call(this, imageString);
             this.x = x;
@@ -41,17 +40,22 @@ var objects;
             else if (object.x < this.x) {
                 this.rotation = 180 + temp;
             }
-            console.log("temp: " + temp + ", " + this.rotation);
+            //console.log("temp: " + temp + ", " + this.rotation);
         };
         Tower.prototype._shoot = function () {
+            if (this._hasTarget) {
+                for (var i = 0; i < bullets_green.length; i++) {
+                    if (bullets_green[i].isReady) {
+                        bullets_green[i].fireBullet(this);
+                    }
+                }
+            }
         };
-        // may not need this
-        Tower.prototype._distanceToMouse = function () {
-            return Math.floor(Math.sqrt(Math.pow((stage.mouseX - this.x), 2) + Math.pow((stage.mouseY - this.y), 2)));
+        /** This is for centered tower */
+        Tower.prototype.getGunpoint = function () {
+            return new createjs.Point(this.x + this._width * .5, this.y);
         };
-        Tower.prototype._distanceToTarget = function (object) {
-            return Math.floor(Math.sqrt(Math.pow((object.x - this.x), 2) + Math.pow((object.y - this.y), 2)));
-        };
+        ;
         return Tower;
     })(createjs.Bitmap);
     objects.Tower = Tower;

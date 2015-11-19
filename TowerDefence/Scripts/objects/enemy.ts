@@ -6,13 +6,15 @@
         protected _speed: number;
         protected _oldSpeed: number;
         protected _direction: number;
+        protected _width: number;
+        protected _height: number;
 
         protected _nextPosition: createjs.Point; // for tank and bullet to track ememy
 
 
 
         /** direction: up -1, down 1, west -2, east 2*/
-        constructor(atlas: createjs.SpriteSheet, imageString: string, x: number, y: number, lives: number, speed:number, direction:number) {
+        constructor(atlas: createjs.SpriteSheet, imageString: string, x: number, y: number, width: number, height: number, lives: number, speed:number, direction:number) {
             super(atlas, imageString);
 
             this.x = x;
@@ -21,6 +23,11 @@
             this._lives = lives;
             this._speed = speed;
             this._direction = direction;
+
+            this._width = width ? width : 64;
+            this._height = height ? height : 64;
+            this.regX = this._width * .5;
+            this.regY = this._height * .5;
             
         }
 
