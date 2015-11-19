@@ -8,19 +8,20 @@
         protected _direction: number;
         protected _width: number;
         protected _height: number;
-
+        protected _isDead: boolean;
         protected _nextPosition: createjs.Point; // for tank and bullet to track ememy
-
+        protected _orignalLives: number;
 
 
         /** direction: up -1, down 1, west -2, east 2*/
-        constructor(atlas: createjs.SpriteSheet, imageString: string, x: number, y: number, width: number, height: number, lives: number, speed:number, direction:number) {
+        constructor(atlas: createjs.SpriteSheet, imageString: string, lives: number, x: number, y: number, width: number, height: number, speed:number, direction:number) {
             super(atlas, imageString);
 
             this.x = x;
             this.y = y;
-           
+                       
             this._lives = lives;
+            this._orignalLives = this._lives;// for reset to reuse
             this._speed = speed;
             this._direction = direction;
 
@@ -29,6 +30,14 @@
             this.regX = this._width * .5;
             this.regY = this._height * .5;
             
+            this._isDead = false;
+        }
+
+        public die() {
+            this._isDead = true;
+            //this._lives = this._orignalLives;
+            this.x = -30;
+            this.y = -30;
         }
 
         public update() {
@@ -70,6 +79,7 @@
                     this._nextPosition.x = this.x + this._speed * num;
                     break;
             }
+
             return this._nextPosition;
         }
 

@@ -9,7 +9,7 @@ var objects;
         __extends(GameObject, _super);
         function GameObject(atlas, imageString) {
             _super.call(this, atlas, imageString);
-            this._name = imageString;
+            this._tag = imageString;
             this._width = this.getBounds().width;
             this._height = this.getBounds().height;
             this.regX = this._width * .5;
@@ -38,7 +38,7 @@ var objects;
         };
         /** Get name of object*/
         GameObject.prototype.getName = function () {
-            return this._name;
+            return this._tag;
         };
         return GameObject;
     })(createjs.Sprite);

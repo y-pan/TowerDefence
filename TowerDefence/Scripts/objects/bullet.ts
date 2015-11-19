@@ -7,16 +7,19 @@
         protected _attack: number;
         protected _speed: number;
         protected _dx: number;
-        protected _dy: number;
+        protected _dy: number;        
+        protected _name: string;
+
         public isReady: boolean;
 
-        constructor(imagePath:string, x:number, y:number, attack:number, speed:number, width:number,height:number, isCentered:boolean) {
+        constructor(imagePath:string, name:string, x:number, y:number, attack:number, speed:number, width:number,height:number, isCentered:boolean) {
             super(imagePath);
 
+            this._name = name;
             this.x = x ? x : -10; // store outside 
             this.y = y ? y : -10; // store outside
 
-            this._attack = attack ? attack : 5;
+            this._attack = attack ? attack : 1;
             this._speed = speed ? speed : 5;
             this._width = width ? width : 8;
             this._height = height? height : 8;
@@ -48,17 +51,18 @@
 
                 // detect if it fly outside
                 if (this.x > canvasWidth || this.x < 0 || this.y > canvasHeight || this.y < 0) {
-                    this._reset();
+                    this.reset();
                 }
 
-                // detect collision with enemy
+                // detect collision with enemy, by collision object
+                
 
-                // do damage
+                // do damage, by collision object
             }            
         }
 
         /** reset bullet and put it outside canvas*/
-        private _reset():void {
+        public reset():void {
             this.x = -10;
             this.y = -10;
             this._dx = 0;
@@ -81,7 +85,7 @@
             this._dx = Math.floor(this._speed * Math.cos(r * Math.PI / 180)); 
             
             this._dy = Math.floor(this._speed * Math.sin(r * Math.PI / 180));    
-            console.log("fired at " + r + " : " + this._dx + "|" + this._dy);        
+            //console.log("fired at " + r + " : " + this._dx + "|" + this._dy);        
         }
 
         private _flyAtDirection(): void {
@@ -89,6 +93,22 @@
             this.y += this._dy;
             this.isReady = false;
             //console.log("b @ " + this.x + " | " + this.y);  
+        }
+
+        public getPosition(): createjs.Point {
+            return new createjs.Point(this.x, this.y);
+        }
+
+        public getRadius(): number {
+            return this._width * 5;
+        }
+
+        public getName(): string {
+            return this._name;
+        }
+
+        public getAttack(): number {
+            return this._attack;
         }
     }
 }

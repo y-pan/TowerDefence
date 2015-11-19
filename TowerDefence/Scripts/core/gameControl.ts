@@ -45,11 +45,12 @@ var currentState: objects.Scene;
 
 var scoreBoard: managers.ScoreBoard;
 var collision: managers.Collsion;
+var bulletArray: objects.Bullet[];
+var enemyArray: objects.Enemy[];
 
 var canvasWidth: number = 640;
 var canvasHeight: number = 480;
 
-var bullets_green: objects.Bullet[];
 
 // atlas & data
 var redDragonData: {};

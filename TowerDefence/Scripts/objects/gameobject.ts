@@ -4,14 +4,14 @@
         protected _width: number;
         protected _height: number;
         protected _isColliding: boolean;
-        protected _name: string;
+        protected _tag: string;
 
 
         constructor(atlas:createjs.SpriteSheet, imageString: string) {
 
             super(atlas, imageString);
 
-            this._name = imageString;
+            this._tag = imageString;
             this._width = this.getBounds().width;
             this._height = this.getBounds().height;
             this.regX = this._width * .5;
@@ -46,7 +46,7 @@
 
         /** Get name of object*/
         public getName(): string {
-            return this._name;
+            return this._tag;
         }
 
         

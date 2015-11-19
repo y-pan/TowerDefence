@@ -30,9 +30,10 @@ var state;
 var currentState;
 var scoreBoard;
 var collision;
+var bulletArray;
+var enemyArray;
 var canvasWidth = 640;
 var canvasHeight = 480;
-var bullets_green;
 // atlas & data
 var redDragonData;
 var redDragonAtlas;

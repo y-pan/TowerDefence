@@ -10,30 +10,55 @@
         private _direction_up: objects.DirectionTile;
         private _direction_down: objects.DirectionTile;
 
-        // ememy
-        private _enemy: objects.Enemy;
+        private _collion: managers.Collsion;
 
         private _menu: createjs.Bitmap;
 
+        // ememy
+
+        private _enemy: objects.Enemy;
+        private _enemyArray: objects.Enemy[];
+        private _enemyNumber: number;
+
         // tower
         private _ta1: objects.Tower;
+        private _towerArray: objects.Tower[];
 
         // bullet
         private _bullet: objects.Bullet;
-
+        // bulletArray ?
         constructor() { super(); }
 
 
         // PUBLIC 
         public start(): void {
+
+            // managers: collision
+            this._collion = new managers.Collsion();
+
             // background
             this._background = new objects.Background("grass_background");
             this.addChild(this._background);
 
+            
             // enemy
-            this._enemy = new objects.Enemy(redDragonAtlas, "redDragon", 100, 100, 64, 64, 10, 1, config.DIRECTION_DOWN);
 
-            this.addChild(this._enemy);
+            this._enemyNumber = 5;
+            //this._enemy = new objects.Enemy(redDragonAtlas, "redDragon", 5000, 100, 100, 64, 64, 1, config.DIRECTION_DOWN);
+            this._enemyArray = [];
+            for (var i = 0; i < this._enemyNumber; i++) {
+
+                this._enemyArray.push(new objects.Enemy(redDragonAtlas, "redDragon", 5000, 100, (100 - 64 * i), 64, 64, 1, config.DIRECTION_DOWN));
+                console.log(i);
+            }
+
+            for (var i = 0; i < this._enemyArray.length; i++) {
+                this.addChild(this._enemyArray[i]);
+            }
+
+            console.log(this._enemyArray.length);
+
+            
 
             // direction tiles
             this._direction_right = new objects.DirectionTile("direction_right", config.DIRECTION_RIGHT, 100, 350);
@@ -49,17 +74,22 @@
             this.addChild(this._direction_down);
 
             // tower
-            this._ta1 = new objects.Tower(assets.getResult("ta1"), 300, 200, 2, 1, 1);
-            this.addChild(this._ta1);
+            this._ta1 = new objects.Tower(assets.getResult("ta1"), 150, 150, 2, 300, 1, 1);
+            this._towerArray = [];
+            this._towerArray.push(this._ta1);
+            for (var i = 0; i < this._towerArray.length; i++) {
+                this.addChild(this._towerArray[i]);
+            }
+            
 
             // bullet
             //this._bullet = new objects.Bullet(assets.getResult("bullet_g8"), null, null, 5, 5, 8, 8, true);
             //this.addChild(this._bullet);
 
-            bullets_green = [];
+            bulletArray = [];
             for (var i = 0; i < 10; i++) {
-                bullets_green[i] = new objects.Bullet(assets.getResult("bullet_g8"), null, null, 5, 20, 8, 8, true);
-                this.addChild(bullets_green[i]);
+                bulletArray[i] = new objects.Bullet(assets.getResult("bullet_g8"),"bullet", null, null, 5, 20, 8, 8, true);
+                this.addChild(bulletArray[i]);
             }
 
             this._menu = new createjs.Bitmap(assets.getResult("menu_bar"));
@@ -72,16 +102,37 @@
         }//end of start
 
         public update(): void {
+
+            /*
             this._direction_right.detectObject_applyDirection(this._enemy);
             this._direction_up.detectObject_applyDirection(this._enemy);
             this._direction_left.detectObject_applyDirection(this._enemy);
             this._direction_down.detectObject_applyDirection(this._enemy);
-            this._enemy.update();
-            this._ta1.update(this._enemy);
+            */
             
-            for (var i = 0; i < bullets_green.length; i++) {
-                bullets_green[i].update();
+
+            for (var i = 0; i < this._towerArray.length; i++) {
+                for (var j = 0; j < this._enemyArray.length; j++) {
+
+                    this._direction_right.detectObject_applyDirection(this._enemyArray[j]);
+                    this._direction_up.detectObject_applyDirection(this._enemyArray[j]);
+                    this._direction_left.detectObject_applyDirection(this._enemyArray[j]);
+                    this._direction_down.detectObject_applyDirection(this._enemyArray[j]);
+
+                    this._enemyArray[j].update();
+
+
+                    this._collion.updateTowerVsEnemy(this._towerArray[i], this._enemyArray[j])
+                }                
             }
+
+            //this._ta1.fireAt(this._enemy);
+            
+            for (var i = 0; i < bulletArray.length; i++) {
+                bulletArray[i].update();
+                this._collion.updateBulletVsEnemy(bulletArray[i], this._enemy);
+            }
+            
             
 
 

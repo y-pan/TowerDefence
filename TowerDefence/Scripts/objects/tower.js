@@ -7,7 +7,7 @@ var objects;
 (function (objects) {
     var Tower = (function (_super) {
         __extends(Tower, _super);
-        function Tower(imageString, x, y, attack, shootSpeed, level) {
+        function Tower(imageString, x, y, attack, fireRange, shootSpeed, level) {
             _super.call(this, imageString);
             this.x = x;
             this.y = y;
@@ -18,20 +18,33 @@ var objects;
             this.rotation = 0;
             this._hasTarget = false;
             this._attack = attack;
+            this._fireRange = fireRange;
             this._shootSpeed = shootSpeed;
             this._level = level;
         }
-        Tower.prototype.update = function (object) {
-            if (object) {
-                this._hasTarget = true;
-                this._getRotation(object);
+        Tower.prototype.setHasTarget = function (hasTarget) {
+            this._hasTarget = hasTarget;
+        };
+        Tower.prototype.getHasTarget = function () {
+            return this._hasTarget;
+        };
+        Tower.prototype.fireAt = function (enemy) {
+            if (enemy.getLives() > 0) {
+                this._getRotationAt(enemy);
                 this._shoot();
             }
-            else {
-                this._hasTarget = false;
-            }
+            //if (object) {
+            //  this._hasTarget = true;
+            //this._getRotation(object);
+            //this._shoot();
+            //} else {
+            //    this._hasTarget = false;
+            //}
         };
-        Tower.prototype._getRotation = function (object) {
+        Tower.prototype.getFireRange = function () {
+            return this._fireRange;
+        };
+        Tower.prototype._getRotationAt = function (object) {
             // can use object.getNextPosition() to improve targeting enemy
             var temp = Math.floor(Math.atan((this.y - object.y) / (this.x - object.x)) * (180 / Math.PI));
             if (object.x > this.x) {
@@ -43,19 +56,29 @@ var objects;
             //console.log("temp: " + temp + ", " + this.rotation);
         };
         Tower.prototype._shoot = function () {
-            if (this._hasTarget) {
-                for (var i = 0; i < bullets_green.length; i++) {
-                    if (bullets_green[i].isReady) {
-                        bullets_green[i].fireBullet(this);
-                    }
+            for (var i = 0; i < bulletArray.length; i++) {
+                if (bulletArray[i].isReady) {
+                    bulletArray[i].fireBullet(this);
                 }
             }
+            /*
+            if (this._hasTarget) {
+                console.log("hasTarget");
+                for (var i = 0; i < bulletArray.length; i++) {
+                    if (bulletArray[i].isReady) {
+                        bulletArray[i].fireBullet(this);
+                    }
+                }
+            }*/
         };
         /** This is for centered tower */
         Tower.prototype.getGunpoint = function () {
             return new createjs.Point(this.x + this._width * .5, this.y);
         };
         ;
+        Tower.prototype.getPosition = function () {
+            return new createjs.Point(this.x, this.y);
+        };
         return Tower;
     })(createjs.Bitmap);
     objects.Tower = Tower;
