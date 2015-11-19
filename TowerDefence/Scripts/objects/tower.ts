@@ -12,7 +12,7 @@
 
         protected _hasTarget: boolean;
         
-        protected _target: objects.Enemy;
+        //protected _target: objects.Enemy;
 
         constructor(imageString: string, x: number, y:number, attack:number, shootSpeed:number, level:number) {
             super(imageString);
@@ -43,7 +43,6 @@
         public update(object: objects.Enemy): void {
             if (object) {
                 this._hasTarget = true;
-                //this._target = object;
                 this._getRotation(object);
                 this._shoot();
             } else {
@@ -52,57 +51,22 @@
         }
 
         private _getRotation(object: objects.Enemy): void {
-
-            var temp = (Math.floor(-Math.asin((this.y - object.y) / this._distanceToTarget(object)) * (180 / Math.PI)));
-
-            if (object.x > this.x) {
-                if (temp) {
-                    this.rotation = temp;
-                } else {
-                    if (object.y > this.y + 5) { this.rotation = 90; }
-                    else if (object.y < this.y - 5) { this.rotation = -90; }
-                    else { this.rotation = 0; }
-                }
-            } else if (object.x < this.x) {
-                if (temp) {
-                    this.rotation = 180 - temp;
-                } else {
-                    if (object.x > this.y + 5) { this.rotation = 90; }
-                    else if (object.y < this.y - 5) { this.rotation = -90; }
-                    else { this.rotation = 180; }
-                }
-            }
-
-            /*
-            var temp = (Math.floor(-Math.asin((this.y - stage.mouseY) / this._distanceToMouse()) * (180 / Math.PI)));
             
-            if (stage.mouseX > this.x) {
-                if (temp) {
-                    this.rotation = temp;
-                } else {
-                    if (stage.mouseY > this.y + 5) { this.rotation = 90; }
-                    else if (stage.mouseY < this.y - 5) { this.rotation = -90; }
-                    else { this.rotation = 0;}
-                }
-            } else if (stage.mouseX < this.x) {
-                if (temp) {
-                    this.rotation = 180 - temp;
-                } else {
-                    if (stage.mouseY > this.y + 5) { this.rotation = 90; }
-                    else if (stage.mouseY < this.y - 5) { this.rotation = -90; }
-                    else { this.rotation = 180; }
-                }
-            }
-            */
+            // can use object.getNextPosition() to improve targeting enemy
 
+            var temp = Math.floor(Math.atan((this.y - object.y) / (this.x - object.x)) * (180 / Math.PI));
 
-           //console.log("mouseX: " + stage.mouseX +", mouseX-this.x= " + (stage.mouseX - this.x) + ", temp: " + temp + ", tower rotation: " + this.rotation);
+            if (object.x > this.x) { this.rotation = temp; }
+            else if (object.x < this.x) { this.rotation = 180 + temp; }
+            console.log("temp: " + temp + ", " + this.rotation);
+                       
         }
 
         private _shoot(): void {
 
         }
 
+        // may not need this
         private _distanceToMouse(): number {
             return Math.floor(Math.sqrt(Math.pow((stage.mouseX - this.x), 2) + Math.pow((stage.mouseY - this.y), 2)));
         }

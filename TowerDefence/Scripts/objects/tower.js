@@ -7,6 +7,7 @@ var objects;
 (function (objects) {
     var Tower = (function (_super) {
         __extends(Tower, _super);
+        //protected _target: objects.Enemy;
         function Tower(imageString, x, y, attack, shootSpeed, level) {
             _super.call(this, imageString);
             this.x = x;
@@ -24,7 +25,6 @@ var objects;
         Tower.prototype.update = function (object) {
             if (object) {
                 this._hasTarget = true;
-                //this._target = object;
                 this._getRotation(object);
                 this._shoot();
             }
@@ -33,64 +33,19 @@ var objects;
             }
         };
         Tower.prototype._getRotation = function (object) {
-            var temp = (Math.floor(-Math.asin((this.y - object.y) / this._distanceToTarget(object)) * (180 / Math.PI)));
+            // can use object.getNextPosition() to improve targeting enemy
+            var temp = Math.floor(Math.atan((this.y - object.y) / (this.x - object.x)) * (180 / Math.PI));
             if (object.x > this.x) {
-                if (temp) {
-                    this.rotation = temp;
-                }
-                else {
-                    if (object.y > this.y + 5) {
-                        this.rotation = 90;
-                    }
-                    else if (object.y < this.y - 5) {
-                        this.rotation = -90;
-                    }
-                    else {
-                        this.rotation = 0;
-                    }
-                }
+                this.rotation = temp;
             }
             else if (object.x < this.x) {
-                if (temp) {
-                    this.rotation = 180 - temp;
-                }
-                else {
-                    if (object.x > this.y + 5) {
-                        this.rotation = 90;
-                    }
-                    else if (object.y < this.y - 5) {
-                        this.rotation = -90;
-                    }
-                    else {
-                        this.rotation = 180;
-                    }
-                }
+                this.rotation = 180 + temp;
             }
-            /*
-            var temp = (Math.floor(-Math.asin((this.y - stage.mouseY) / this._distanceToMouse()) * (180 / Math.PI)));
-            
-            if (stage.mouseX > this.x) {
-                if (temp) {
-                    this.rotation = temp;
-                } else {
-                    if (stage.mouseY > this.y + 5) { this.rotation = 90; }
-                    else if (stage.mouseY < this.y - 5) { this.rotation = -90; }
-                    else { this.rotation = 0;}
-                }
-            } else if (stage.mouseX < this.x) {
-                if (temp) {
-                    this.rotation = 180 - temp;
-                } else {
-                    if (stage.mouseY > this.y + 5) { this.rotation = 90; }
-                    else if (stage.mouseY < this.y - 5) { this.rotation = -90; }
-                    else { this.rotation = 180; }
-                }
-            }
-            */
-            //console.log("mouseX: " + stage.mouseX +", mouseX-this.x= " + (stage.mouseX - this.x) + ", temp: " + temp + ", tower rotation: " + this.rotation);
+            console.log("temp: " + temp + ", " + this.rotation);
         };
         Tower.prototype._shoot = function () {
         };
+        // may not need this
         Tower.prototype._distanceToMouse = function () {
             return Math.floor(Math.sqrt(Math.pow((stage.mouseX - this.x), 2) + Math.pow((stage.mouseY - this.y), 2)));
         };

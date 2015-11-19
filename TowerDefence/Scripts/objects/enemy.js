@@ -32,7 +32,27 @@ var objects;
                     break;
                 case config.DIRECTION_RIGHT:
                     this.x += this._speed;
+                    break;
             }
+        };
+        /** Get enemy position after 1 tick or more ticks, used for bullet's targeting ememy*/
+        Enemy.prototype.getNextPosition = function (numTicksLater) {
+            var num = numTicksLater ? numTicksLater : 1;
+            switch (this._direction) {
+                case config.DIRECTION_DOWN:
+                    this._nextPosition.y = this.y + this._speed * num;
+                    break;
+                case config.DIRECTION_UP:
+                    this._nextPosition.y = this.y + this._speed * num;
+                    break;
+                case config.DIRECTION_LEFT:
+                    this._nextPosition.x = this.x - this._speed * num;
+                    break;
+                case config.DIRECTION_RIGHT:
+                    this._nextPosition.x = this.x + this._speed * num;
+                    break;
+            }
+            return this._nextPosition;
         };
         Enemy.prototype.setLives = function (value) { this._lives = value; };
         Enemy.prototype.getLives = function () { return this._lives; };

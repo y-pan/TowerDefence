@@ -7,6 +7,10 @@
         protected _oldSpeed: number;
         protected _direction: number;
 
+        protected _nextPosition: createjs.Point; // for tank and bullet to track ememy
+
+
+
         /** direction: up -1, down 1, west -2, east 2*/
         constructor(atlas: createjs.SpriteSheet, imageString: string, x: number, y: number, lives: number, speed:number, direction:number) {
             super(atlas, imageString);
@@ -21,7 +25,8 @@
         }
 
         public update() {
-            this._moveWith_Speed_Drection();  
+            this._moveWith_Speed_Drection();
+              
         }
 
         private _moveWith_Speed_Drection(): void {
@@ -37,7 +42,28 @@
                     break;
                 case config.DIRECTION_RIGHT:
                     this.x += this._speed;
+                    break;
             }
+        }
+
+        /** Get enemy position after 1 tick or more ticks, used for bullet's targeting ememy*/
+        public getNextPosition(numTicksLater: number): createjs.Point {
+            var num = numTicksLater ? numTicksLater : 1;
+            switch (this._direction) {
+                case config.DIRECTION_DOWN:
+                    this._nextPosition.y = this.y + this._speed * num;
+                    break;
+                case config.DIRECTION_UP:
+                    this._nextPosition.y = this.y + this._speed * num;
+                    break;
+                case config.DIRECTION_LEFT:
+                    this._nextPosition.x = this.x - this._speed * num;
+                    break;
+                case config.DIRECTION_RIGHT:
+                    this._nextPosition.x = this.x + this._speed * num;
+                    break;
+            }
+            return this._nextPosition;
         }
 
         public setLives(value: number): void { this._lives = value; }
