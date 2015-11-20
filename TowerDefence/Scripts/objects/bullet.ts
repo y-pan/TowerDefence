@@ -35,7 +35,7 @@
         public fireBullet(tower: objects.Tower): void {
             //
             if (this.isReady) {
-                this._setDirection(tower);
+                this._setDirectionWith(tower);
                 this._flyAtDirection();
             }
             
@@ -72,7 +72,7 @@
 
        
 
-        private _setDirection(tower: objects.Tower):void {
+        private _setDirectionWith(tower: objects.Tower):void {
             var r = tower.rotation;
 
             //this.x = tower.getGunpoint().x; // how to rotate gunpoint ?
@@ -85,7 +85,7 @@
             this._dx = Math.floor(this._speed * Math.cos(r * Math.PI / 180)); 
             
             this._dy = Math.floor(this._speed * Math.sin(r * Math.PI / 180));    
-            //console.log("fired at " + r + " : " + this._dx + "|" + this._dy);        
+                    
         }
 
         private _flyAtDirection(): void {

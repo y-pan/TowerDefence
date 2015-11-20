@@ -66,10 +66,11 @@ var objects;
             }
             return this._nextPosition;
         };
+        Enemy.prototype.getPosition = function () { return new createjs.Point(this.x, this.y); };
         Enemy.prototype.setLives = function (value) { this._lives = value; };
         Enemy.prototype.getLives = function () { return this._lives; };
         Enemy.prototype.addLives = function (lives) { this._lives += lives; };
-        Enemy.prototype.substractLives = function (lives) { this._lives -= lives; };
+        Enemy.prototype.removeLives = function (lives) { this._lives -= lives; };
         Enemy.prototype.setSpeed = function (value) { this._speed = value; };
         Enemy.prototype.getDirection = function () { return this._direction; };
         Enemy.prototype.setDirection = function (direction) { this._direction = direction; };

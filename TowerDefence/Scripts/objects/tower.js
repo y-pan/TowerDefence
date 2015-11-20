@@ -7,6 +7,7 @@ var objects;
 (function (objects) {
     var Tower = (function (_super) {
         __extends(Tower, _super);
+        // how to remember current target until lose it in range ? 
         function Tower(imageString, x, y, attack, fireRange, shootSpeed, level) {
             _super.call(this, imageString);
             this.x = x;
@@ -30,21 +31,34 @@ var objects;
         };
         Tower.prototype.fireAt = function (enemy) {
             if (enemy.getLives() > 0) {
-                this._getRotationAt(enemy);
+                this._setRotationAt(enemy);
+                this._shoot();
+                this._hasTarget = true;
+                this._target = enemy;
+                console.log(this._target);
+            }
+        };
+        Tower.prototype.fireAsBefore = function () {
+            if ((this._target.getLives() > 0) && (this._distance(this._target.getPosition(), this.getPosition()) <= this.getFireRange())) {
+                this._setRotationAt(this._target);
                 this._shoot();
             }
-            //if (object) {
-            //  this._hasTarget = true;
-            //this._getRotation(object);
-            //this._shoot();
-            //} else {
-            //    this._hasTarget = false;
-            //}
+            else {
+                this._hasTarget = false;
+                this._target = null;
+            }
+            //console.log(this._hasTarget);
+        };
+        Tower.prototype._distance = function (p1, p2) {
+            return Math.floor(Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2)));
+        };
+        Tower.prototype.getTarget = function () {
+            return this._target;
         };
         Tower.prototype.getFireRange = function () {
             return this._fireRange;
         };
-        Tower.prototype._getRotationAt = function (object) {
+        Tower.prototype._setRotationAt = function (object) {
             // can use object.getNextPosition() to improve targeting enemy
             var temp = Math.floor(Math.atan((this.y - object.y) / (this.x - object.x)) * (180 / Math.PI));
             if (object.x > this.x) {
@@ -53,7 +67,7 @@ var objects;
             else if (object.x < this.x) {
                 this.rotation = 180 + temp;
             }
-            //console.log("temp: " + temp + ", " + this.rotation);
+            //console.log("temp: " + temp + ", " + this.rotation);                       
         };
         Tower.prototype._shoot = function () {
             for (var i = 0; i < bulletArray.length; i++) {

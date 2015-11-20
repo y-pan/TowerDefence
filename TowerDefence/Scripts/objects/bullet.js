@@ -25,7 +25,7 @@ var objects;
         Bullet.prototype.fireBullet = function (tower) {
             //
             if (this.isReady) {
-                this._setDirection(tower);
+                this._setDirectionWith(tower);
                 this._flyAtDirection();
             }
         };
@@ -47,7 +47,7 @@ var objects;
             this._dy = 0;
             this.isReady = true;
         };
-        Bullet.prototype._setDirection = function (tower) {
+        Bullet.prototype._setDirectionWith = function (tower) {
             var r = tower.rotation;
             //this.x = tower.getGunpoint().x; // how to rotate gunpoint ?
             //this.y = tower.getGunpoint().y;
@@ -55,7 +55,6 @@ var objects;
             this.y = tower.y;
             this._dx = Math.floor(this._speed * Math.cos(r * Math.PI / 180));
             this._dy = Math.floor(this._speed * Math.sin(r * Math.PI / 180));
-            //console.log("fired at " + r + " : " + this._dx + "|" + this._dy);        
         };
         Bullet.prototype._flyAtDirection = function () {
             this.x += this._dx;

@@ -63,6 +63,7 @@
     <Content Include="Assets\audio\ta_buttonPress.mp3" />
     <Content Include="Assets\images\again_button.png" />
     <Content Include="Assets\images\bullet_g8.png" />
+    <Content Include="Assets\images\bullet_red8.png" />
     <Content Include="Assets\images\direction_down.png" />
     <Content Include="Assets\images\exit_button.png" />
     <Content Include="Assets\images\grass_background.png" />

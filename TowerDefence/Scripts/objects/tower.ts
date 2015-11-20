@@ -14,6 +14,10 @@
 
         protected _hasTarget: boolean;
         
+        protected _targetNextPosition: createjs.Point;
+
+        protected _target: objects.Enemy;
+         // how to remember current target until lose it in range ? 
         constructor(imageString: string, x: number, y: number, attack: number, fireRange: number, shootSpeed:number, level:number) {
             super(imageString);
 
@@ -46,23 +50,40 @@
         public fireAt(enemy: objects.Enemy): void {
 
             if (enemy.getLives() > 0) {
-                this._getRotationAt(enemy);
+                this._setRotationAt(enemy);
                 this._shoot();
+                this._hasTarget = true;
+                this._target = enemy;
+                console.log(this._target);
             } 
-            
-            //if (object) {
-              //  this._hasTarget = true;
-                //this._getRotation(object);
-                //this._shoot();
-            //} else {
-            //    this._hasTarget = false;
-            //}
+        }
+
+        public fireAsBefore(): void {
+            if ((this._target.getLives() > 0)&&(this._distance(this._target.getPosition(), this.getPosition()) <= this.getFireRange())) {
+             
+                this._setRotationAt(this._target);
+                this._shoot();             
+                
+            } else {
+                this._hasTarget = false;
+                this._target = null;
+            }
+            //console.log(this._hasTarget);
+        }
+
+        private _distance(p1: createjs.Point, p2: createjs.Point): number {
+            return Math.floor(Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2)));
+        }
+
+        public getTarget(): objects.Enemy {
+            return this._target;
         }
 
         public getFireRange(): number {
             return this._fireRange;
         }
-        private _getRotationAt(object: objects.Enemy): void {
+
+        private _setRotationAt(object: objects.Enemy): void {
             
             // can use object.getNextPosition() to improve targeting enemy
 
@@ -70,8 +91,7 @@
 
             if (object.x > this.x) { this.rotation = temp; }
             else if (object.x < this.x) { this.rotation = 180 + temp; }
-            //console.log("temp: " + temp + ", " + this.rotation);
-                       
+            //console.log("temp: " + temp + ", " + this.rotation);                       
         }
 
         private _shoot(): void {

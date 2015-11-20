@@ -80,6 +80,8 @@ var manifest = [
     { id: "ta1", src: "../../Assets/images/ta1.png" },
     
     { id: "bullet_g8", src: "../../Assets/images/bullet_g8.png" },
+    { id: "bullet_red8", src: "../../Assets/images/bullet_red8.png" },
+
     { id: "redDragon", src: "../../Assets/images/redDragon.png" },
 
 

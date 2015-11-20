@@ -31,6 +31,7 @@
             this.regY = this._height * .5;
             
             this._isDead = false;
+
         }
 
         public die() {
@@ -83,13 +84,14 @@
             return this._nextPosition;
         }
 
+        public getPosition(): createjs.Point { return new createjs.Point(this.x, this.y);}
         public setLives(value: number): void { this._lives = value; }
 
         public getLives(): number { return this._lives; }
 
         public addLives(lives: number): void { this._lives += lives; }
 
-        public substractLives(lives: number): void { this._lives -= lives; }
+        public removeLives(lives: number): void { this._lives -= lives; }
 
         public setSpeed(value: number): void { this._speed = value; }
 
