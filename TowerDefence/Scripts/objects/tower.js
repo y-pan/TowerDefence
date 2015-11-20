@@ -67,17 +67,39 @@ var objects;
                 this.rotation = 180 + temp;
             }
         };
+        Tower.prototype._getBulletType = function () {
+            switch (this._level) {
+                case 1:
+                    this._bulletType = "bullet1";
+                    break;
+                case 2:
+                    this._bulletType = "bullet2";
+                    break;
+                case 3:
+                    this._bulletType = "bullet3";
+                    break;
+            }
+            return this._bulletType;
+        };
         Tower.prototype._shoot = function () {
+            //console.log(bulletArray.length);
             var fired = false;
             this._nowTicks = createjs.Ticker.getTicks();
             if (this._nowTicks - this._oldTicks >= this._coldTime) {
-                for (var i = 0; i < bulletArray.length && !fired; i++) {
-                    console.log(bulletArray[i].isReady);
-                    if (bulletArray[i].isReady) {
-                        bulletArray[i].fireBullet(this);
+                for (var i = 0; i < bullet1Array.length && !fired; i++) {
+                    //console.log(bulletArray[i].isReady);
+                    if (bullet1Array[i].isReady) {
+                        bullet1Array[i].fireBullet(this);
                         fired = true;
                         this._oldTicks = this._nowTicks;
                     }
+                }
+                // add one more when bullet is not enough to use  
+                if (!fired) {
+                    bullet1Array.push(new objects.Bullet(assets.getResult(this._getBulletType()), "bullet", null, null, 5, 4, 8, 8, true));
+                    bullet1Array[bullet1Array.length - 1].fireBullet(this);
+                    fired = true;
+                    this._oldTicks = this._nowTicks;
                 }
             }
             /*

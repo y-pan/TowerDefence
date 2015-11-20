@@ -30,7 +30,9 @@ var state;
 var currentState;
 var scoreBoard;
 var collision;
-var bulletArray;
+var bullet1Array;
+var bullet2Array;
+var bullet3Array;
 var enemyArray;
 var towerArray;
 var canvasWidth = 640;
@@ -53,8 +55,9 @@ var manifest = [
     { id: "again_button", src: "../../Assets/images/again_button.png" },
     { id: "exit_button", src: "../../Assets/images/exit_button.png" },
     { id: "ta1", src: "../../Assets/images/ta1.png" },
-    { id: "bullet_g8", src: "../../Assets/images/bullet_g8.png" },
-    { id: "bullet_red8", src: "../../Assets/images/bullet_red8.png" },
+    { id: "bullet1", src: "../../Assets/images/bullet1.png" },
+    { id: "bullet2", src: "../../Assets/images/bullet2.png" },
+    { id: "bullet3", src: "../../Assets/images/bullet3.png" },
     { id: "redDragon", src: "../../Assets/images/redDragon.png" },
     { id: "direction_up", src: "../../Assets/images/direction_up.png" },
     { id: "direction_down", src: "../../Assets/images/direction_down.png" },

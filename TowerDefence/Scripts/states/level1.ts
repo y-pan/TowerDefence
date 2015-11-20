@@ -50,22 +50,22 @@
                 this.addChild(enemyArray[i]);
             }
 
-    
+            
 
              // tower
             //this._ta1 = new objects.Tower(assets.getResult("ta1"), 250, 250, 2, 300, 1, 1);
             towerArray = [];
-            towerArray.push(new objects.Tower(assets.getResult("ta1"), 150, 250, 2, 300, 50, 1));
+            towerArray.push(new objects.Tower(assets.getResult("ta1"), 150, 250, 2,300, 50, 1));
             //towerArray.push(new objects.Tower(assets.getResult("ta1"), 450, 350, 2, 300, 1, 1));
             for (var i = 0; i < towerArray.length; i++) {
                 this.addChild(towerArray[i]);
             }
             console.log(towerArray.length)
 
-            bulletArray = [];
-            for (var i = 0; i < 20; i++) {
-                bulletArray[i] = new objects.Bullet(assets.getResult("bullet_red8"),"bullet", null, null, 5, 4, 8, 8, true);
-                this.addChild(bulletArray[i]);
+            bullet1Array = [];
+            for (var i = 0; i < 1; i++) {
+                bullet1Array[i] = new objects.Bullet(assets.getResult("bullet1"),"bullet", null, null, 5, 4, 8, 8, true);
+                this.addChild(bullet1Array[i]);
             }
 
             this._menu = new createjs.Bitmap(assets.getResult("menu_bar"));
@@ -102,9 +102,9 @@
 
                 enemyArray[e].update();
 
-                for (var b = 0; b < bulletArray.length; b++) {
-                    bulletArray[b].update();
-                    this._collion.updateBulletVsEnemy(bulletArray[b], enemyArray[e]);
+                for (var b = 0; b < bullet1Array.length; b++) {
+                    bullet1Array[b].update();
+                    this._collion.updateBulletVsEnemy(bullet1Array[b], enemyArray[e]);
                 }
 
                 for (var t = 0; t < towerArray.length; t++) {

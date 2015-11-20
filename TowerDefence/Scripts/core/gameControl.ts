@@ -45,7 +45,10 @@ var currentState: objects.Scene;
 
 var scoreBoard: managers.ScoreBoard;
 var collision: managers.Collsion;
-var bulletArray: objects.Bullet[];
+var bullet1Array: objects.Bullet[];
+var bullet2Array: objects.Bullet[];
+var bullet3Array: objects.Bullet[];
+
 var enemyArray: objects.Enemy[];
 var towerArray: objects.Tower[];
 
@@ -80,8 +83,9 @@ var manifest = [
 
     { id: "ta1", src: "../../Assets/images/ta1.png" },
     
-    { id: "bullet_g8", src: "../../Assets/images/bullet_g8.png" },
-    { id: "bullet_red8", src: "../../Assets/images/bullet_red8.png" },
+    { id: "bullet1", src: "../../Assets/images/bullet1.png" },
+    { id: "bullet2", src: "../../Assets/images/bullet2.png" },
+    { id: "bullet3", src: "../../Assets/images/bullet3.png" },
 
     { id: "redDragon", src: "../../Assets/images/redDragon.png" },
 

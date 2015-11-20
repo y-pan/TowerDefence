@@ -20,6 +20,8 @@
         protected _coldTime: number;
         protected _oldTicks: number; //getTicks
         protected _nowTicks: number;
+        protected _bulletType: string;
+
          // how to remember current target until lose it in range ? 
         constructor(imageString: string, x: number, y: number, attack: number, fireRange: number, coldTime:number, level:number) {
             super(imageString);
@@ -97,23 +99,46 @@
                    
         }
 
+        private _getBulletType(): string {
+            
+            switch (this._level) {
+                case 1:
+                    this._bulletType = "bullet1";
+                    break;
+                case 2:
+                    this._bulletType = "bullet2";
+                    break;
+                case 3:
+                    this._bulletType = "bullet3";
+                    break;
+            }
+            return this._bulletType;
+        }
+
         private _shoot(): void {
+            //console.log(bulletArray.length);
             var fired: boolean = false;
             this._nowTicks = createjs.Ticker.getTicks();
             if (this._nowTicks - this._oldTicks >= this._coldTime) {
                
-                for (var i = 0; i < bulletArray.length && !fired; i++) {
-                    console.log(bulletArray[i].isReady);
-                    if (bulletArray[i].isReady) {
-                        bulletArray[i].fireBullet(this);
+                for (var i = 0; i < bullet1Array.length && !fired; i++) {
+                    //console.log(bulletArray[i].isReady);
+                    if (bullet1Array[i].isReady) {
+                        bullet1Array[i].fireBullet(this);
                         fired = true;
                         this._oldTicks = this._nowTicks;
-                        
-                    }
-                }                
+                    }                   
+                } 
+                // add one more when bullet is not enough to use  
+                if (!fired) {
+                    bullet1Array.push(new objects.Bullet(assets.getResult(this._getBulletType()), "bullet", null, null, 5, 4, 8, 8, true));
+                    bullet1Array[bullet1Array.length -1].fireBullet(this);
+                    fired = true;
+                    this._oldTicks = this._nowTicks;
+                }            
             }
             
-           
+                       
             /*
             if (this._hasTarget) {
                 console.log("hasTarget");
