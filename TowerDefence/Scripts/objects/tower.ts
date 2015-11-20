@@ -52,13 +52,12 @@
         }
 
         public fireAt(enemy: objects.Enemy): void {
-
             if (enemy.getLives() > 0) {
                 this._setRotationAt(enemy);
                 this._shoot();
                 this._hasTarget = true;
                 this._target = enemy;
-                console.log(this._target);
+                //console.log(this._target);
             } 
         }
 
@@ -87,14 +86,14 @@
             return this._fireRange;
         }
 
-        private _setRotationAt(object: objects.Enemy): void {
+        private _setRotationAt(enemy: objects.Enemy): void {
             
             // can use object.getNextPosition() to improve targeting enemy
 
-            var temp = Math.floor(Math.atan((this.y - object.y) / (this.x - object.x)) * (180 / Math.PI));
+            var temp = Math.floor(Math.atan((this.y - enemy.y) / (this.x - enemy.x)) * (180 / Math.PI));
 
-            if (object.x > this.x) { this.rotation = temp; }
-            else if (object.x < this.x) { this.rotation = 180 + temp; }
+            if (enemy.x > this.x) { this.rotation = temp; }
+            else if (enemy.x < this.x) { this.rotation = 180 + temp; }
                    
         }
 

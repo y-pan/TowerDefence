@@ -36,7 +36,6 @@ var objects;
                 this._shoot();
                 this._hasTarget = true;
                 this._target = enemy;
-                console.log(this._target);
             }
         };
         Tower.prototype.fireAsBefore = function () {
@@ -58,13 +57,13 @@ var objects;
         Tower.prototype.getFireRange = function () {
             return this._fireRange;
         };
-        Tower.prototype._setRotationAt = function (object) {
+        Tower.prototype._setRotationAt = function (enemy) {
             // can use object.getNextPosition() to improve targeting enemy
-            var temp = Math.floor(Math.atan((this.y - object.y) / (this.x - object.x)) * (180 / Math.PI));
-            if (object.x > this.x) {
+            var temp = Math.floor(Math.atan((this.y - enemy.y) / (this.x - enemy.x)) * (180 / Math.PI));
+            if (enemy.x > this.x) {
                 this.rotation = temp;
             }
-            else if (object.x < this.x) {
+            else if (enemy.x < this.x) {
                 this.rotation = 180 + temp;
             }
         };

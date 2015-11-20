@@ -42,9 +42,9 @@
 
             enemyArray = [];
             
-            enemyArray.push(new objects.Enemy(redDragonAtlas, "redDragon", 5000, 100, 100, 64, 64, 1, config.DIRECTION_DOWN));  
-            enemyArray.push(new objects.Enemy(redDragonAtlas, "redDragon", 5000, 100, 100 - 128, 64, 64, 1, config.DIRECTION_DOWN));  
-            enemyArray.push(new objects.Enemy(redDragonAtlas, "redDragon", 5000, 100, 100 - 128 * 4, 64, 64, 1, config.DIRECTION_DOWN));  
+            enemyArray.push(new objects.Enemy(redDragonAtlas, "redDragon", 50, 100, 100, 64, 64, 3, config.DIRECTION_DOWN));  
+            enemyArray.push(new objects.Enemy(redDragonAtlas, "redDragon", 50, 100, 100 - 128, 64, 64, 4, config.DIRECTION_DOWN));  
+            enemyArray.push(new objects.Enemy(redDragonAtlas, "redDragon", 50, 100, 100 - 128 * 4, 64, 64, 2, config.DIRECTION_DOWN));  
            
             for (var i = 0; i < enemyArray.length; i++) {
                 this.addChild(enemyArray[i]);
@@ -55,7 +55,7 @@
              // tower
             //this._ta1 = new objects.Tower(assets.getResult("ta1"), 250, 250, 2, 300, 1, 1);
             towerArray = [];
-            towerArray.push(new objects.Tower(assets.getResult("ta1"), 150, 250, 2, 300, 10, 1));
+            towerArray.push(new objects.Tower(assets.getResult("ta1"), 150, 250, 2, 300, 50, 1));
             //towerArray.push(new objects.Tower(assets.getResult("ta1"), 450, 350, 2, 300, 1, 1));
             for (var i = 0; i < towerArray.length; i++) {
                 this.addChild(towerArray[i]);
@@ -63,7 +63,7 @@
             console.log(towerArray.length)
 
             bulletArray = [];
-            for (var i = 0; i < 10; i++) {
+            for (var i = 0; i < 20; i++) {
                 bulletArray[i] = new objects.Bullet(assets.getResult("bullet_red8"),"bullet", null, null, 5, 4, 8, 8, true);
                 this.addChild(bulletArray[i]);
             }

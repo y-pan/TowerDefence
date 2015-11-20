@@ -24,7 +24,7 @@ var objects;
         }
         Bullet.prototype.fireBullet = function (tower) {
             //
-            if (this.isReady && (createjs.Ticker.getTicks() % 14 == 0)) {
+            if (this.isReady) {
                 this._setDirectionWith(tower);
                 this._flyAtDirection();
             }

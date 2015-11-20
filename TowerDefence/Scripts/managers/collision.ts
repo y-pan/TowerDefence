@@ -24,6 +24,7 @@
             else {
                 if (this._distance(tower.getPosition(), enemy.getPosition()) <= tower.getFireRange()) {
                     tower.fireAt(enemy);
+                    
                 }
             }
         }
