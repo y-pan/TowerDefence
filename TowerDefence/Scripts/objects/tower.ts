@@ -5,7 +5,7 @@
         protected _width: number;
         protected _height: number;
         protected _attack: number;
-        protected _shootSpeed: number;
+       
         protected _level: number;
 
         protected _rotation: number;
@@ -17,8 +17,11 @@
         protected _targetNextPosition: createjs.Point;
 
         protected _target: objects.Enemy;
+        protected _coldTime: number;
+        protected _oldTicks: number; //getTicks
+        protected _nowTicks: number;
          // how to remember current target until lose it in range ? 
-        constructor(imageString: string, x: number, y: number, attack: number, fireRange: number, shootSpeed:number, level:number) {
+        constructor(imageString: string, x: number, y: number, attack: number, fireRange: number, coldTime:number, level:number) {
             super(imageString);
 
             this.x = x;
@@ -35,9 +38,10 @@
 
             this._attack = attack;
             this._fireRange = fireRange;
-            this._shootSpeed = shootSpeed;
+            this._coldTime = coldTime;
             this._level = level;
-           
+            this._oldTicks = createjs.Ticker.getTicks();
+            
         }
 
         public setHasTarget(hasTarget: boolean): void {
@@ -62,13 +66,13 @@
             if ((this._target.getLives() > 0)&&(this._distance(this._target.getPosition(), this.getPosition()) <= this.getFireRange())) {
              
                 this._setRotationAt(this._target);
+                
                 this._shoot();             
                 
             } else {
                 this._hasTarget = false;
                 this._target = null;
             }
-            //console.log(this._hasTarget);
         }
 
         private _distance(p1: createjs.Point, p2: createjs.Point): number {
@@ -91,15 +95,26 @@
 
             if (object.x > this.x) { this.rotation = temp; }
             else if (object.x < this.x) { this.rotation = 180 + temp; }
-            //console.log("temp: " + temp + ", " + this.rotation);                       
+                   
         }
 
         private _shoot(): void {
-            for (var i = 0; i < bulletArray.length; i++) {
-                if (bulletArray[i].isReady) {
-                    bulletArray[i].fireBullet(this);
-                }
+            var fired: boolean = false;
+            this._nowTicks = createjs.Ticker.getTicks();
+            if (this._nowTicks - this._oldTicks >= this._coldTime) {
+               
+                for (var i = 0; i < bulletArray.length && !fired; i++) {
+                    console.log(bulletArray[i].isReady);
+                    if (bulletArray[i].isReady) {
+                        bulletArray[i].fireBullet(this);
+                        fired = true;
+                        this._oldTicks = this._nowTicks;
+                        
+                    }
+                }                
             }
+            
+           
             /*
             if (this._hasTarget) {
                 console.log("hasTarget");

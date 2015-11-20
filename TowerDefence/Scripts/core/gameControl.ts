@@ -47,6 +47,7 @@ var scoreBoard: managers.ScoreBoard;
 var collision: managers.Collsion;
 var bulletArray: objects.Bullet[];
 var enemyArray: objects.Enemy[];
+var towerArray: objects.Tower[];
 
 var canvasWidth: number = 640;
 var canvasHeight: number = 480;

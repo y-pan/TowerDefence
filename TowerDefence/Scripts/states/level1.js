@@ -7,6 +7,9 @@ var states;
 (function (states) {
     var Level1 = (function (_super) {
         __extends(Level1, _super);
+        // tower
+        //private _ta1: objects.Tower;
+        //private _towerArray: objects.Tower[];
         function Level1() {
             _super.call(this);
         }
@@ -25,17 +28,18 @@ var states;
             for (var i = 0; i < enemyArray.length; i++) {
                 this.addChild(enemyArray[i]);
             }
-            //console.log(enemyArray.length);
             // tower
-            this._ta1 = new objects.Tower(assets.getResult("ta1"), 250, 250, 2, 300, 1, 1);
-            this._towerArray = [];
-            this._towerArray.push(this._ta1);
-            for (var i = 0; i < this._towerArray.length; i++) {
-                this.addChild(this._towerArray[i]);
+            //this._ta1 = new objects.Tower(assets.getResult("ta1"), 250, 250, 2, 300, 1, 1);
+            towerArray = [];
+            towerArray.push(new objects.Tower(assets.getResult("ta1"), 150, 250, 2, 300, 10, 1));
+            //towerArray.push(new objects.Tower(assets.getResult("ta1"), 450, 350, 2, 300, 1, 1));
+            for (var i = 0; i < towerArray.length; i++) {
+                this.addChild(towerArray[i]);
             }
+            console.log(towerArray.length);
             bulletArray = [];
             for (var i = 0; i < 10; i++) {
-                bulletArray[i] = new objects.Bullet(assets.getResult("bullet_red8"), "bullet", null, null, 5, 10, 8, 8, true);
+                bulletArray[i] = new objects.Bullet(assets.getResult("bullet_red8"), "bullet", null, null, 5, 4, 8, 8, true);
                 this.addChild(bulletArray[i]);
             }
             this._menu = new createjs.Bitmap(assets.getResult("menu_bar"));
@@ -54,23 +58,46 @@ var states;
             stage.addChild(this);
         }; //end of start
         Level1.prototype.update = function () {
-            for (var i = 0; i < this._towerArray.length; i++) {
+            //console.log(createjs.Ticker.getTicks());
+            // each tower 
+            for (var e = 0; e < enemyArray.length; e++) {
+                this._direction_right.detectObject_applyDirection(enemyArray[e]);
+                this._direction_up.detectObject_applyDirection(enemyArray[e]);
+                this._direction_left.detectObject_applyDirection(enemyArray[e]);
+                this._direction_down.detectObject_applyDirection(enemyArray[e]);
+                enemyArray[e].update();
+                for (var b = 0; b < bulletArray.length; b++) {
+                    bulletArray[b].update();
+                    this._collion.updateBulletVsEnemy(bulletArray[b], enemyArray[e]);
+                }
+                for (var t = 0; t < towerArray.length; t++) {
+                    this._collion.updateTowerVsEnemy(towerArray[t], enemyArray[e]);
+                }
+            }
+            /*
+            for (var i = 0; i < towerArray.length; i++) {
                 for (var j = 0; j < enemyArray.length; j++) {
+
                     this._direction_right.detectObject_applyDirection(enemyArray[j]);
                     this._direction_up.detectObject_applyDirection(enemyArray[j]);
                     this._direction_left.detectObject_applyDirection(enemyArray[j]);
                     this._direction_down.detectObject_applyDirection(enemyArray[j]);
+
                     enemyArray[j].update();
                     //this._towerArray[i].fireAt(this._towerArray[i].getTarget());
-                    this._collion.updateTowerVsEnemy(this._towerArray[i], enemyArray[j]);
+                    this._collion.updateTowerVsEnemy(towerArray[i], enemyArray[j])
                 }
             }
+
+
             for (var i = 0; i < bulletArray.length; i++) {
                 bulletArray[i].update();
+
                 for (var j = 0; j < enemyArray.length; j++) {
                     this._collion.updateBulletVsEnemy(bulletArray[i], enemyArray[j]);
                 }
             }
+            */
         }; // end of update 
         return Level1;
     })(objects.Scene);

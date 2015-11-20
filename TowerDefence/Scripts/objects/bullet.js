@@ -24,7 +24,7 @@ var objects;
         }
         Bullet.prototype.fireBullet = function (tower) {
             //
-            if (this.isReady) {
+            if (this.isReady && (createjs.Ticker.getTicks() % 14 == 0)) {
                 this._setDirectionWith(tower);
                 this._flyAtDirection();
             }
@@ -60,7 +60,6 @@ var objects;
             this.x += this._dx;
             this.y += this._dy;
             this.isReady = false;
-            //console.log("b @ " + this.x + " | " + this.y);  
         };
         Bullet.prototype.getPosition = function () {
             return new createjs.Point(this.x, this.y);

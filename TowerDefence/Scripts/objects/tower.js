@@ -8,7 +8,7 @@ var objects;
     var Tower = (function (_super) {
         __extends(Tower, _super);
         // how to remember current target until lose it in range ? 
-        function Tower(imageString, x, y, attack, fireRange, shootSpeed, level) {
+        function Tower(imageString, x, y, attack, fireRange, coldTime, level) {
             _super.call(this, imageString);
             this.x = x;
             this.y = y;
@@ -20,8 +20,9 @@ var objects;
             this._hasTarget = false;
             this._attack = attack;
             this._fireRange = fireRange;
-            this._shootSpeed = shootSpeed;
+            this._coldTime = coldTime;
             this._level = level;
+            this._oldTicks = createjs.Ticker.getTicks();
         }
         Tower.prototype.setHasTarget = function (hasTarget) {
             this._hasTarget = hasTarget;
@@ -47,7 +48,6 @@ var objects;
                 this._hasTarget = false;
                 this._target = null;
             }
-            //console.log(this._hasTarget);
         };
         Tower.prototype._distance = function (p1, p2) {
             return Math.floor(Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2)));
@@ -67,12 +67,18 @@ var objects;
             else if (object.x < this.x) {
                 this.rotation = 180 + temp;
             }
-            //console.log("temp: " + temp + ", " + this.rotation);                       
         };
         Tower.prototype._shoot = function () {
-            for (var i = 0; i < bulletArray.length; i++) {
-                if (bulletArray[i].isReady) {
-                    bulletArray[i].fireBullet(this);
+            var fired = false;
+            this._nowTicks = createjs.Ticker.getTicks();
+            if (this._nowTicks - this._oldTicks >= this._coldTime) {
+                for (var i = 0; i < bulletArray.length && !fired; i++) {
+                    console.log(bulletArray[i].isReady);
+                    if (bulletArray[i].isReady) {
+                        bulletArray[i].fireBullet(this);
+                        fired = true;
+                        this._oldTicks = this._nowTicks;
+                    }
                 }
             }
             /*

@@ -19,8 +19,8 @@
         private _enemyNumber: number;
 
         // tower
-        private _ta1: objects.Tower;
-        private _towerArray: objects.Tower[];
+        //private _ta1: objects.Tower;
+        //private _towerArray: objects.Tower[];
 
 
         constructor() { super(); }
@@ -50,20 +50,21 @@
                 this.addChild(enemyArray[i]);
             }
 
-            //console.log(enemyArray.length);
+    
 
              // tower
-            this._ta1 = new objects.Tower(assets.getResult("ta1"), 250, 250, 2, 300, 1, 1);
-            this._towerArray = [];
-            this._towerArray.push(this._ta1);
-            for (var i = 0; i < this._towerArray.length; i++) {
-                this.addChild(this._towerArray[i]);
+            //this._ta1 = new objects.Tower(assets.getResult("ta1"), 250, 250, 2, 300, 1, 1);
+            towerArray = [];
+            towerArray.push(new objects.Tower(assets.getResult("ta1"), 150, 250, 2, 300, 10, 1));
+            //towerArray.push(new objects.Tower(assets.getResult("ta1"), 450, 350, 2, 300, 1, 1));
+            for (var i = 0; i < towerArray.length; i++) {
+                this.addChild(towerArray[i]);
             }
-            
+            console.log(towerArray.length)
 
             bulletArray = [];
             for (var i = 0; i < 10; i++) {
-                bulletArray[i] = new objects.Bullet(assets.getResult("bullet_red8"),"bullet", null, null, 5,10, 8, 8, true);
+                bulletArray[i] = new objects.Bullet(assets.getResult("bullet_red8"),"bullet", null, null, 5, 4, 8, 8, true);
                 this.addChild(bulletArray[i]);
             }
 
@@ -89,9 +90,30 @@
         }//end of start
 
         public update(): void {          
+            //console.log(createjs.Ticker.getTicks());
+            // each tower 
 
+            for (var e = 0; e < enemyArray.length; e++) {
 
-            for (var i = 0; i < this._towerArray.length; i++) {
+                this._direction_right.detectObject_applyDirection(enemyArray[e]);
+                this._direction_up.detectObject_applyDirection(enemyArray[e]);
+                this._direction_left.detectObject_applyDirection(enemyArray[e]);
+                this._direction_down.detectObject_applyDirection(enemyArray[e]);
+
+                enemyArray[e].update();
+
+                for (var b = 0; b < bulletArray.length; b++) {
+                    bulletArray[b].update();
+                    this._collion.updateBulletVsEnemy(bulletArray[b], enemyArray[e]);
+                }
+
+                for (var t = 0; t < towerArray.length; t++) {
+                    this._collion.updateTowerVsEnemy(towerArray[t], enemyArray[e])
+                }
+                
+            }
+            /*
+            for (var i = 0; i < towerArray.length; i++) {
                 for (var j = 0; j < enemyArray.length; j++) {
 
                     this._direction_right.detectObject_applyDirection(enemyArray[j]);
@@ -101,7 +123,7 @@
 
                     enemyArray[j].update();
                     //this._towerArray[i].fireAt(this._towerArray[i].getTarget());
-                    this._collion.updateTowerVsEnemy(this._towerArray[i], enemyArray[j])
+                    this._collion.updateTowerVsEnemy(towerArray[i], enemyArray[j])
                 }                
             }
 
@@ -113,7 +135,7 @@
                     this._collion.updateBulletVsEnemy(bulletArray[i], enemyArray[j]);
                 }            
             }
-            
+            */
         }// end of update 
 
     }

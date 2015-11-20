@@ -20,15 +20,11 @@ var managers;
                     tower.fireAt(enemy);
                 }
             }
-            /*
-            if (this._distance(tower.getPosition(), enemy.getPosition()) <= tower.getFireRange()) {
-                tower.fireAt(enemy);
-            } */
         };
         Collsion.prototype._checkCollision = function (bullet, enemy) {
             // check the distance between enemy and bullet
             if (this._distance(bullet.getPosition(), enemy.getPosition()) <
-                (enemy.getHalfHeight() + bullet.getRadius())) {
+                (enemy.getHalfHeight() * .2 + bullet.getRadius())) {
                 enemy.removeLives(bullet.getAttack());
                 // reset bullet, reset enemy if enemy is 0 at life
                 bullet.reset();

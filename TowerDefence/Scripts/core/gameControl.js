@@ -32,6 +32,7 @@ var scoreBoard;
 var collision;
 var bulletArray;
 var enemyArray;
+var towerArray;
 var canvasWidth = 640;
 var canvasHeight = 480;
 // atlas & data
