@@ -55,6 +55,8 @@ var manifest = [
     { id: "again_button", src: "../../Assets/images/again_button.png" },
     { id: "exit_button", src: "../../Assets/images/exit_button.png" },
     { id: "ta1", src: "../../Assets/images/ta1.png" },
+    { id: "ta2", src: "../../Assets/images/ta2.png" },
+    { id: "ta3", src: "../../Assets/images/ta3.png" },
     { id: "bullet1", src: "../../Assets/images/bullet1.png" },
     { id: "bullet2", src: "../../Assets/images/bullet2.png" },
     { id: "bullet3", src: "../../Assets/images/bullet3.png" },

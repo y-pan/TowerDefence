@@ -10,6 +10,9 @@ var objects;
         // how to remember current target until lose it in range ? 
         function Tower(imageString, x, y, attack, fireRange, coldTime, level) {
             _super.call(this, imageString);
+            this._imageString = imageString;
+            this._timeCreated = createjs.Ticker.getTicks();
+            this._isUpdatingLevel = false;
             this.x = x;
             this.y = y;
             this._width = 50;
@@ -23,7 +26,53 @@ var objects;
             this._coldTime = coldTime;
             this._level = level;
             this._oldTicks = createjs.Ticker.getTicks();
+            // event
+            this.on("mouseover", this.overTower, this);
+            this.on("mouseout", this.outTower, this);
+            this.on("click", this.clickTower, this);
         }
+        Tower.prototype.getTimeCreated = function () {
+            return this._timeCreated;
+        };
+        Tower.prototype.overTower = function (event) {
+            event.currentTarget.alpha = 0.7;
+        };
+        Tower.prototype.outTower = function (event) {
+            event.currentTarget.alpha = 1;
+        };
+        Tower.prototype.clickTower = function (event) {
+            console.log("click in tower created at: " + this.getTimeCreated());
+            // check conditions: money > 50, this._level < 3    maxlevel = 3
+            this._requestUpdateLevel();
+        };
+        Tower.prototype._requestUpdateLevel = function () {
+            console.log("requestUpdateLevel()");
+            // global to update this level if condition
+            this._isUpdatingLevel = true;
+        };
+        Tower.prototype.getLevel = function () {
+            return this._level;
+        };
+        Tower.prototype.getIsUpdatingLevel = function () {
+            return this._isUpdatingLevel;
+        };
+        Tower.prototype.setIsUpdatingLevel = function (isUpdatingLevel) {
+            this._isUpdatingLevel = isUpdatingLevel;
+        };
+        Tower.prototype.setLevel = function (level) {
+            switch (level) {
+                case 1:
+                    this._imageString = assets.getResult("ta1");
+                    break;
+                case 2:
+                    this._imageString = assets.getResult("ta2");
+                    break;
+                case 3:
+                    this._imageString = assets.getResult("ta3");
+                    break;
+            }
+            this.image = this._imageString;
+        };
         Tower.prototype.setHasTarget = function (hasTarget) {
             this._hasTarget = hasTarget;
         };
@@ -81,36 +130,43 @@ var objects;
             }
             return this._bulletType;
         };
+        Tower.prototype._getBulletArray = function () {
+            switch (this._level) {
+                case 1:
+                    return bullet1Array;
+                    break;
+                case 2:
+                    return bullet1Array;
+                    break;
+                case 3:
+                    return bullet1Array;
+                    break;
+            }
+        };
         Tower.prototype._shoot = function () {
             //console.log(bulletArray.length);
-            var fired = false;
             this._nowTicks = createjs.Ticker.getTicks();
             if (this._nowTicks - this._oldTicks >= this._coldTime) {
-                for (var i = 0; i < bullet1Array.length && !fired; i++) {
-                    //console.log(bulletArray[i].isReady);
-                    if (bullet1Array[i].isReady) {
-                        bullet1Array[i].fireBullet(this);
-                        fired = true;
-                        this._oldTicks = this._nowTicks;
-                    }
-                }
-                // add one more when bullet is not enough to use  
-                if (!fired) {
-                    bullet1Array.push(new objects.Bullet(assets.getResult(this._getBulletType()), "bullet", null, null, 5, 4, 8, 8, true));
-                    bullet1Array[bullet1Array.length - 1].fireBullet(this);
+                this._shootBullet();
+            }
+        };
+        Tower.prototype._shootBullet = function () {
+            var fired = false;
+            for (var i = 0; i < this._getBulletArray().length && !fired; i++) {
+                //console.log(bulletArray[i].isReady);
+                if (this._getBulletArray()[i].isReady) {
+                    this._getBulletArray()[i].fireBullet(this);
                     fired = true;
                     this._oldTicks = this._nowTicks;
                 }
             }
-            /*
-            if (this._hasTarget) {
-                console.log("hasTarget");
-                for (var i = 0; i < bulletArray.length; i++) {
-                    if (bulletArray[i].isReady) {
-                        bulletArray[i].fireBullet(this);
-                    }
-                }
-            }*/
+            // add one more when bullet is not enough to use  
+            if (!fired) {
+                this._getBulletArray().push(new objects.Bullet(assets.getResult(this._getBulletType()), "bullet", null, null, 5, 4, 8, 8, true));
+                this._getBulletArray()[bullet1Array.length - 1].fireBullet(this);
+                fired = true;
+                this._oldTicks = this._nowTicks;
+            }
         };
         /** This is for centered tower */
         Tower.prototype.getGunpoint = function () {

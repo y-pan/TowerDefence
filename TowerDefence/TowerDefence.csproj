@@ -77,6 +77,8 @@
     <Content Include="Assets\images\start_button.png" />
     <Content Include="Assets\images\direction_up.png" />
     <Content Include="Assets\images\ta1.png" />
+    <Content Include="Assets\images\ta2.png" />
+    <Content Include="Assets\images\ta3.png" />
     <Content Include="Content\game.css" />
     <Content Include="Content\reset.css" />
     <Content Include="index.html" />

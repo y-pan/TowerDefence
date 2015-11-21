@@ -49,22 +49,36 @@
             for (var i = 0; i < enemyArray.length; i++) {
                 this.addChild(enemyArray[i]);
             }
-
-            
+                        
 
              // tower
             //this._ta1 = new objects.Tower(assets.getResult("ta1"), 250, 250, 2, 300, 1, 1);
             towerArray = [];
-            towerArray.push(new objects.Tower(assets.getResult("ta1"), 150, 250, 2,300, 50, 1));
+            towerArray.push(new objects.Tower(assets.getResult("ta1"), 250, 250, 2, 300, 50, 1));
+
             //towerArray.push(new objects.Tower(assets.getResult("ta1"), 450, 350, 2, 300, 1, 1));
-            for (var i = 0; i < towerArray.length; i++) {
+            for (var i = 0; i < towerArray.length; i++) {              
                 this.addChild(towerArray[i]);
             }
-            console.log(towerArray.length)
 
+
+            // bullet arrays
             bullet1Array = [];
+            bullet2Array = [];
+            bullet3Array = [];
+
             for (var i = 0; i < 1; i++) {
                 bullet1Array[i] = new objects.Bullet(assets.getResult("bullet1"),"bullet", null, null, 5, 4, 8, 8, true);
+                this.addChild(bullet1Array[i]);
+            }
+
+            for (var i = 0; i < 1; i++) {
+                bullet2Array[i] = new objects.Bullet(assets.getResult("bullet2"), "bullet", null, null, 10, 4,8, 8, true);
+                this.addChild(bullet1Array[i]);
+            }
+
+            for (var i = 0; i < 1; i++) {
+                bullet3Array[i] = new objects.Bullet(assets.getResult("bullet3"), "bullet", null, null, 15, 4, 8, 8, true);
                 this.addChild(bullet1Array[i]);
             }
 
@@ -108,34 +122,19 @@
                 }
 
                 for (var t = 0; t < towerArray.length; t++) {
+                    towerArray[t].setLevel(1);
                     this._collion.updateTowerVsEnemy(towerArray[t], enemyArray[e])
-                }
-                
-            }
-            /*
-            for (var i = 0; i < towerArray.length; i++) {
-                for (var j = 0; j < enemyArray.length; j++) {
-
-                    this._direction_right.detectObject_applyDirection(enemyArray[j]);
-                    this._direction_up.detectObject_applyDirection(enemyArray[j]);
-                    this._direction_left.detectObject_applyDirection(enemyArray[j]);
-                    this._direction_down.detectObject_applyDirection(enemyArray[j]);
-
-                    enemyArray[j].update();
-                    //this._towerArray[i].fireAt(this._towerArray[i].getTarget());
-                    this._collion.updateTowerVsEnemy(towerArray[i], enemyArray[j])
                 }                
             }
-
-
-            for (var i = 0; i < bulletArray.length; i++) {
-                bulletArray[i].update();
-
-                for (var j = 0; j < enemyArray.length; j++) {
-                    this._collion.updateBulletVsEnemy(bulletArray[i], enemyArray[j]);
-                }            
+            // update tower level
+            for (var t = 0; t < towerArray.length; t++) {
+                if (towerArray[t].getIsUpdatingLevel()) {
+                    towerArray[t].setLevel(towerArray[t].getLevel() + 1);
+                    //towerArray[t].setIsUpdatingLevel(false);
+                    
+                }
             }
-            */
+
         }// end of update 
 
     }

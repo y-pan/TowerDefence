@@ -22,9 +22,21 @@
         protected _nowTicks: number;
         protected _bulletType: string;
 
+        protected _imageString;
+        protected _timeCreated: number;
+        
+        public getTimeCreated():number {
+            return this._timeCreated;
+        }
+
+        protected _isUpdatingLevel: boolean;
+
          // how to remember current target until lose it in range ? 
         constructor(imageString: string, x: number, y: number, attack: number, fireRange: number, coldTime:number, level:number) {
             super(imageString);
+            this._imageString = imageString;
+            this._timeCreated = createjs.Ticker.getTicks();
+            this._isUpdatingLevel = false;
 
             this.x = x;
             this.y = y;                       
@@ -44,6 +56,57 @@
             this._level = level;
             this._oldTicks = createjs.Ticker.getTicks();
             
+            // event
+            this.on("mouseover", this.overTower, this);
+            this.on("mouseout", this.outTower, this);
+            this.on("click", this.clickTower, this);
+        }
+
+        overTower(event: createjs.MouseEvent): void {
+            event.currentTarget.alpha = 0.7;            
+        }
+        outTower(event: createjs.MouseEvent): void {
+            event.currentTarget.alpha = 1;
+        }
+        
+        clickTower(event: createjs.MouseEvent): void {
+            console.log("click in tower created at: " + this.getTimeCreated());
+            
+            // check conditions: money > 50, this._level < 3    maxlevel = 3
+
+            this._requestUpdateLevel();
+               
+        }
+        
+        
+        private _requestUpdateLevel(): void {
+            console.log("requestUpdateLevel()");
+            // global to update this level if condition
+            this._isUpdatingLevel = true;
+
+        }
+        public getLevel(): number {
+            return this._level;
+        }
+        public getIsUpdatingLevel(): boolean {
+            return this._isUpdatingLevel;
+        }
+        public setIsUpdatingLevel(isUpdatingLevel: boolean): void {
+            this._isUpdatingLevel = isUpdatingLevel;
+        }
+        public setLevel(level:number): void {
+            switch (level) {
+                case 1:
+                    this._imageString = assets.getResult("ta1");
+                    break;
+                case 2:
+                    this._imageString = assets.getResult("ta2");
+                    break;
+                case 3:
+                    this._imageString = assets.getResult("ta3");
+                    break;
+            }
+            this.image = this._imageString;
         }
 
         public setHasTarget(hasTarget: boolean): void {
@@ -59,7 +122,7 @@
                 this._shoot();
                 this._hasTarget = true;
                 this._target = enemy;
-                //console.log(this._target);
+                
             } 
         }
 
@@ -115,39 +178,48 @@
             return this._bulletType;
         }
 
+        private _getBulletArray(): any {
+            switch (this._level) {
+                case 1:
+                    return bullet1Array;
+                    break;
+                case 2:
+                    return bullet1Array;
+                    break;
+                case 3:
+                    return bullet1Array;
+                    break;
+            }            
+        }
+
         private _shoot(): void {
             //console.log(bulletArray.length);
-            var fired: boolean = false;
             this._nowTicks = createjs.Ticker.getTicks();
             if (this._nowTicks - this._oldTicks >= this._coldTime) {
-               
-                for (var i = 0; i < bullet1Array.length && !fired; i++) {
-                    //console.log(bulletArray[i].isReady);
-                    if (bullet1Array[i].isReady) {
-                        bullet1Array[i].fireBullet(this);
-                        fired = true;
-                        this._oldTicks = this._nowTicks;
-                    }                   
-                } 
-                // add one more when bullet is not enough to use  
-                if (!fired) {
-                    bullet1Array.push(new objects.Bullet(assets.getResult(this._getBulletType()), "bullet", null, null, 5, 4, 8, 8, true));
-                    bullet1Array[bullet1Array.length -1].fireBullet(this);
+                this._shootBullet();
+            }            
+        }
+
+
+        private _shootBullet(): void {
+
+            var fired: boolean = false;
+
+            for (var i = 0; i < this._getBulletArray().length && !fired; i++) {
+                //console.log(bulletArray[i].isReady);
+                if (this._getBulletArray()[i].isReady) {
+                    this._getBulletArray()[i].fireBullet(this);
                     fired = true;
                     this._oldTicks = this._nowTicks;
-                }            
-            }
-            
-                       
-            /*
-            if (this._hasTarget) {
-                console.log("hasTarget");
-                for (var i = 0; i < bulletArray.length; i++) {
-                    if (bulletArray[i].isReady) {
-                        bulletArray[i].fireBullet(this);
-                    }
                 }
-            }*/
+            } 
+            // add one more when bullet is not enough to use  
+            if (!fired) {
+                this._getBulletArray().push(new objects.Bullet(assets.getResult(this._getBulletType()), "bullet", null, null, 5, 4, 8, 8, true));
+                this._getBulletArray()[bullet1Array.length - 1].fireBullet(this);
+                fired = true;
+                this._oldTicks = this._nowTicks;
+            }  
         }
 
         /** This is for centered tower */
@@ -160,14 +232,5 @@
         }
 
 
-        // may not need this
-        /*
-        private _distanceToMouse(): number {
-            return Math.floor(Math.sqrt(Math.pow((stage.mouseX - this.x), 2) + Math.pow((stage.mouseY - this.y), 2)));
-        }
-
-        private _distanceToTarget(object:objects.Enemy): number {
-            return Math.floor(Math.sqrt(Math.pow((object.x - this.x), 2) + Math.pow((object.y - this.y), 2)));
-        }*/
     }
 }
