@@ -10,8 +10,8 @@ var objects;
         function Bullet(imagePath, name, x, y, attack, speed, width, height, isCentered) {
             _super.call(this, imagePath);
             this._name = name;
-            this.x = x ? x : -10; // store outside 
-            this.y = y ? y : -10; // store outside
+            this.x = x ? x : -30; // store outside 
+            this.y = y ? y : -30; // store outside
             this._attack = attack ? attack : 1;
             this._speed = speed ? speed : 5;
             this._width = width ? width : 8;
@@ -21,9 +21,9 @@ var objects;
                 this.regY = this._height * .5;
             }
             this.isReady = true;
+            stage.addChild(this);
         }
         Bullet.prototype.fireBullet = function (tower) {
-            //
             if (this.isReady) {
                 this._setDirectionWith(tower);
                 this._flyAtDirection();
@@ -41,8 +41,8 @@ var objects;
         };
         /** reset bullet and put it outside canvas*/
         Bullet.prototype.reset = function () {
-            this.x = -10;
-            this.y = -10;
+            this.x = -30;
+            this.y = -30;
             this._dx = 0;
             this._dy = 0;
             this.isReady = true;

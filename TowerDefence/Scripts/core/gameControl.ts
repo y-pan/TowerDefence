@@ -45,12 +45,17 @@ var currentState: objects.Scene;
 
 var scoreBoard: managers.ScoreBoard;
 var collision: managers.Collsion;
-var bullet1Array: objects.Bullet[];
-var bullet2Array: objects.Bullet[];
-var bullet3Array: objects.Bullet[];
 
-var enemyArray: objects.Enemy[];
-var towerArray: objects.Tower[];
+var bullets1: objects.Bullet[];
+var bullets2: objects.Bullet[];
+var bullets3: objects.Bullet[];
+
+var enemies: objects.Enemy[];
+var towers: objects.Tower[];
+var directionTiles: objects.DirectionTile[];
+
+var isBulletToAdd: boolean = false;
+var isTowerToAdd: boolean = false;
 
 var canvasWidth: number = 640;
 var canvasHeight: number = 480;
