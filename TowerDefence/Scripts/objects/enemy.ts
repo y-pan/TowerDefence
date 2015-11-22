@@ -32,6 +32,7 @@
             
             this._isDead = false;
 
+            currentLevel.addChild(this);
         }
 
         public die() {
@@ -42,8 +43,7 @@
         }
 
         public update() {
-            this._moveWith_Speed_Drection();
-              
+            this._moveWith_Speed_Drection();              
         }
 
         private _moveWith_Speed_Drection(): void {

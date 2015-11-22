@@ -22,18 +22,15 @@ var states;
             enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 5000, 100, 100, 64, 64, 2, config.DIRECTION_DOWN));
             enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 5000, 100, 100 - 128, 64, 64, 2, config.DIRECTION_DOWN));
             enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 5000, 100, 100 - 128 * 4, 64, 64, 2, config.DIRECTION_DOWN));
-            for (var i = 0; i < enemies.length; i++) {
-                this.addChild(enemies[i]);
-            }
+            /*
+             for (var i = 0; i < enemies.length; i++) {
+                 this.addChild(enemies[i]);
+             }*/
             // tower
             towers = [];
             towers.push(new objects.Tower(assets.getResult("ta1"), "ta", 250, 250, 2, 100, 30, 1));
             towers.push(new objects.Tower(assets.getResult("ta1"), "ta", 300, 250, 2, 100, 30, 1));
             towers.push(new objects.Tower(assets.getResult("tb1"), "tb", 300, 300, 2, 100, 30, 1));
-            /*
-            for (var i = 0; i < towers.length; i++) {
-                this.addChild(towers[i]);
-            }     */
             // bullet arrays
             bullets1 = [];
             bullets2 = [];

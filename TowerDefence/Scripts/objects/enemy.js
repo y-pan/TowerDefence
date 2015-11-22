@@ -21,6 +21,7 @@ var objects;
             this.regX = this._width * .5;
             this.regY = this._height * .5;
             this._isDead = false;
+            currentLevel.addChild(this);
         }
         Enemy.prototype.die = function () {
             this._isDead = true;

@@ -46,6 +46,7 @@ var currentState: objects.Scene;
 var scoreBoard: managers.ScoreBoard;
 var collision: managers.Collsion;
 
+
 var bullets1: objects.Bullet[];
 var bullets2: objects.Bullet[];
 var bullets3: objects.Bullet[];
