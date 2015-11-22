@@ -30,7 +30,8 @@ var states;
         // PRIVATE METHODS --------------------------------------------------------------------------
         Menu.prototype._clickStartButton = function (event) {
             createjs.Sound.play("horn");
-            changeState(config.STATE_LEVEL1);
+            state = config.STATE_LEVEL1;
+            changeState(state);
         };
         Menu.prototype._clickMenuButton = function (event) {
             createjs.Sound.play("ta_buttonPress");

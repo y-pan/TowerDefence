@@ -36,8 +36,6 @@ var bullets3;
 var enemies;
 var towers;
 var directionTiles;
-var isBulletToAdd = false;
-var isTowerToAdd = false;
 var canvasWidth = 640;
 var canvasHeight = 480;
 // atlas & data
@@ -45,9 +43,7 @@ var redDragonData;
 var redDragonAtlas;
 //
 var menu;
-var level1;
-var level2;
-var level3;
+var currentLevel;
 var over;
 var manifest = [
     { id: "grass_background", src: "../../Assets/images/grass_background.png" },
@@ -121,27 +117,38 @@ function setupStats() {
     stats.domElement.style.top = "0px";
     document.body.appendChild(stats.domElement);
 }
-function changeState(state) {
-    switch (state) {
+function changeState(_state) {
+    state = _state;
+    switch (_state) {
         case config.STATE_MENU:
             stage.removeAllChildren();
-            currentState = new states.Menu();
+            menu = new states.Menu();
+            currentState = menu;
+            console.log("changeState(), state=" + _state);
             break;
         case config.STATE_OVER:
             stage.removeAllChildren();
-            currentState = new states.Over();
+            over = new states.Over();
+            currentState = over;
+            console.log("changeState(), state=" + _state);
             break;
         case config.STATE_LEVEL1:
             stage.removeAllChildren();
-            currentState = new states.Level1;
+            currentLevel = new states.Level1;
+            currentState = currentLevel;
+            console.log("changeState(), state=" + _state);
             break;
         case config.STATE_LEVEL2:
             stage.removeAllChildren();
-            currentState = new states.Level2;
+            currentLevel = new states.Level2;
+            currentState = currentLevel;
+            console.log("changeState(), state=" + _state);
             break;
         case config.STATE_LEVEL3:
             stage.removeAllChildren();
-            currentState = new states.Level3;
+            currentLevel = new states.Level3;
+            currentState = currentLevel;
+            console.log("changeState(), state=" + _state);
             break;
     }
     currentState.start();

@@ -12,7 +12,6 @@
 
         // PUBLIC 
         public start(): void {
-            
             // background
             this._background = new objects.Background("grass_background");
             this.addChild(this._background);
@@ -37,7 +36,8 @@
         // PRIVATE METHODS --------------------------------------------------------------------------
         private _clickStartButton(event: createjs.MouseEvent): void {
             createjs.Sound.play("horn");
-            changeState(config.STATE_LEVEL1);
+            state = config.STATE_LEVEL1;
+            changeState(state);
         }
         private _clickMenuButton(event: createjs.MouseEvent): void {
             createjs.Sound.play("ta_buttonPress");

@@ -12,8 +12,6 @@ var states;
         }
         // PUBLIC 
         Level1.prototype.start = function () {
-            isBulletToAdd = false;
-            isTowerToAdd = false;
             // managers: collision
             this._collion = new managers.Collsion();
             // background
@@ -32,9 +30,10 @@ var states;
             towers.push(new objects.Tower(assets.getResult("ta1"), "ta", 250, 250, 2, 100, 30, 1));
             towers.push(new objects.Tower(assets.getResult("ta1"), "ta", 300, 250, 2, 100, 30, 1));
             towers.push(new objects.Tower(assets.getResult("tb1"), "tb", 300, 300, 2, 100, 30, 1));
+            /*
             for (var i = 0; i < towers.length; i++) {
                 this.addChild(towers[i]);
-            }
+            }     */
             // bullet arrays
             bullets1 = [];
             bullets2 = [];
@@ -62,34 +61,6 @@ var states;
             stage.addChild(this);
         }; //end of start
         Level1.prototype.update = function () {
-            //
-            if (isBulletToAdd) {
-                var i = 0;
-                for (i = 0; i < bullets1.length; i++) {
-                    if (!this.contains(bullets1[i])) {
-                        this.addChild(bullets1[i]);
-                    }
-                }
-                for (i = 0; i < bullets2.length; i++) {
-                    if (!this.contains(bullets2[i])) {
-                        this.addChild(bullets2[i]);
-                    }
-                }
-                for (i = 0; i < bullets3.length; i++) {
-                    if (!this.contains(bullets3[i])) {
-                        this.addChild(bullets3[i]);
-                    }
-                }
-                isBulletToAdd = false;
-            }
-            if (isTowerToAdd) {
-                for (var i = 0; i < towers.length; i++) {
-                    if (!this.contains(towers[i])) {
-                        this.addChild(towers[i]);
-                    }
-                }
-                isTowerToAdd = false;
-            }
             console.log("children: " + this.numChildren + "| b1: " + bullets1.length + ", b2: " + bullets2.length + ", b3:" + bullets3.length);
             // enemys, towers, bullets
             for (var e = 0; e < enemies.length; e++) {
@@ -113,14 +84,6 @@ var states;
                 }
                 for (var t = 0; t < towers.length; t++) {
                     this._collion.updateTowerVsEnemy(towers[t], enemies[e]);
-                }
-            }
-            // update tower level(including bullet)
-            for (var t = 0; t < towers.length; t++) {
-                var nl = towers[t].getNewLevel();
-                var l = towers[t].getLevel();
-                if (nl != l) {
-                    towers[t].setLevel(nl);
                 }
             }
         }; // end of update 

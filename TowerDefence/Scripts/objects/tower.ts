@@ -21,7 +21,10 @@
         protected _level: number;
         protected _newLevel: number;
         protected _maxLevel: number = 3;
-        
+
+        protected _rangeCircle: createjs.Shape;
+        //protected _needToUpdateCircle: Boolean;
+        /**This constructor will automatically add this object to the global currentLevel, which is objects.Scene extends createjs.Container*/
         constructor(imageString:any, towerType:string, x: number, y: number, attack: number, fireRange: number, coldTime:number, level:number) {
             super(imageString);
 
@@ -46,7 +49,15 @@
             this._newLevel = this._level;
 
             this._oldTicks = createjs.Ticker.getTicks();
-            
+
+            this._rangeCircle = new createjs.Shape();
+            this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(0,0,0,1)").drawCircle(this.x, this.y, this.getFireRange());     
+            this._rangeCircle.alpha = 0;
+            currentLevel.addChild(this._rangeCircle);
+
+            // 
+            currentLevel.addChild(this);
+              
             // event
             this.on("mouseover", this.overTower, this);
             this.on("mouseout", this.outTower, this);
@@ -56,15 +67,18 @@
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~ Event Listener ~~~~~~~~~~~~~~~~~~~~~~~~~
 
         overTower(event: createjs.MouseEvent): void {
-            event.currentTarget.alpha = 0.7;            
+            //event.currentTarget.alpha = 0.7;     
+            this._rangeCircle.alpha = 1;    
+            //console.log("_needToUpdateCircle:" +this._needToUpdateCircle);   
         }
         outTower(event: createjs.MouseEvent): void {
-            event.currentTarget.alpha = 1;
+            //event.currentTarget.alpha = 1;
+            this._rangeCircle.alpha = 0;
         }
         
         clickTower(event: createjs.MouseEvent): void {
             //console.log("click in tower created at: " + this.getTimeCreated());
-            this._requestNewLevel();                        
+            this._requestNewLevel();        
         }
         
         
@@ -79,26 +93,25 @@
         }
 
         public setLevel(level: number): void {
-            switch (level) {
-                case 1:                    
-                    this._imageString = assets.getResult(this._towerType + 1);
-
-                    break;
-                case 2:
-                    this._imageString = assets.getResult(this._towerType + 2);
-                    break;
-                case 3:
-                    this._imageString = assets.getResult(this._towerType + 3);
-                    break;
-            }
+            // set level
             this._level = level;
+            this._newLevel = this._level;
+            // set image
+            this._imageString = assets.getResult(this._towerType + this._level);
             this.image = this._imageString;
+            // set range & circle
+            this.setFireRange(Math.floor(this.getFireRange() * 1.5));
+            this._rangeCircle.graphics.clear();
+            this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(0,0,0,1)").drawCircle(this.x, this.y, this.getFireRange());
         }
 
         public getTimeCreated(): number {
             return this._timeCreated;
         }
-
+        
+        public setFireRange(range:number): void {
+            this._fireRange = range;
+        }
         
         /** This is for centered tower */
         public getGunpoint(): createjs.Point {
@@ -138,9 +151,11 @@
         }
 
         //-------------------------------- PRIVATE -------------------------------------------
+        /**Conditions applied here before update level*/
         private _requestNewLevel(): void {
             if (this._newLevel < this._maxLevel) {
                 this._newLevel++;
+                this.setLevel(this._newLevel);              
             }
         }
 
@@ -203,13 +218,15 @@
             // add more if not enough  
             if (!fired) {
                 this._getBullet().push(new objects.Bullet(assets.getResult(this._getBulletType()), "bullet", null, null, 5, 4, 8, 8, true));
-                this._getBullet()[bullets1.length].fireBullet(this);
+                this._getBullet()[this._getBullet().length - 1].fireBullet(this);
+
+                // add to current container
+
+                currentLevel.addChild(this._getBullet()[this._getBullet().length - 1]);
                 fired = true;
                 this._oldTicks = this._nowTicks;
-                isBulletToAdd = true;
             }
         }// end of _shootBullet
-
 
     }// end of module
 }

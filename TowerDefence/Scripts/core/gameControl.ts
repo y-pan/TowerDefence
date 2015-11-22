@@ -54,9 +54,6 @@ var enemies: objects.Enemy[];
 var towers: objects.Tower[];
 var directionTiles: objects.DirectionTile[];
 
-var isBulletToAdd: boolean = false;
-var isTowerToAdd: boolean = false;
-
 var canvasWidth: number = 640;
 var canvasHeight: number = 480;
 
@@ -68,9 +65,7 @@ var redDragonAtlas: createjs.SpriteSheet;
 
 //
 var menu: states.Menu;
-var level1: states.Level1;
-var level2: states.Level2;
-var level3: states.Level3;
+var currentLevel: objects.Scene;
 var over: states.Over;
 
 var manifest = [
@@ -165,28 +160,39 @@ function setupStats(): void {
     document.body.appendChild(stats.domElement);
 }
 
-function changeState(state): void {
-    
-    switch (state) {
+function changeState(_state): void {
+    state = _state;
+    switch (_state) {
         case config.STATE_MENU:
-            stage.removeAllChildren();
-            currentState = new states.Menu();
+            stage.removeAllChildren();            
+            menu = new states.Menu();
+            currentState = menu;
+            console.log("changeState(), state=" + _state);
             break;
         case config.STATE_OVER:
             stage.removeAllChildren();
-            currentState = new states.Over();
+            over = new states.Over();
+            currentState = over;
+            console.log("changeState(), state=" + _state);
             break;
         case config.STATE_LEVEL1:
             stage.removeAllChildren();
-            currentState = new states.Level1;
+            currentLevel = new states.Level1;
+            currentState = currentLevel;
+            console.log("changeState(), state=" + _state);
             break;
         case config.STATE_LEVEL2:
             stage.removeAllChildren();
-            currentState = new states.Level2;
+            currentLevel = new states.Level2;
+            currentState = currentLevel;
+            console.log("changeState(), state=" + _state);
+
             break;
         case config.STATE_LEVEL3:
             stage.removeAllChildren();
-            currentState = new states.Level3;
+            currentLevel = new states.Level3;
+            currentState = currentLevel;
+            console.log("changeState(), state=" + _state);
             break;
     }
     currentState.start();
