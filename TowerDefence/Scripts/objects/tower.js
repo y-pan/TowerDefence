@@ -7,10 +7,11 @@ var objects;
 (function (objects) {
     var Tower = (function (_super) {
         __extends(Tower, _super);
-        function Tower(imageString, x, y, attack, fireRange, coldTime, level) {
+        function Tower(imageString, towerType, x, y, attack, fireRange, coldTime, level) {
             _super.call(this, imageString);
             this._maxLevel = 3;
             this._imageString = imageString;
+            this._towerType = towerType;
             this.x = x;
             this.y = y;
             this._width = 50;
@@ -42,11 +43,7 @@ var objects;
             //console.log("click in tower created at: " + this.getTimeCreated());
             this._requestNewLevel();
         };
-        Tower.prototype._requestNewLevel = function () {
-            if (this._newLevel < this._maxLevel) {
-                this._newLevel++;
-            }
-        };
+        // +++++++++++++++++++++++++++++++++++ PUBLIC ++++++++++++++++++++++++++++++++++++++++++++
         Tower.prototype.getLevel = function () {
             return this._level;
         };
@@ -56,23 +53,21 @@ var objects;
         Tower.prototype.setLevel = function (level) {
             switch (level) {
                 case 1:
-                    this._imageString = assets.getResult("ta1");
+                    this._imageString = assets.getResult(this._towerType + 1);
                     break;
                 case 2:
-                    this._imageString = assets.getResult("ta2");
+                    this._imageString = assets.getResult(this._towerType + 2);
                     break;
                 case 3:
-                    this._imageString = assets.getResult("ta3");
+                    this._imageString = assets.getResult(this._towerType + 3);
                     break;
             }
             this._level = level;
             this.image = this._imageString;
-            //console.log("setLevel to " + level+ " result: " + this._level);
         };
         Tower.prototype.getTimeCreated = function () {
             return this._timeCreated;
         };
-        // +++++++++++++++++++++++++++++++++++ PUBLIC +++++++++++++++++++++++++++++++++++++++++++++
         /** This is for centered tower */
         Tower.prototype.getGunpoint = function () {
             return new createjs.Point(this.x + this._width * .5, this.y);
@@ -112,6 +107,11 @@ var objects;
             }
         };
         //-------------------------------- PRIVATE -------------------------------------------
+        Tower.prototype._requestNewLevel = function () {
+            if (this._newLevel < this._maxLevel) {
+                this._newLevel++;
+            }
+        };
         Tower.prototype._distance = function (p1, p2) {
             return Math.floor(Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2)));
         };

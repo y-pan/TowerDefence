@@ -79,6 +79,9 @@
     <Content Include="Assets\images\ta1.png" />
     <Content Include="Assets\images\ta2.png" />
     <Content Include="Assets\images\ta3.png" />
+    <Content Include="Assets\images\tb1.png" />
+    <Content Include="Assets\images\tb2.png" />
+    <Content Include="Assets\images\tb3.png" />
     <Content Include="Content\game.css" />
     <Content Include="Content\reset.css" />
     <Content Include="index.html" />

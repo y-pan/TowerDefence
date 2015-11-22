@@ -40,9 +40,11 @@
 
              // tower
             towers = [];
-            towers.push(new objects.Tower(assets.getResult("ta1"), 250, 250, 2, 300, 10, 1));
+            towers.push(new objects.Tower(assets.getResult("ta1"),"ta", 250, 250, 2, 100, 30, 1));
 
-            //towerArray.push(new objects.Tower(assets.getResult("ta1"), 450, 350, 2, 300, 1, 1));
+            towers.push(new objects.Tower(assets.getResult("ta1"), "ta", 300, 250, 2, 100, 30, 1));
+
+            towers.push(new objects.Tower(assets.getResult("tb1"), "tb", 300, 300, 2, 100, 30, 1));
             for (var i = 0; i < towers.length; i++) {              
                 this.addChild(towers[i]);
             }

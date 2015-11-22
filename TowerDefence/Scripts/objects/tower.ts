@@ -5,9 +5,9 @@
         protected _width: number;
         protected _height: number;
         protected _attack: number;       
-        protected _imageString;
+        protected _imageString: any;// ?
         protected _timeCreated: number;
-
+        protected _towerType: string;
         protected _rotation: number;
         protected _fireRange: number;
         protected _hasTarget: boolean;        
@@ -21,11 +21,12 @@
         protected _level: number;
         protected _newLevel: number;
         protected _maxLevel: number = 3;
-
-        constructor(imageString: string, x: number, y: number, attack: number, fireRange: number, coldTime:number, level:number) {
+        
+        constructor(imageString:any, towerType:string, x: number, y: number, attack: number, fireRange: number, coldTime:number, level:number) {
             super(imageString);
 
             this._imageString = imageString;
+            this._towerType = towerType;
             this.x = x;
             this.y = y;
             this._width = 50;
@@ -67,11 +68,7 @@
         }
         
         
-        private _requestNewLevel(): void {
-            if (this._newLevel < this._maxLevel) {
-                this._newLevel++;
-            }
-        }
+        // +++++++++++++++++++++++++++++++++++ PUBLIC ++++++++++++++++++++++++++++++++++++++++++++
 
         public getLevel(): number {
             return this._level;
@@ -83,27 +80,25 @@
 
         public setLevel(level: number): void {
             switch (level) {
-                case 1:
-                    this._imageString = assets.getResult("ta1");
+                case 1:                    
+                    this._imageString = assets.getResult(this._towerType + 1);
 
                     break;
                 case 2:
-                    this._imageString = assets.getResult("ta2");
+                    this._imageString = assets.getResult(this._towerType + 2);
                     break;
                 case 3:
-                    this._imageString = assets.getResult("ta3");
+                    this._imageString = assets.getResult(this._towerType + 3);
                     break;
             }
             this._level = level;
             this.image = this._imageString;
-            //console.log("setLevel to " + level+ " result: " + this._level);
         }
 
         public getTimeCreated(): number {
             return this._timeCreated;
         }
 
-        // +++++++++++++++++++++++++++++++++++ PUBLIC +++++++++++++++++++++++++++++++++++++++++++++
         
         /** This is for centered tower */
         public getGunpoint(): createjs.Point {
@@ -143,6 +138,12 @@
         }
 
         //-------------------------------- PRIVATE -------------------------------------------
+        private _requestNewLevel(): void {
+            if (this._newLevel < this._maxLevel) {
+                this._newLevel++;
+            }
+        }
+
         private _distance(p1: createjs.Point, p2: createjs.Point): number {
             return Math.floor(Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2)));
         }
