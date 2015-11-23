@@ -7,11 +7,9 @@ var objects;
 (function (objects) {
     var Tower = (function (_super) {
         __extends(Tower, _super);
-        //protected _needToUpdateCircle: Boolean;
         /**This constructor will automatically add this object to the global currentLevel, which is objects.Scene extends createjs.Container*/
-        function Tower(imageString, towerType, x, y, attack, fireRange, coldTime, level) {
+        function Tower(imageString, towerType, x, y) {
             _super.call(this, imageString);
-            this._maxLevel = 3;
             this._imageString = imageString;
             this._towerType = towerType;
             this.x = x;
@@ -20,20 +18,15 @@ var objects;
             this._height = 50;
             this.regX = this._width * .5;
             this.regY = this._height * .5;
-            this._timeCreated = createjs.Ticker.getTicks();
+            this._level = config.TowerLevel_1;
             this.rotation = 0;
             this._hasTarget = false;
-            this._attack = attack;
-            this._fireRange = fireRange;
-            this._coldTime = coldTime;
-            this._level = level;
+            this.updateFireRange();
+            this.updateColdTime();
+            this._maxLevel = config.TowerLevel_Max;
             this._newLevel = this._level;
             this._oldTicks = createjs.Ticker.getTicks();
-            this._rangeCircle = new createjs.Shape();
-            this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(0,0,0,1)").drawCircle(this.x, this.y, this.getFireRange());
-            this._rangeCircle.alpha = 0;
-            currentLevel.addChild(this._rangeCircle);
-            // 
+            this.createRangeCircle();
             currentLevel.addChild(this);
             // event
             this.on("mouseover", this.overTower, this);
@@ -54,30 +47,64 @@ var objects;
             //console.log("click in tower created at: " + this.getTimeCreated());
             this._requestNewLevel();
         };
+        /**Create a circle where the center is tower, radius is fireRange, and add it to current scene*/
+        Tower.prototype.createRangeCircle = function () {
+            this._rangeCircle = new createjs.Shape();
+            this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(0,0,0,1)").drawCircle(this.x, this.y, this.getFireRange());
+            this._rangeCircle.alpha = 0;
+            currentLevel.addChild(this._rangeCircle);
+        };
         // +++++++++++++++++++++++++++++++++++ PUBLIC ++++++++++++++++++++++++++++++++++++++++++++
+        Tower.prototype.setLevel = function (level) {
+            // set level
+            this._level = level;
+            this._newLevel = this._level;
+            // set image
+            this.updateTowerImage();
+            // set range & circle
+            this.updateFireRange();
+            this.updateRangeCircle();
+            this.updateColdTime();
+        };
+        Tower.prototype.updateColdTime = function () {
+            switch (this._level) {
+                case 1:
+                    this._coldTime = config.FireColdTime_1;
+                    break;
+                case 2:
+                    this._coldTime = config.FireCodeTime_2;
+                    break;
+                case 3:
+                    this._coldTime = config.FireCodeTime_3;
+                    break;
+            }
+        };
         Tower.prototype.getLevel = function () {
             return this._level;
         };
         Tower.prototype.getNewLevel = function () {
             return this._newLevel;
         };
-        Tower.prototype.setLevel = function (level) {
-            // set level
-            this._level = level;
-            this._newLevel = this._level;
-            // set image
+        Tower.prototype.updateTowerImage = function () {
             this._imageString = assets.getResult(this._towerType + this._level);
             this.image = this._imageString;
-            // set range & circle
-            this.setFireRange(Math.floor(this.getFireRange() * 1.5));
+        };
+        Tower.prototype.updateRangeCircle = function () {
             this._rangeCircle.graphics.clear();
             this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(0,0,0,1)").drawCircle(this.x, this.y, this.getFireRange());
         };
-        Tower.prototype.getTimeCreated = function () {
-            return this._timeCreated;
-        };
-        Tower.prototype.setFireRange = function (range) {
-            this._fireRange = range;
+        Tower.prototype.updateFireRange = function () {
+            switch (this._level) {
+                case 1:
+                    this._fireRange = config.FireRange_1;
+                    break;
+                case 2:
+                    this._fireRange = config.FireRange_2;
+                    break;
+                case 3:
+                    this._fireRange = config.FireRange_3;
+                    break;
+            }
         };
         /** This is for centered tower */
         Tower.prototype.getGunpoint = function () {

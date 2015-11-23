@@ -4,12 +4,11 @@
 
         protected _width: number;
         protected _height: number;
-        protected _attack: number;       
         protected _imageString: any;// ?
-        protected _timeCreated: number;
         protected _towerType: string;
         protected _rotation: number;
         protected _fireRange: number;
+        
         protected _hasTarget: boolean;        
         protected _target: objects.Enemy;
         protected _coldTime: number;
@@ -20,12 +19,12 @@
 
         protected _level: number;
         protected _newLevel: number;
-        protected _maxLevel: number = 3;
+        protected _maxLevel: number;
 
         protected _rangeCircle: createjs.Shape;
-        //protected _needToUpdateCircle: Boolean;
+       
         /**This constructor will automatically add this object to the global currentLevel, which is objects.Scene extends createjs.Container*/
-        constructor(imageString:any, towerType:string, x: number, y: number, attack: number, fireRange: number, coldTime:number, level:number) {
+        constructor(imageString:any, towerType:string, x: number, y: number) {
             super(imageString);
 
             this._imageString = imageString;
@@ -36,26 +35,21 @@
             this._height = 50;
             this.regX = this._width * .5;
             this.regY = this._height * .5;
-
-            this._timeCreated = createjs.Ticker.getTicks();
+            this._level = config.TowerLevel_1;
 
             this.rotation = 0;
             this._hasTarget = false;
-            this._attack = attack;
-            this._fireRange = fireRange;
-            this._coldTime = coldTime;
 
-            this._level = level;
+            this.updateFireRange();
+            this.updateColdTime();
+
+            this._maxLevel = config.TowerLevel_Max;
             this._newLevel = this._level;
 
             this._oldTicks = createjs.Ticker.getTicks();
 
-            this._rangeCircle = new createjs.Shape();
-            this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(0,0,0,1)").drawCircle(this.x, this.y, this.getFireRange());     
-            this._rangeCircle.alpha = 0;
-            currentLevel.addChild(this._rangeCircle);
-
-            // 
+            this.createRangeCircle();
+            
             currentLevel.addChild(this);
               
             // event
@@ -81,8 +75,41 @@
             this._requestNewLevel();        
         }
         
-        
+        /**Create a circle where the center is tower, radius is fireRange, and add it to current scene*/
+        public createRangeCircle(): void {
+            this._rangeCircle = new createjs.Shape();
+            this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(0,0,0,1)").drawCircle(this.x, this.y, this.getFireRange());
+            this._rangeCircle.alpha = 0;
+            currentLevel.addChild(this._rangeCircle);
+        }
         // +++++++++++++++++++++++++++++++++++ PUBLIC ++++++++++++++++++++++++++++++++++++++++++++
+
+        public setLevel(level: number): void {
+            // set level
+            this._level = level;
+            this._newLevel = this._level;
+            // set image
+            this.updateTowerImage();
+            // set range & circle
+            this.updateFireRange();
+            this.updateRangeCircle();
+            this.updateColdTime();
+
+        }
+
+        public updateColdTime(): void {
+            switch (this._level) {
+                case 1:
+                    this._coldTime = config.FireColdTime_1;
+                    break;
+                case 2:
+                    this._coldTime = config.FireCodeTime_2;
+                    break;
+                case 3:
+                    this._coldTime = config.FireCodeTime_3;
+                    break;
+            }
+        }
 
         public getLevel(): number {
             return this._level;
@@ -92,25 +119,30 @@
             return this._newLevel;
         }
 
-        public setLevel(level: number): void {
-            // set level
-            this._level = level;
-            this._newLevel = this._level;
-            // set image
+        
+
+        public updateTowerImage(): void {
             this._imageString = assets.getResult(this._towerType + this._level);
             this.image = this._imageString;
-            // set range & circle
-            this.setFireRange(Math.floor(this.getFireRange() * 1.5));
+        }
+
+        public updateRangeCircle(): void {
             this._rangeCircle.graphics.clear();
             this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(0,0,0,1)").drawCircle(this.x, this.y, this.getFireRange());
         }
 
-        public getTimeCreated(): number {
-            return this._timeCreated;
-        }
-        
-        public setFireRange(range:number): void {
-            this._fireRange = range;
+        public updateFireRange(): void {
+            switch (this._level) {
+                case 1:
+                    this._fireRange = config.FireRange_1;
+                    break;
+                case 2:
+                    this._fireRange = config.FireRange_2;
+                    break;
+                case 3:
+                    this._fireRange = config.FireRange_3;
+                    break;
+            }
         }
         
         /** This is for centered tower */

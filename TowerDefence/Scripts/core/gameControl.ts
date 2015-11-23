@@ -56,6 +56,7 @@ var bullets3: objects.Bullet[];
 var enemies: objects.Enemy[];
 var towers: objects.Tower[];
 var directionTiles: objects.DirectionTile[];
+var weaponButtons: objects.WeaponButton[];
 
 var canvasWidth: number = 640;
 var canvasHeight: number = 480;

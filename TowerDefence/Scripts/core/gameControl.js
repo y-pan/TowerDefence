@@ -37,6 +37,7 @@ var bullets3;
 var enemies;
 var towers;
 var directionTiles;
+var weaponButtons;
 var canvasWidth = 640;
 var canvasHeight = 480;
 // atlas & data
