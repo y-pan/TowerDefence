@@ -7,6 +7,8 @@
         private _collion: managers.Collsion;
         private _menu: createjs.Bitmap;
         private _enemyNumber: number;
+        
+        private _weaponButton: objects.WeaponButton;
 
         constructor() { super(); }
 
@@ -74,13 +76,15 @@
                 this.addChild(directionTiles[i]);
             }
 
+            this._weaponButton = new objects.WeaponButton("ta1", 32, 455, 50, 50, true);
+
             stage.addChild(this);
 
         }//end of start
 
         public update(): void {        
 
-            console.log("children: " + this.numChildren + "| b1: " + bullets1.length + ", b2: " + bullets2.length + ", b3:" + bullets3.length);
+            //console.log("children: " + this.numChildren + "| b1: " + bullets1.length + ", b2: " + bullets2.length + ", b3:" + bullets3.length);
 
             // enemys, towers, bullets
             for (var e = 0; e < enemies.length; e++) {

@@ -55,10 +55,11 @@ var states;
                 // if comment this out, won't show but the functionality exits
                 this.addChild(directionTiles[i]);
             }
+            this._weaponButton = new objects.WeaponButton("ta1", 32, 455, 50, 50, true);
             stage.addChild(this);
         }; //end of start
         Level1.prototype.update = function () {
-            console.log("children: " + this.numChildren + "| b1: " + bullets1.length + ", b2: " + bullets2.length + ", b3:" + bullets3.length);
+            //console.log("children: " + this.numChildren + "| b1: " + bullets1.length + ", b2: " + bullets2.length + ", b3:" + bullets3.length);
             // enemys, towers, bullets
             for (var e = 0; e < enemies.length; e++) {
                 // apply directions

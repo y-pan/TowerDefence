@@ -11,4 +11,8 @@
     export var DIRECTION_DOWN: number = 1;
     export var DIRECTION_LEFT: number = -2;
     export var DIRECTION_RIGHT: number = 2;
+
+    // tower type
+
+
 } 

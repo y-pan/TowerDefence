@@ -9,6 +9,7 @@
 /// <reference path="../objects/label.ts" />
 /// <reference path="../objects/background.ts" />
 /// <reference path="../objects/button.ts" />
+/// <reference path="../objects/weaponbutton.ts" />
 /// <reference path="../managers/collision.ts" />
 /// <reference path="../objects/gameobject.ts" />
 /// <reference path="../objects/enemy.ts" />
@@ -124,33 +125,29 @@ function changeState(_state) {
             stage.removeAllChildren();
             menu = new states.Menu();
             currentState = menu;
-            console.log("changeState(), state=" + _state);
             break;
         case config.STATE_OVER:
             stage.removeAllChildren();
             over = new states.Over();
             currentState = over;
-            console.log("changeState(), state=" + _state);
             break;
         case config.STATE_LEVEL1:
             stage.removeAllChildren();
             currentLevel = new states.Level1;
             currentState = currentLevel;
-            console.log("changeState(), state=" + _state);
             break;
         case config.STATE_LEVEL2:
             stage.removeAllChildren();
             currentLevel = new states.Level2;
             currentState = currentLevel;
-            console.log("changeState(), state=" + _state);
             break;
         case config.STATE_LEVEL3:
             stage.removeAllChildren();
             currentLevel = new states.Level3;
             currentState = currentLevel;
-            console.log("changeState(), state=" + _state);
             break;
     }
     currentState.start();
+    console.log(stage.numChildren);
 }
 //# sourceMappingURL=gameControl.js.map

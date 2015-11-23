@@ -118,6 +118,7 @@
     <TypeScriptCompile Include="Scripts\managers\scoreboard.ts" />
     <TypeScriptCompile Include="Scripts\objects\background.ts" />
     <TypeScriptCompile Include="Scripts\objects\bullet.ts" />
+    <TypeScriptCompile Include="Scripts\objects\weaponbutton.ts" />
     <TypeScriptCompile Include="Scripts\objects\button.ts" />
     <TypeScriptCompile Include="Scripts\objects\directiontile.ts" />
     <TypeScriptCompile Include="Scripts\objects\enemy.ts" />
