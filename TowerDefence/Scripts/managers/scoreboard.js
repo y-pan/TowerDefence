@@ -1,8 +1,26 @@
 var managers;
 (function (managers) {
     var ScoreBoard = (function () {
-        function ScoreBoard() {
+        function ScoreBoard(lives, money, level) {
+            this._score = 0;
+            this._lives = lives;
+            this._money = money;
+            this._gameLevel = level;
         }
+        ScoreBoard.prototype._setEnemyNumberByLevel = function () {
+            switch (this._gameLevel) {
+                case 1:
+                    this._enemyNumber = 20;
+                    break;
+                case 2:
+                    this._enemyNumber = 50;
+                    break;
+                case 3:
+                    this._enemyNumber = 100;
+                    break;
+            }
+        };
+        ScoreBoard.prototype.getLevel = function () { return this._gameLevel; };
         ScoreBoard.prototype.update = function () { };
         ScoreBoard.prototype.getEnemyNumber = function () { return this._enemyNumber; };
         ScoreBoard.prototype.setEnemyNumber = function (enemyNumber) { this._enemyNumber = enemyNumber; };

@@ -42,7 +42,7 @@
                 bullet.recycle();
 
                 if (enemy.getLives() <= 0) {
-                    enemy.die();
+                    enemy.dieOrRecycle();
                 }
             } 
         }

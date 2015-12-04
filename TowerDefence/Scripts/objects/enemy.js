@@ -22,6 +22,7 @@ var objects;
             this._height = height ? height : 64;
             this.regX = this._width * .5;
             this.regY = this._height * .5;
+            this._attack = 10;
             this._isDead = false;
             currentLevel.addChild(this);
         }
@@ -36,7 +37,7 @@ var objects;
             return this._isDead;
         };
         //！！！！！！！！！！！！！！！！！！！
-        Enemy.prototype.die = function () {
+        Enemy.prototype.dieOrRecycle = function () {
             this._isDead = true;
             //this._lives = this._orignalLives;
             this.x = -30;
@@ -44,6 +45,13 @@ var objects;
         };
         Enemy.prototype.update = function () {
             this._moveWith_Speed_Drection();
+            if (this.y >= canvasHeight || this.x >= canvasWidth) {
+                this._doAttack();
+                this.dieOrRecycle();
+            }
+        };
+        Enemy.prototype._doAttack = function () {
+            scoreBoard.removeLives(this._attack);
         };
         Enemy.prototype._moveWith_Speed_Drection = function () {
             switch (this._direction) {

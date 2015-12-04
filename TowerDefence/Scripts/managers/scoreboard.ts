@@ -8,7 +8,28 @@
         private _money: number;
         private _gameLevel: number;
 
-        constructor() { }
+        constructor(lives: number, money: number, level: number) {            
+            this._score = 0;
+            this._lives = lives;
+            this._money = money;
+            this._gameLevel = level;
+        }
+
+        private _setEnemyNumberByLevel(): void {
+            switch (this._gameLevel) {
+                case 1:
+                    this._enemyNumber = 20;
+                    break;
+                case 2:
+                    this._enemyNumber = 50;
+                    break;
+                case 3:
+                    this._enemyNumber = 100;
+                    break;
+            }
+        }
+
+        public getLevel(): number { return this._gameLevel;}
         public update(): void { }
 
         public getEnemyNumber(): number { return this._enemyNumber; }

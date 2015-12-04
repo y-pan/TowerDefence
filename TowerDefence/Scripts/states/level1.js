@@ -12,7 +12,6 @@ var states;
         }
         // PUBLIC 
         Level1.prototype.start = function () {
-            waveManager = new managers.WaveManager(1);
             weaponButtons = [];
             towers = [];
             enemies = [];
@@ -21,16 +20,13 @@ var states;
             bullets3 = [];
             directionTiles = [];
             collision = new managers.Collsion();
-            scoreBoard = new managers.ScoreBoard();
+            scoreBoard = new managers.ScoreBoard(100, 500, 1);
+            waveManager = new managers.WaveManager(scoreBoard.getLevel());
             // background
-            this._background = new objects.Background("grass_background");
+            this._background = new objects.Background("background_1");
             this.addChild(this._background);
             enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 50, 100, 100, 64, 64, 2, config.DIRECTION_DOWN));
-            /*
-            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 100, 100, 100 - 128, 64, 64, 2, config.DIRECTION_DOWN));
-            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 500, 100, 100 - 128 * 4, 64, 64, 2, config.DIRECTION_DOWN));
-     */
-            towers.push(new objects.Tower(assets.getResult(config.TowerType_1 + 1), config.TowerType_1, 250, 250));
+            //towers.push(new objects.Tower(assets.getResult(config.TowerType_1 + 1), config.TowerType_1, 250, 250));
             // bullet arrays
             bullets1.push(new objects.Bullet(assets.getResult("bullet1"), "bullet", -30, -30, 5, 4, 8, 8, true));
             this.addChild(bullets1[0]);
@@ -43,10 +39,11 @@ var states;
             this._menu.y = 432;
             this.addChild(this._menu);
             // direction tiles
-            directionTiles.push(new objects.DirectionTile("direction_right", config.DIRECTION_RIGHT, 100, 350));
-            directionTiles.push(new objects.DirectionTile("direction_up", config.DIRECTION_UP, 600, 350));
-            directionTiles.push(new objects.DirectionTile("direction_left", config.DIRECTION_LEFT, 600, 100));
-            directionTiles.push(new objects.DirectionTile("direction_down", config.DIRECTION_DOWN, 100, 100));
+            directionTiles.push(new objects.DirectionTile("direction_right", config.DIRECTION_RIGHT, 100, 420));
+            directionTiles.push(new objects.DirectionTile("direction_right", config.DIRECTION_RIGHT, 320, 48));
+            directionTiles.push(new objects.DirectionTile("direction_up", config.DIRECTION_UP, 320, 420));
+            //directionTiles.push(new objects.DirectionTile("direction_left", config.DIRECTION_LEFT, 600, 100));
+            directionTiles.push(new objects.DirectionTile("direction_down", config.DIRECTION_DOWN, 570, 48));
             for (var i = 0; i < directionTiles.length; i++) {
                 // if comment this out, won't show but the functionality exits
                 this.addChild(directionTiles[i]);

@@ -50,7 +50,7 @@ var menu;
 var currentLevel;
 var over;
 var manifest = [
-    { id: "grass_background", src: "../../Assets/images/grass_background.png" },
+    { id: "background_1", src: "../../Assets/images/background_1.png" },
     { id: "menu_bar", src: "../../Assets/images/menu_bar.png" },
     { id: "start_button", src: "../../Assets/images/start_button.png" },
     { id: "menu_button", src: "../../Assets/images/menu_button.png" },

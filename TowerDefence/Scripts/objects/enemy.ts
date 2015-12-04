@@ -15,6 +15,7 @@
         protected _orignalX: number;
         protected _orignalY: number;
       
+        protected _attack: number;
 
 
         /** direction: up -1, down 1, west -2, east 2*/
@@ -37,6 +38,7 @@
             this.regX = this._width * .5;
             this.regY = this._height * .5;
             
+            this._attack = 10;
             this._isDead = false;
 
             currentLevel.addChild(this);
@@ -56,7 +58,7 @@
 
         
         //！！！！！！！！！！！！！！！！！！！
-        public die():void {
+        public dieOrRecycle():void {
             this._isDead = true;
             //this._lives = this._orignalLives;
             this.x = -30;
@@ -66,9 +68,16 @@
 
 
         public update():void {
-            this._moveWith_Speed_Drection();              
+            this._moveWith_Speed_Drection();   
+            if (this.y >= canvasHeight || this.x >= canvasWidth) {
+                this._doAttack();
+                this.dieOrRecycle();
+            }           
         }
 
+        private _doAttack(): void {
+            scoreBoard.removeLives(this._attack);
+        }
         private _moveWith_Speed_Drection(): void {
             switch (this._direction) {
                 case config.DIRECTION_DOWN:

@@ -62,6 +62,7 @@
     <Content Include="Assets\audio\horn.mp3" />
     <Content Include="Assets\audio\ta_buttonPress.mp3" />
     <Content Include="Assets\images\again_button.png" />
+    <Content Include="Assets\images\background_1.png" />
     <Content Include="Assets\images\bullet1.png" />
     <Content Include="Assets\images\bullet2.png" />
     <Content Include="Assets\images\bullet3.png" />

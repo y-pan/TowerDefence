@@ -13,10 +13,10 @@ var states;
         // PUBLIC 
         Menu.prototype.start = function () {
             // background
-            this._background = new objects.Background("grass_background");
+            this._background = new objects.Background("background_1");
             this.addChild(this._background);
             // titleLabel
-            this._titleLabel = new objects.Label("Tower Defence", "30px Showcard Gothic", "#fcc", canvasWidth * .5, 50, true);
+            this._titleLabel = new objects.Label("Tower Defence", "30px Showcard Gothic", "#000", canvasWidth * .5, 50, true);
             this.addChild(this._titleLabel);
             // button
             this._startButton = new objects.Button("start_button", canvasWidth * .5 - 100, 350, 0, 0, true);

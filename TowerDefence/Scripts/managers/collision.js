@@ -29,7 +29,7 @@ var managers;
                 // reset bullet, reset enemy if enemy is 0 at life
                 bullet.recycle();
                 if (enemy.getLives() <= 0) {
-                    enemy.die();
+                    enemy.dieOrRecycle();
                 }
             }
         };
