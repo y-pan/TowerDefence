@@ -14,6 +14,9 @@
 
 /// <reference path="../objects/weaponbutton.ts" />
 
+/// <reference path="../managers/wavemanager.ts" />
+
+
 /// <reference path="../managers/collision.ts" />
 /// <reference path="../objects/gameobject.ts" />
 
@@ -47,7 +50,7 @@ var currentState: objects.Scene;
 
 var scoreBoard: managers.ScoreBoard;
 var collision: managers.Collsion;
-
+var waveManager: managers.WaveManager;
 
 var bullets1: objects.Bullet[];
 var bullets2: objects.Bullet[];

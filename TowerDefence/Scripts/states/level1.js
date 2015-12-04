@@ -12,6 +12,7 @@ var states;
         }
         // PUBLIC 
         Level1.prototype.start = function () {
+            waveManager = new managers.WaveManager(1);
             weaponButtons = [];
             towers = [];
             enemies = [];
@@ -24,10 +25,11 @@ var states;
             // background
             this._background = new objects.Background("grass_background");
             this.addChild(this._background);
-            // enemy               
-            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 5000, 100, 100, 64, 64, 2, config.DIRECTION_DOWN));
-            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 5000, 100, 100 - 128, 64, 64, 2, config.DIRECTION_DOWN));
-            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 5000, 100, 100 - 128 * 4, 64, 64, 2, config.DIRECTION_DOWN));
+            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 50, 100, 100, 64, 64, 2, config.DIRECTION_DOWN));
+            /*
+            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 100, 100, 100 - 128, 64, 64, 2, config.DIRECTION_DOWN));
+            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 500, 100, 100 - 128 * 4, 64, 64, 2, config.DIRECTION_DOWN));
+     */
             towers.push(new objects.Tower(assets.getResult(config.TowerType_1 + 1), config.TowerType_1, 250, 250));
             // bullet arrays
             bullets1.push(new objects.Bullet(assets.getResult("bullet1"), "bullet", -30, -30, 5, 4, 8, 8, true));
@@ -54,7 +56,8 @@ var states;
             stage.addChild(this);
         }; //end of start
         Level1.prototype.update = function () {
-            console.log("b1: " + bullets1.length + ", b2: " + bullets2.length + ", b3:" + bullets3.length);
+            //console.log("b1: " + bullets1.length + ", b2: " + bullets2.length + ", b3:" + bullets3.length);
+            waveManager.update(); // reuse enemy if necessary, or add enemy to enemies array
             // enemys, towers, bullets
             for (var e = 0; e < enemies.length; e++) {
                 // apply directions

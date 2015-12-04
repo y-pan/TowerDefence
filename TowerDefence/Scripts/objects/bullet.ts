@@ -48,7 +48,7 @@
 
                 // detect if it fly outside
                 if (this.x > canvasWidth || this.x < 0 || this.y > canvasHeight || this.y < 0) {
-                    this.reset();
+                    this.recycle();
                 }
 
                 // detect collision with enemy, by collision object
@@ -57,8 +57,8 @@
             }            
         }
 
-        /** reset bullet and put it outside canvas*/
-        public reset():void {
+        /** recycle/reset bullet and put it outside canvas*/
+        public recycle():void {
             this.x = -30;
             this.y = -30;
             this._dx = 0;

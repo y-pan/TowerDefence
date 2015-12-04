@@ -10,6 +10,7 @@
 /// <reference path="../objects/background.ts" />
 /// <reference path="../objects/button.ts" />
 /// <reference path="../objects/weaponbutton.ts" />
+/// <reference path="../managers/wavemanager.ts" />
 /// <reference path="../managers/collision.ts" />
 /// <reference path="../objects/gameobject.ts" />
 /// <reference path="../objects/enemy.ts" />
@@ -31,6 +32,7 @@ var state;
 var currentState;
 var scoreBoard;
 var collision;
+var waveManager;
 var bullets1;
 var bullets2;
 var bullets3;

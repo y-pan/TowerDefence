@@ -12,6 +12,8 @@ var objects;
             _super.call(this, atlas, imageString);
             this.x = x;
             this.y = y;
+            this._orignalX = this.x;
+            this._orignalY = this.y;
             this._lives = lives;
             this._orignalLives = this._lives; // for reset to reuse
             this._speed = speed;
@@ -23,6 +25,17 @@ var objects;
             this._isDead = false;
             currentLevel.addChild(this);
         }
+        Enemy.prototype.goAgain = function () {
+            this._isDead = false;
+            this.x = this._orignalX;
+            this.y = this._orignalY;
+            this._lives = this._orignalLives;
+        };
+        // ！！！！！！！！！！！！！！！！！！！
+        Enemy.prototype.getIsDead = function () {
+            return this._isDead;
+        };
+        //！！！！！！！！！！！！！！！！！！！
         Enemy.prototype.die = function () {
             this._isDead = true;
             //this._lives = this._orignalLives;

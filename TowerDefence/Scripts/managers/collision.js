@@ -27,7 +27,7 @@ var managers;
                 (enemy.getHalfHeight() * .2 + bullet.getRadius())) {
                 enemy.removeLives(bullet.getAttack());
                 // reset bullet, reset enemy if enemy is 0 at life
-                bullet.reset();
+                bullet.recycle();
                 if (enemy.getLives() <= 0) {
                     enemy.die();
                 }

@@ -1,6 +1,7 @@
 ﻿module managers {
 
     export class ScoreBoard {
+
         private _score: number;
         private _enemyNumber: number;
         private _lives: number;

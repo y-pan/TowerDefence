@@ -115,6 +115,7 @@
     <TypeScriptCompile Include="Scripts\config\config.ts" />
     <TypeScriptCompile Include="Scripts\core\gameControl.ts" />
     <TypeScriptCompile Include="Scripts\managers\collision.ts" />
+    <TypeScriptCompile Include="Scripts\managers\wavemanager.ts" />
     <TypeScriptCompile Include="Scripts\managers\scoreboard.ts" />
     <TypeScriptCompile Include="Scripts\objects\background.ts" />
     <TypeScriptCompile Include="Scripts\objects\bullet.ts" />

@@ -35,12 +35,12 @@ var objects;
                 this._flyAtDirection();
                 // detect if it fly outside
                 if (this.x > canvasWidth || this.x < 0 || this.y > canvasHeight || this.y < 0) {
-                    this.reset();
+                    this.recycle();
                 }
             }
         };
-        /** reset bullet and put it outside canvas*/
-        Bullet.prototype.reset = function () {
+        /** recycle/reset bullet and put it outside canvas*/
+        Bullet.prototype.recycle = function () {
             this.x = -30;
             this.y = -30;
             this._dx = 0;

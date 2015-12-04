@@ -10,7 +10,11 @@
         protected _height: number;
         protected _isDead: boolean;
         protected _nextPosition: createjs.Point; // for tank and bullet to track ememy
+
         protected _orignalLives: number;
+        protected _orignalX: number;
+        protected _orignalY: number;
+      
 
 
         /** direction: up -1, down 1, west -2, east 2*/
@@ -19,9 +23,12 @@
 
             this.x = x;
             this.y = y;
-                       
+            this._orignalX = this.x;
+            this._orignalY = this.y;     
+                  
             this._lives = lives;
             this._orignalLives = this._lives;// for reset to reuse
+            
             this._speed = speed;
             this._direction = direction;
 
@@ -35,14 +42,30 @@
             currentLevel.addChild(this);
         }
 
-        public die() {
+        public goAgain(): void {
+            this._isDead = false;
+            this.x = this._orignalX;
+            this.y = this._orignalY;
+            this._lives = this._orignalLives;           
+
+        }
+        // ！！！！！！！！！！！！！！！！！！！
+        public getIsDead(): boolean {
+            return this._isDead;
+        }
+
+        
+        //！！！！！！！！！！！！！！！！！！！
+        public die():void {
             this._isDead = true;
             //this._lives = this._orignalLives;
             this.x = -30;
             this.y = -30;
         }
 
-        public update() {
+
+
+        public update():void {
             this._moveWith_Speed_Drection();              
         }
 
@@ -104,6 +127,7 @@
             this._speed *= percentage;
             
         }
+        
 
     }
 } 

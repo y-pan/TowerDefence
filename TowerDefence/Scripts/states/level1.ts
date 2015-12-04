@@ -5,15 +5,16 @@
         // PRIVATE VAR
         private _background: objects.Background;
         private _menu: createjs.Bitmap;
-        private _enemyNumber: number;
-        
+       
 
         constructor() { super(); }
 
 
         // PUBLIC 
         public start(): void {
-            
+
+            waveManager = new managers.WaveManager(1);
+
             weaponButtons = [];
             towers = [];
             enemies = [];
@@ -25,18 +26,17 @@
             collision = new managers.Collsion();
             scoreBoard = new managers.ScoreBoard();
         
+            
 
             // background
             this._background = new objects.Background("grass_background");
             this.addChild(this._background);
-
             
-            // enemy               
-
-            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 5000, 100, 100, 64, 64, 2, config.DIRECTION_DOWN));  
-            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 5000, 100, 100 - 128, 64, 64, 2, config.DIRECTION_DOWN));  
-            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 5000, 100, 100 - 128 * 4, 64, 64, 2, config.DIRECTION_DOWN));  
-     
+            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 50, 100, 100, 64, 64, 2, config.DIRECTION_DOWN));  
+            /*
+            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 100, 100, 100 - 128, 64, 64, 2, config.DIRECTION_DOWN));  
+            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 500, 100, 100 - 128 * 4, 64, 64, 2, config.DIRECTION_DOWN));  
+     */
             
             towers.push(new objects.Tower(assets.getResult(config.TowerType_1 + 1), config.TowerType_1, 250, 250));
 
@@ -78,7 +78,8 @@
 
         public update(): void {        
 
-            console.log("b1: " + bullets1.length + ", b2: " + bullets2.length + ", b3:" + bullets3.length);
+            //console.log("b1: " + bullets1.length + ", b2: " + bullets2.length + ", b3:" + bullets3.length);
+            waveManager.update();// reuse enemy if necessary, or add enemy to enemies array
 
             // enemys, towers, bullets
             for (var e = 0; e < enemies.length; e++) {
@@ -87,6 +88,7 @@
                 for (var d = 0; d < directionTiles.length; d++) {
                     directionTiles[d].detectObject_applyDirection(enemies[e]);
                 }
+
                 // update enemy
                 enemies[e].update();
 
