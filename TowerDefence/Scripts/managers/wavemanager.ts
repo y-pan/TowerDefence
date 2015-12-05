@@ -1,5 +1,12 @@
 ﻿module managers {
-
+/**
+ * File Name: WaveManager
+ * Author: Yun Kui Pan
+ * Last Modified by: Yun Kui Pan
+ * Date Last Modified: 2015-12-04
+ * Description: WaveManager object to manage enemy wave
+ * History: 1.0
+ */
     export class WaveManager {
         
         private _level: number;
@@ -42,10 +49,10 @@
         private _setEnemyColdTime(): void {
             switch (this._level) {
                 case 1:
-                    this._enemyColdTime = 150;
+                    this._enemyColdTime = 300;
                     break;
                 case 2:
-                    this._enemyColdTime = 110;
+                    this._enemyColdTime = 150;
                     break;
                 case 3:
                     this._enemyColdTime = 80;
@@ -107,7 +114,7 @@
         }*/
 
         private _pushNewEnemy(): void {
-            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 50, 100, 100, 64, 64, 2, config.DIRECTION_DOWN)); 
+            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 30, 128, 10, 64, 64, 1, config.DIRECTION_DOWN)); 
         }
     }
 } 

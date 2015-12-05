@@ -5,6 +5,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var objects;
 (function (objects) {
+    /**
+     * File Name: Tower
+     * Author: Yun Kui Pan
+     * Last Modified by: Yun Kui Pan
+     * Date Last Modified: 2015-12-04
+     * Description: Tower object extends createjs.Bitmap, to create tower
+     * History: 1.0
+     */
     var Tower = (function (_super) {
         __extends(Tower, _super);
         /**This constructor will automatically add this object to the global currentLevel, which is objects.Scene extends createjs.Container*/
@@ -148,8 +156,24 @@ var objects;
         /**Conditions applied here before update level*/
         Tower.prototype._requestNewLevel = function () {
             if (this._newLevel < this._maxLevel) {
-                this._newLevel++;
-                this.setLevel(this._newLevel);
+                switch (this._newLevel) {
+                    case 1:
+                        if (scoreBoard.getMoney() >= config.TowerCost_UpdateTo2) {
+                            this._newLevel++;
+                            this.setLevel(this._newLevel);
+                            createjs.Sound.play("powerUp");
+                            scoreBoard.removeMoney(config.TowerCost_UpdateTo2);
+                        }
+                        break;
+                    case 2:
+                        if (scoreBoard.getMoney() >= config.TowerCost_UpdateTo3) {
+                            this._newLevel++;
+                            this.setLevel(this._newLevel);
+                            scoreBoard.removeMoney(config.TowerCost_UpdateTo3);
+                            createjs.Sound.play("powerUp");
+                        }
+                        break;
+                }
             }
         };
         Tower.prototype._distance = function (p1, p2) {

@@ -5,6 +5,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var objects;
 (function (objects) {
+    /**
+     * File Name: Button
+     * Author: Yun Kui Pan
+     * Last Modified by: Yun Kui Pan
+     * Date Last Modified: 2015-12-04
+     * Description: Button object button
+     * History: 1.0
+     */
     var Button = (function (_super) {
         __extends(Button, _super);
         function Button(pathString, x, y, width, height, isCentered) {
@@ -19,12 +27,16 @@ var objects;
             }
             this.on("mouseover", this.overButton, this);
             this.on("mouseout", this.outButton, this);
+            this.on("click", this.clickButton, this);
         }
         Button.prototype.overButton = function (event) {
             event.currentTarget.alpha = .8;
         };
         Button.prototype.outButton = function (event) {
             event.currentTarget.alpha = 1;
+        };
+        Button.prototype.clickButton = function (event) {
+            createjs.Sound.play("ta_buttonPress");
         };
         return Button;
     })(createjs.Bitmap);

@@ -1,5 +1,13 @@
 var managers;
 (function (managers) {
+    /**
+     * File Name: WaveManager
+     * Author: Yun Kui Pan
+     * Last Modified by: Yun Kui Pan
+     * Date Last Modified: 2015-12-04
+     * Description: WaveManager object to manage enemy wave
+     * History: 1.0
+     */
     var WaveManager = (function () {
         /**For each game level, waves and enumies are predefined, instantiate it then update it, object will use global enemies and add to createjs.Container(currentLevel)*/
         function WaveManager(level) {
@@ -15,10 +23,10 @@ var managers;
         WaveManager.prototype._setEnemyColdTime = function () {
             switch (this._level) {
                 case 1:
-                    this._enemyColdTime = 150;
+                    this._enemyColdTime = 300;
                     break;
                 case 2:
-                    this._enemyColdTime = 110;
+                    this._enemyColdTime = 150;
                     break;
                 case 3:
                     this._enemyColdTime = 80;
@@ -62,7 +70,7 @@ var managers;
             }
         }*/
         WaveManager.prototype._pushNewEnemy = function () {
-            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 50, 100, 100, 64, 64, 2, config.DIRECTION_DOWN));
+            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 30, 128, 10, 64, 64, 1, config.DIRECTION_DOWN));
         };
         return WaveManager;
     })();

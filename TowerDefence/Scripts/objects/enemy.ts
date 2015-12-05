@@ -1,5 +1,12 @@
 ﻿module objects {
-
+/**
+ * File Name: Enemy
+ * Author: Yun Kui Pan
+ * Last Modified by: Yun Kui Pan
+ * Date Last Modified: 2015-12-04
+ * Description: Enemy object for enemy 
+ * History: 1.0
+ */
     export class Enemy extends objects.GameObject {
 
         protected _lives: number;
@@ -16,7 +23,7 @@
         protected _orignalY: number;
       
         protected _attack: number;
-
+        protected _money: number;
 
         /** direction: up -1, down 1, west -2, east 2*/
         constructor(atlas: createjs.SpriteSheet, imageString: string, lives: number, x: number, y: number, width: number, height: number, speed:number, direction:number) {
@@ -41,8 +48,12 @@
             this._attack = 10;
             this._isDead = false;
 
+            this._money = 50;
+
             currentLevel.addChild(this);
         }
+
+        public getMoney(): number { return this._money; }
 
         public goAgain(): void {
             this._isDead = false;
@@ -51,6 +62,7 @@
             this._lives = this._orignalLives;           
 
         }
+
         // ！！！！！！！！！！！！！！！！！！！
         public getIsDead(): boolean {
             return this._isDead;
@@ -61,8 +73,9 @@
         public dieOrRecycle():void {
             this._isDead = true;
             //this._lives = this._orignalLives;
-            this.x = -30;
-            this.y = -30;
+            this.x = this._orignalX;
+            this.y = -1000;
+            this._direction = config.DIRECTION_DOWN;
         }
 
 

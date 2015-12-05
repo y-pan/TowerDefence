@@ -5,6 +5,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var objects;
 (function (objects) {
+    /**
+     * File Name: Enemy
+     * Author: Yun Kui Pan
+     * Last Modified by: Yun Kui Pan
+     * Date Last Modified: 2015-12-04
+     * Description: Enemy object for enemy
+     * History: 1.0
+     */
     var Enemy = (function (_super) {
         __extends(Enemy, _super);
         /** direction: up -1, down 1, west -2, east 2*/
@@ -24,8 +32,10 @@ var objects;
             this.regY = this._height * .5;
             this._attack = 10;
             this._isDead = false;
+            this._money = 50;
             currentLevel.addChild(this);
         }
+        Enemy.prototype.getMoney = function () { return this._money; };
         Enemy.prototype.goAgain = function () {
             this._isDead = false;
             this.x = this._orignalX;
@@ -40,8 +50,9 @@ var objects;
         Enemy.prototype.dieOrRecycle = function () {
             this._isDead = true;
             //this._lives = this._orignalLives;
-            this.x = -30;
-            this.y = -30;
+            this.x = this._orignalX;
+            this.y = -1000;
+            this._direction = config.DIRECTION_DOWN;
         };
         Enemy.prototype.update = function () {
             this._moveWith_Speed_Drection();

@@ -1,6 +1,14 @@
-﻿module managers {
-
-    export class Collsion {
+﻿
+module managers {
+/**
+ * File Name: Collision
+ * Author: Yun Kui Pan
+ * Last Modified by: Yun Kui Pan
+ * Date Last Modified: 2015-12-04
+ * Description: Collision object to manage collision globlely
+ * History: 1.0
+ */
+    export class Collision {
 
         /**Empty constructor*/
         constructor() { }
@@ -43,6 +51,7 @@
 
                 if (enemy.getLives() <= 0) {
                     enemy.dieOrRecycle();
+                    scoreBoard.addMoney(enemy.getMoney());
                 }
             } 
         }

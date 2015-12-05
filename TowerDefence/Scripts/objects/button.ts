@@ -1,5 +1,12 @@
 ﻿module objects {
-
+/**
+ * File Name: Button
+ * Author: Yun Kui Pan
+ * Last Modified by: Yun Kui Pan
+ * Date Last Modified: 2015-12-04
+ * Description: Button object button 
+ * History: 1.0
+ */
     export class Button extends createjs.Bitmap {
 
         private _width: number;
@@ -21,6 +28,7 @@
 
             this.on("mouseover", this.overButton, this);
             this.on("mouseout", this.outButton, this);
+            this.on("click", this.clickButton, this);
         }
 
         overButton(event: createjs.MouseEvent): void {
@@ -29,6 +37,9 @@
 
         outButton(event: createjs.MouseEvent): void {
             event.currentTarget.alpha = 1;
+        }
+        clickButton(event: createjs.MouseEvent): void {
+            createjs.Sound.play("ta_buttonPress");
         }
     }
 }

@@ -5,6 +5,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var objects;
 (function (objects) {
+    /**
+     * File Name: GameObject
+     * Author: Yun Kui Pan
+     * Last Modified by: Yun Kui Pan
+     * Date Last Modified: 2015-12-04
+     * Description: GameObject object extends createjs.Sprite, used for object which needs animations
+     * History: 1.0
+     */
     var GameObject = (function (_super) {
         __extends(GameObject, _super);
         function GameObject(atlas, imageString) {

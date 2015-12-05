@@ -1,4 +1,13 @@
 ﻿module objects {
+
+/**
+ * File Name: GameObject
+ * Author: Yun Kui Pan
+ * Last Modified by: Yun Kui Pan
+ * Date Last Modified: 2015-12-04
+ * Description: GameObject object extends createjs.Sprite, used for object which needs animations
+ * History: 1.0
+ */
     export class GameObject extends createjs.Sprite {
 
         protected _width: number;

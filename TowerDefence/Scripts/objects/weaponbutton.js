@@ -5,6 +5,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var objects;
 (function (objects) {
+    /**
+     * File Name: WeaponButton
+     * Author: Yun Kui Pan
+     * Last Modified by: Yun Kui Pan
+     * Date Last Modified: 2015-12-04
+     * Description: WeaponButton object extends objects.Button, drag and drog weaponButton to create new weapon(tower)
+     * History: 1.0
+     */
     var WeaponButton = (function (_super) {
         __extends(WeaponButton, _super);
         /**Added this weaponbutton object to currentLevel by its constructor.
@@ -26,7 +34,11 @@ var objects;
         };
         WeaponButton.prototype.pressupWeaponButton = function (event) {
             if (this._isDragging) {
-                this._createTower();
+                if (scoreBoard.getMoney() >= config.TowerCost_Build) {
+                    this._createTower();
+                    createjs.Sound.play("powerUp");
+                    scoreBoard.removeMoney(config.TowerCost_Build);
+                }
                 this._resetPreview();
                 this._isDragging = false;
             }

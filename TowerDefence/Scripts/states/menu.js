@@ -5,6 +5,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var states;
 (function (states) {
+    /**
+     * File Name: Menu
+     * Author: Yun Kui Pan
+     * Last Modified by: Yun Kui Pan
+     * Date Last Modified: 2015-12-04
+     * Description: Menu object extends objects.Scene, for menu
+     * History: 1.0
+     */
     var Menu = (function (_super) {
         __extends(Menu, _super);
         function Menu() {
@@ -29,12 +37,11 @@ var states;
         }; //end of start
         // PRIVATE METHODS --------------------------------------------------------------------------
         Menu.prototype._clickStartButton = function (event) {
-            createjs.Sound.play("horn");
             state = config.STATE_LEVEL1;
             changeState(state);
         };
         Menu.prototype._clickMenuButton = function (event) {
-            createjs.Sound.play("ta_buttonPress");
+            //createjs.Sound.play("ta_buttonPress");
         };
         Menu.prototype.update = function () {
         }; // end of update 

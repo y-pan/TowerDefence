@@ -5,6 +5,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var objects;
 (function (objects) {
+    /**
+     * File Name: Scene
+     * Author: Yun Kui Pan
+     * Last Modified by: Yun Kui Pan
+     * Date Last Modified: 2015-12-04
+     * Description: Scene object extends createjs.Container, used for game scene(game state)
+     * History: 1.0
+     */
     var Scene = (function (_super) {
         __extends(Scene, _super);
         function Scene() {

@@ -1,5 +1,13 @@
 var managers;
 (function (managers) {
+    /**
+     * File Name: ScoreBoard
+     * Author: Yun Kui Pan
+     * Last Modified by: Yun Kui Pan
+     * Date Last Modified: 2015-12-04
+     * Description: ScoreBoard object to manage score, lives, money, gamelevel, enemyNumber, etc globlely
+     * History: 1.0
+     */
     var ScoreBoard = (function () {
         function ScoreBoard(lives, money, level) {
             this._score = 0;

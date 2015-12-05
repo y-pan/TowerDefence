@@ -1,4 +1,12 @@
-﻿module config {
+﻿/**
+ * File Name: config
+ * Author: Yun Kui Pan
+ * Last Modified by: Yun Kui Pan
+ * Date Last Modified: 2015-12-04
+ * Description: configuration for entire game, used for managing general values
+ * History: 1.0
+ */
+module config {
 
     export var STATE_MENU: number = 0;
     export var STATE_LEVEL1: number = 1;
@@ -21,6 +29,9 @@
     // setting for tower
     export var TowerLevel_1: number = 1
     export var TowerLevel_Max: number = 3;
+    export var TowerCost_Build: number = 150;
+    export var TowerCost_UpdateTo2: number = 200;
+    export var TowerCost_UpdateTo3: number = 300;
 
     export var FireRange_1: number = 100;
     export var FireRange_2: number = 150;

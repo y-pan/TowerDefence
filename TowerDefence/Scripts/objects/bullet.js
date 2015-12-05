@@ -5,6 +5,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var objects;
 (function (objects) {
+    /**
+     * File Name: Bullet
+     * Author: Yun Kui Pan
+     * Last Modified by: Yun Kui Pan
+     * Date Last Modified: 2015-12-04
+     * Description: Bullet object for tower's bullet
+     * History: 1.0
+     */
     var Bullet = (function (_super) {
         __extends(Bullet, _super);
         function Bullet(imagePath, name, x, y, attack, speed, width, height, isCentered) {

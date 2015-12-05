@@ -1,5 +1,12 @@
 ﻿module states {
-
+/**
+ * File Name: Menu
+ * Author: Yun Kui Pan
+ * Last Modified by: Yun Kui Pan
+ * Date Last Modified: 2015-12-04
+ * Description: Menu object extends objects.Scene, for menu
+ * History: 1.0
+ */
     export class Menu extends objects.Scene {
 
         // PRIVATE VAR
@@ -35,12 +42,12 @@
 
         // PRIVATE METHODS --------------------------------------------------------------------------
         private _clickStartButton(event: createjs.MouseEvent): void {
-            createjs.Sound.play("horn");
+            
             state = config.STATE_LEVEL1;
             changeState(state);
         }
         private _clickMenuButton(event: createjs.MouseEvent): void {
-            createjs.Sound.play("ta_buttonPress");
+            //createjs.Sound.play("ta_buttonPress");
         }
 
         public update(): void {

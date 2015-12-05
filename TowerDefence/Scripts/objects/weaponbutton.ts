@@ -1,5 +1,13 @@
-﻿module objects {
-
+﻿
+module objects {
+/**
+ * File Name: WeaponButton
+ * Author: Yun Kui Pan
+ * Last Modified by: Yun Kui Pan
+ * Date Last Modified: 2015-12-04
+ * Description: WeaponButton object extends objects.Button, drag and drog weaponButton to create new weapon(tower)
+ * History: 1.0
+ */
     export class WeaponButton extends objects.Button {
 
         protected _towerPreview: createjs.Bitmap;
@@ -33,7 +41,11 @@
         }
         pressupWeaponButton(event: createjs.MouseEvent): void {
             if (this._isDragging) {
-                this._createTower();
+                if (scoreBoard.getMoney() >= config.TowerCost_Build) {
+                    this._createTower();   
+                    createjs.Sound.play("powerUp");                 
+                    scoreBoard.removeMoney(config.TowerCost_Build);
+                }
                 this._resetPreview();
                 this._isDragging = false;
             }

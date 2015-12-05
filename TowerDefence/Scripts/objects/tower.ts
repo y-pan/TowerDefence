@@ -1,5 +1,12 @@
 ﻿module objects {
-    
+/**
+ * File Name: Tower
+ * Author: Yun Kui Pan
+ * Last Modified by: Yun Kui Pan
+ * Date Last Modified: 2015-12-04
+ * Description: Tower object extends createjs.Bitmap, to create tower
+ * History: 1.0
+ */
     export class Tower extends createjs.Bitmap {
 
         protected _width: number;
@@ -72,6 +79,7 @@
         
         clickTower(event: createjs.MouseEvent): void {
             //console.log("click in tower created at: " + this.getTimeCreated());
+            
             this._requestNewLevel();        
         }
         
@@ -185,9 +193,27 @@
         //-------------------------------- PRIVATE -------------------------------------------
         /**Conditions applied here before update level*/
         private _requestNewLevel(): void {
+
             if (this._newLevel < this._maxLevel) {
-                this._newLevel++;
-                this.setLevel(this._newLevel);              
+                switch (this._newLevel) {
+                    case 1:
+                        if (scoreBoard.getMoney() >= config.TowerCost_UpdateTo2) {
+                            this._newLevel++;
+                            this.setLevel(this._newLevel);
+                            createjs.Sound.play("powerUp");
+                            scoreBoard.removeMoney(config.TowerCost_UpdateTo2);
+                        }
+                        break;
+                    case 2:
+                        if (scoreBoard.getMoney() >= config.TowerCost_UpdateTo3) {
+                            this._newLevel++;
+                            this.setLevel(this._newLevel);
+                            scoreBoard.removeMoney(config.TowerCost_UpdateTo3);
+                            createjs.Sound.play("powerUp");
+                        }
+                        break;
+
+                }
             }
         }
 

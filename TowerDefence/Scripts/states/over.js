@@ -5,6 +5,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var states;
 (function (states) {
+    /**
+     * File Name: Over
+     * Author: Yun Kui Pan
+     * Last Modified by: Yun Kui Pan
+     * Date Last Modified: 2015-12-04
+     * Description: Over object extends objects.Scene, for game over
+     * History: 1.0
+     */
     var Over = (function (_super) {
         __extends(Over, _super);
         // PRIVATE VAR

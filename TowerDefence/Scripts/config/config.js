@@ -1,3 +1,11 @@
+/**
+ * File Name: config
+ * Author: Yun Kui Pan
+ * Last Modified by: Yun Kui Pan
+ * Date Last Modified: 2015-12-04
+ * Description: configuration for entire game, used for managing general values
+ * History: 1.0
+ */
 var config;
 (function (config) {
     config.STATE_MENU = 0;
@@ -17,6 +25,9 @@ var config;
     // setting for tower
     config.TowerLevel_1 = 1;
     config.TowerLevel_Max = 3;
+    config.TowerCost_Build = 150;
+    config.TowerCost_UpdateTo2 = 200;
+    config.TowerCost_UpdateTo3 = 300;
     config.FireRange_1 = 100;
     config.FireRange_2 = 150;
     config.FireRange_3 = 250;

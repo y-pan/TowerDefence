@@ -49,7 +49,7 @@ var state: number;
 var currentState: objects.Scene;
 
 var scoreBoard: managers.ScoreBoard;
-var collision: managers.Collsion;
+var collision: managers.Collision;
 var waveManager: managers.WaveManager;
 
 var bullets1: objects.Bullet[];
@@ -109,7 +109,8 @@ var manifest = [
 
     { id: "horn", src: "../../Assets/audio/horn.mp3" },
     { id: "ta_buttonPress", src: "../../Assets/audio/ta_buttonPress.mp3" },
-
+    { id: "Forest-Chase", src: "../../Assets/audio/Forest-Chase.mp3" },
+    { id: "powerUp", src: "../../Assets/audio/powerUp.mp3" }    
 ];
 
 // data for spriteSheet

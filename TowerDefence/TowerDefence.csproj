@@ -59,7 +59,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\audio\Forest-Chase.mp3" />
     <Content Include="Assets\audio\horn.mp3" />
+    <Content Include="Assets\audio\powerUp.mp3" />
     <Content Include="Assets\audio\ta_buttonPress.mp3" />
     <Content Include="Assets\images\again_button.png" />
     <Content Include="Assets\images\background_1.png" />
@@ -68,7 +70,6 @@
     <Content Include="Assets\images\bullet3.png" />
     <Content Include="Assets\images\direction_down.png" />
     <Content Include="Assets\images\exit_button.png" />
-    <Content Include="Assets\images\grass_background.png" />
     <Content Include="Assets\images\direction_left.png" />
     <Content Include="Assets\images\menu_bar.png" />
     <Content Include="Assets\images\menu_button.png" />

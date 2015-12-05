@@ -1,5 +1,12 @@
 ﻿module objects {
-
+/**
+ * File Name: Bullet
+ * Author: Yun Kui Pan
+ * Last Modified by: Yun Kui Pan
+ * Date Last Modified: 2015-12-04
+ * Description: Bullet object for tower's bullet 
+ * History: 1.0
+ */
     export class Bullet extends createjs.Bitmap {
 
         protected _width: number;

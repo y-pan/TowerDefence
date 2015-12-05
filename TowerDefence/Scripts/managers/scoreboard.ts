@@ -1,5 +1,12 @@
 ﻿module managers {
-
+/**
+ * File Name: ScoreBoard
+ * Author: Yun Kui Pan
+ * Last Modified by: Yun Kui Pan
+ * Date Last Modified: 2015-12-04
+ * Description: ScoreBoard object to manage score, lives, money, gamelevel, enemyNumber, etc globlely
+ * History: 1.0
+ */
     export class ScoreBoard {
 
         private _score: number;

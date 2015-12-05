@@ -5,6 +5,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var states;
 (function (states) {
+    /**
+     * File Name: Level2
+     * Author: Yun Kui Pan
+     * Last Modified by: Yun Kui Pan
+     * Date Last Modified: 2015-12-04
+     * Description: Level2 object extends objects.Scene, game Level2
+     * History: 1.0
+     */
     var Level2 = (function (_super) {
         __extends(Level2, _super);
         // PRIVATE VAR

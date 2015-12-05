@@ -5,6 +5,14 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var objects;
 (function (objects) {
+    /**
+     * File Name: DirectionTile
+     * Author: Yun Kui Pan
+     * Last Modified by: Yun Kui Pan
+     * Date Last Modified: 2015-12-04
+     * Description: DirectionTile object to set enemy's moving direction when collision occurs
+     * History: 1.0
+     */
     var DirectionTile = (function (_super) {
         __extends(DirectionTile, _super);
         function DirectionTile(pathString, direction, x, y) {
@@ -17,11 +25,12 @@ var objects;
             this.x = x;
             this.y = y;
             this.tag = "DIRECTION";
+            //alert(this._width + "|" + this._height);
         }
         // maybe put this in globle collsion ?
         DirectionTile.prototype.detectObject_applyDirection = function (object) {
             if (object.getDirection() != this._direction) {
-                if (this._distance(object) < Math.min(this._width, this._height) * .2)
+                if (this._distance(object) < Math.max(this._width, this._height) * .2)
                     object.setDirection(this._direction);
             }
         };

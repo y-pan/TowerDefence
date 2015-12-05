@@ -73,6 +73,8 @@ var manifest = [
     { id: "direction_right", src: "../../Assets/images/direction_right.png" },
     { id: "horn", src: "../../Assets/audio/horn.mp3" },
     { id: "ta_buttonPress", src: "../../Assets/audio/ta_buttonPress.mp3" },
+    { id: "Forest-Chase", src: "../../Assets/audio/Forest-Chase.mp3" },
+    { id: "powerUp", src: "../../Assets/audio/powerUp.mp3" }
 ];
 // data for spriteSheet
 redDragonData = {
