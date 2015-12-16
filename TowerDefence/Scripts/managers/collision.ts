@@ -10,8 +10,11 @@ module managers {
  */
     export class Collision {
 
+        private _enemyKilledCount: number;
         /**Empty constructor*/
-        constructor() { }
+        constructor() {
+            this._enemyKilledCount = 0;
+        }
 
         public updateBulletVsEnemy(bullet: objects.Bullet, enemy: objects.Enemy): void {
             this._checkCollision(bullet, enemy);    
@@ -37,7 +40,9 @@ module managers {
             }
         }
 
-
+        public getEnemyKilledCount(): number {
+            return this._enemyKilledCount;
+        }
         private _checkCollision(bullet: objects.Bullet, enemy: objects.Enemy): void {
             // check the distance between enemy and bullet
        
@@ -50,7 +55,9 @@ module managers {
                 bullet.recycle();
 
                 if (enemy.getLives() <= 0) {
+                    
                     enemy.dieOrRecycle();
+                    this._enemyKilledCount++;
                     scoreBoard.addMoney(enemy.getMoney());
                 }
             } 

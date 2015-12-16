@@ -123,49 +123,55 @@
         public update(): void {        
                         
             if (scoreBoard.getLives() > 0) {
-                waveManager.update();// reuse enemy if necessary, or add enemy to enemies array
+                if (waveManager.getTotalNumberOfEnemy() > collision.getEnemyKilledCount()) {
+                    waveManager.update();// reuse enemy if necessary, or add enemy to enemies array
 
-                // enemys, towers, bullets
-                for (var e = 0; e < enemies.length; e++) {
+                    // enemys, towers, bullets
+                    for (var e = 0; e < enemies.length; e++) {
 
-                    // apply directions
-                    for (var d = 0; d < directionTiles.length; d++) {
-                        directionTiles[d].detectObject_applyDirection(enemies[e]);
+                        // apply directions
+                        for (var d = 0; d < directionTiles.length; d++) {
+                            directionTiles[d].detectObject_applyDirection(enemies[e]);
+                        }
+
+                        // update enemy
+                        enemies[e].update();
+
+                        for (var b = 0; b < bullets1.length; b++) {
+                            bullets1[b].update();
+                            collision.updateBulletVsEnemy(bullets1[b], enemies[e]);
+                        }
+                        for (var b = 0; b < bullets2.length; b++) {
+                            bullets2[b].update();
+                            collision.updateBulletVsEnemy(bullets2[b], enemies[e]);
+                        }
+                        for (var b = 0; b < bullets3.length; b++) {
+                            bullets3[b].update();
+                            collision.updateBulletVsEnemy(bullets3[b], enemies[e]);
+                        }
+
+                        for (var t = 0; t < towers.length; t++) {
+                            collision.updateTowerVsEnemy(towers[t], enemies[e])
+                        }
                     }
 
-                    // update enemy
-                    enemies[e].update();
+                    // update labels
+                    this._livesLabel.text = "Lives: " + scoreBoard.getLives();
+                    this._moneyLabel.text = "Money: " + scoreBoard.getMoney();
+                } else { // all enemies completed, level completed, go to next level
 
-                    for (var b = 0; b < bullets1.length; b++) {
-                        bullets1[b].update();
-                        collision.updateBulletVsEnemy(bullets1[b], enemies[e]);
-                    }
-                    for (var b = 0; b < bullets2.length; b++) {
-                        bullets2[b].update();
-                        collision.updateBulletVsEnemy(bullets2[b], enemies[e]);
-                    }
-                    for (var b = 0; b < bullets3.length; b++) {
-                        bullets3[b].update();
-                        collision.updateBulletVsEnemy(bullets3[b], enemies[e]);
-                    }
+                    // show next level button, change state to next level
+                    // +-=-==--=-=-=--=-=-=
 
-                    for (var t = 0; t < towers.length; t++) {
-                        collision.updateTowerVsEnemy(towers[t], enemies[e])
-                    }
                 }
-
-                // update labels
-                this._livesLabel.text = "Lives: " + scoreBoard.getLives();
-                this._moneyLabel.text = "Money: " + scoreBoard.getMoney();
+                
+                // check if level complete
             } else {
                 this._gameOverLabel.visible = true;
                 this._playAgainButton.visible = true;
             }
             
-
             // gameover or next level
-            
-            
             
         }// end of update 
 

@@ -168,7 +168,7 @@ function setupStats(): void {
     document.body.appendChild(stats.domElement);
 }
 
-function changeState(_state): void {
+function changeState(_state:any): void {
     state = _state;
     switch (_state) {
         case config.STATE_MENU:
