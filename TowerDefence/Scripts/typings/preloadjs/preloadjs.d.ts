@@ -158,7 +158,7 @@ declare module createjs {
         // methods
         close(): void;
         getItems(loaded: boolean): Object[];
-        installPlugin(any): void;
+        installPlugin(x:any): void;//(any)
         loadFile(file: Object | string, loadNow?: boolean, basePath?: string): void;
         loadManifest(manifest: Object | string | any[], loadNow?: boolean, basePath?: string): void;
         registerLoader(loader: AbstractLoader): void;

@@ -9,24 +9,33 @@ var managers;
      * History: 1.0
      */
     var WaveManager = (function () {
-        /**For each game level, waves and enumies are predefined, instantiate it then update it, object will use global enemies and add to createjs.Container(currentLevel)*/
+        /**For each game level, manage how many enemies, how fast it launches enemies, enumies are predefined, instantiate it then update it, object will use global enemies and add to createjs.Container(currentLevel)*/
         function WaveManager(level) {
             this._level = level ? level : 1;
+            //this._isLevelCompleted = false;
             this._isWaveReady = true;
             this._isEnemyReady = true;
             this._oldTime = createjs.Ticker.getTicks();
             this._isTimeToGo = false;
-            this._enemyDeadCount = 0;
-            this._setEnemyColdTime();
+            this._setTotalNumberOfEnemyByLevel(); // set total number of emeies for this level
+            this._currentNumberOfEnemy = 0; // current number of enemies that sent out
+            this._setEnemyColdTimeByLevel(); // set cold time for enemy, or frequency 
             this._newEnemyGoes = false;
         }
-        WaveManager.prototype._setEnemyColdTime = function () {
+        /**Get the total number of enemy for current level, use it in level-main to know if level completed by if(deadEnemyCount >= wavemanager.getTotalNumberOfEnemy()), then level completed */
+        WaveManager.prototype.getTotalNumberOfEnemy = function () {
+            return this._totalNumberOfEnemy;
+        };
+        WaveManager.prototype._setTotalNumberOfEnemyByLevel = function () {
+            this._totalNumberOfEnemy = 10 * this._level; //40
+        };
+        WaveManager.prototype._setEnemyColdTimeByLevel = function () {
             switch (this._level) {
                 case 1:
-                    this._enemyColdTime = 300;
+                    this._enemyColdTime = 200;
                     break;
                 case 2:
-                    this._enemyColdTime = 150;
+                    this._enemyColdTime = 120;
                     break;
                 case 3:
                     this._enemyColdTime = 80;
@@ -35,24 +44,27 @@ var managers;
         };
         WaveManager.prototype.update = function () {
             // check if it is time to add enemy to screen
-            if (this._checkTimeToGo()) {
-                this._newEnemyGoes = false;
-                for (var i = 0; i < enemies.length && !this._newEnemyGoes; i++) {
-                    if (enemies[i].getIsDead()) {
-                        enemies[i].goAgain();
+            // why there is an extra one coming out??????????????????
+            if (this._currentNumberOfEnemy < this._totalNumberOfEnemy) {
+                if (this._checkTimeToGo()) {
+                    this._newEnemyGoes = false;
+                    for (var i = 0; i < enemies.length && !this._newEnemyGoes; i++) {
+                        if (enemies[i].getIsDead()) {
+                            enemies[i].goAgain();
+                            this._newEnemyGoes = true;
+                        }
+                        ;
+                    }
+                    if (!this._newEnemyGoes) {
+                        this._pushNewEnemy();
                         this._newEnemyGoes = true;
                     }
-                    ;
+                    this._currentNumberOfEnemy++;
                 }
-                if (!this._newEnemyGoes) {
-                    this._pushNewEnemy();
-                }
-                console.log("enemies count: " + enemies.length);
             }
-            /*
-            if (this._isWaveReady) {
-                this._generateWave();
-            }*/
+        };
+        WaveManager.prototype.getCurrentNumberOfEnemy = function () {
+            return this._currentNumberOfEnemy;
         };
         WaveManager.prototype._checkTimeToGo = function () {
             this._isTimeToGo = false;

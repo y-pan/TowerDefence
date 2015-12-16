@@ -11,6 +11,7 @@ var managers;
     var Collision = (function () {
         /**Empty constructor*/
         function Collision() {
+            this._enemyKilledCount = 0;
         }
         Collision.prototype.updateBulletVsEnemy = function (bullet, enemy) {
             this._checkCollision(bullet, enemy);
@@ -29,6 +30,9 @@ var managers;
                 }
             }
         };
+        Collision.prototype.getEnemyKilledCount = function () {
+            return this._enemyKilledCount;
+        };
         Collision.prototype._checkCollision = function (bullet, enemy) {
             // check the distance between enemy and bullet
             if (this._distance(bullet.getPosition(), enemy.getPosition()) <
@@ -38,6 +42,7 @@ var managers;
                 bullet.recycle();
                 if (enemy.getLives() <= 0) {
                     enemy.dieOrRecycle();
+                    this._enemyKilledCount++;
                     scoreBoard.addMoney(enemy.getMoney());
                 }
             }

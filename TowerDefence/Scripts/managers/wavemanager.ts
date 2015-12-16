@@ -47,8 +47,7 @@
             this._isTimeToGo = false;
 
             this._setTotalNumberOfEnemyByLevel(); // set total number of emeies for this level
-            //this._enemyDeadCount = 0;
-            this._currentNumberOfEnemy = 0;
+            this._currentNumberOfEnemy = 0; // current number of enemies that sent out
 
             this._setEnemyColdTimeByLevel(); // set cold time for enemy, or frequency 
             this._newEnemyGoes = false;
@@ -60,16 +59,16 @@
         }
 
         private _setTotalNumberOfEnemyByLevel(): void {
-            this._totalNumberOfEnemy = 40 * this._level;
+            this._totalNumberOfEnemy = 10 * this._level;//40
         }
 
         private _setEnemyColdTimeByLevel(): void {
             switch (this._level) {
                 case 1:
-                    this._enemyColdTime = 300;
+                    this._enemyColdTime = 200;
                     break;
                 case 2:
-                    this._enemyColdTime = 150;
+                    this._enemyColdTime = 120;
                     break;
                 case 3:
                     this._enemyColdTime = 80;
@@ -81,49 +80,32 @@
         public update(): void {
             
             // check if it is time to add enemy to screen
-            if (this._checkTimeToGo()&&(this._currentNumberOfEnemy <this._totalNumberOfEnemy)) {
-                this._newEnemyGoes = false;
-                for (var i = 0; i < enemies.length && !this._newEnemyGoes; i++) {
-                    if (enemies[i].getIsDead()) {
-                        enemies[i].goAgain();
-                        this._newEnemyGoes = true;
-                    };
-                }
-
-                if (!this._newEnemyGoes) {
-                    this._pushNewEnemy();
-                    this._newEnemyGoes = true;
-                }
+            // why there is an extra one coming out??????????????????
+            if (this._currentNumberOfEnemy < this._totalNumberOfEnemy) { // if still enemies to be sent out
                 
-                // 
-                this._currentNumberOfEnemy++;
+                if (this._checkTimeToGo()) {// if time to go, then either reuse one, or create new one
 
-                /*
-                if (this._enemyDeadCount >= this._totalNumberOfEnemy) {
-                    this._isLevelCompleted = true;
-                }*/
+                    this._newEnemyGoes = false;
+                    for (var i = 0; i < enemies.length && !this._newEnemyGoes; i++) { // can reuse one
+                        if (enemies[i].getIsDead()) {
+                            enemies[i].goAgain();
+                            this._newEnemyGoes = true;
+                        };
+                    }
 
-                console.log("enemies count: " + enemies.length);
+                    if (!this._newEnemyGoes) { // cannot reuse one, then create new one
+                        this._pushNewEnemy();
+                        this._newEnemyGoes = true;
+                    }
 
-                /*
-                this._enemyDeadCount = 0;
-
-                for (var i = 0; i < enemies.length; i++) {
-                    if (enemies[i].getIsDead()) { this._enemyDeadCount++};
+                    this._currentNumberOfEnemy++; 
                 }
-
-                if (this._enemyDeadCount == enemies.length) {
-                    console.log("relive enemies");
-                    this._generateEnemy();
-                }*/
             }
+            
+        }
 
-            
-            
-            /*
-            if (this._isWaveReady) {            
-                this._generateWave();
-            }*/
+        public getCurrentNumberOfEnemy(): number {
+            return this._currentNumberOfEnemy;
         }
 
         private _checkTimeToGo(): boolean {

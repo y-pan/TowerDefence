@@ -121,9 +121,11 @@
         }
 
         public update(): void {        
+            //console.log("In update: enemies k-On-t: " + collision.getEnemyKilledCount() + " - " + waveManager.getCurrentNumberOfEnemy() + " - " + waveManager.getTotalNumberOfEnemy());
                         
             if (scoreBoard.getLives() > 0) {
                 if (waveManager.getTotalNumberOfEnemy() > collision.getEnemyKilledCount()) {
+
                     waveManager.update();// reuse enemy if necessary, or add enemy to enemies array
 
                     // enemys, towers, bullets
@@ -158,10 +160,14 @@
                     // update labels
                     this._livesLabel.text = "Lives: " + scoreBoard.getLives();
                     this._moneyLabel.text = "Money: " + scoreBoard.getMoney();
+                    //console.log("hehe");
+                    console.log("enemies killed-On-total: " + collision.getEnemyKilledCount() + " - " + waveManager.getCurrentNumberOfEnemy() + " - " + waveManager.getTotalNumberOfEnemy());
+
                 } else { // all enemies completed, level completed, go to next level
 
                     // show next level button, change state to next level
                     // +-=-==--=-=-=--=-=-=
+                    console.log("Level Complete, need to go to next level");
 
                 }
                 

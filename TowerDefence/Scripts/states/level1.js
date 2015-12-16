@@ -86,35 +86,45 @@ var states;
             changeState(states.Level1);
         };
         Level1.prototype.update = function () {
+            //console.log("In update: enemies k-On-t: " + collision.getEnemyKilledCount() + " - " + waveManager.getCurrentNumberOfEnemy() + " - " + waveManager.getTotalNumberOfEnemy());
             if (scoreBoard.getLives() > 0) {
-                waveManager.update(); // reuse enemy if necessary, or add enemy to enemies array
-                // enemys, towers, bullets
-                for (var e = 0; e < enemies.length; e++) {
-                    // apply directions
-                    for (var d = 0; d < directionTiles.length; d++) {
-                        directionTiles[d].detectObject_applyDirection(enemies[e]);
+                if (waveManager.getTotalNumberOfEnemy() > collision.getEnemyKilledCount()) {
+                    waveManager.update(); // reuse enemy if necessary, or add enemy to enemies array
+                    // enemys, towers, bullets
+                    for (var e = 0; e < enemies.length; e++) {
+                        // apply directions
+                        for (var d = 0; d < directionTiles.length; d++) {
+                            directionTiles[d].detectObject_applyDirection(enemies[e]);
+                        }
+                        // update enemy
+                        enemies[e].update();
+                        for (var b = 0; b < bullets1.length; b++) {
+                            bullets1[b].update();
+                            collision.updateBulletVsEnemy(bullets1[b], enemies[e]);
+                        }
+                        for (var b = 0; b < bullets2.length; b++) {
+                            bullets2[b].update();
+                            collision.updateBulletVsEnemy(bullets2[b], enemies[e]);
+                        }
+                        for (var b = 0; b < bullets3.length; b++) {
+                            bullets3[b].update();
+                            collision.updateBulletVsEnemy(bullets3[b], enemies[e]);
+                        }
+                        for (var t = 0; t < towers.length; t++) {
+                            collision.updateTowerVsEnemy(towers[t], enemies[e]);
+                        }
                     }
-                    // update enemy
-                    enemies[e].update();
-                    for (var b = 0; b < bullets1.length; b++) {
-                        bullets1[b].update();
-                        collision.updateBulletVsEnemy(bullets1[b], enemies[e]);
-                    }
-                    for (var b = 0; b < bullets2.length; b++) {
-                        bullets2[b].update();
-                        collision.updateBulletVsEnemy(bullets2[b], enemies[e]);
-                    }
-                    for (var b = 0; b < bullets3.length; b++) {
-                        bullets3[b].update();
-                        collision.updateBulletVsEnemy(bullets3[b], enemies[e]);
-                    }
-                    for (var t = 0; t < towers.length; t++) {
-                        collision.updateTowerVsEnemy(towers[t], enemies[e]);
-                    }
+                    // update labels
+                    this._livesLabel.text = "Lives: " + scoreBoard.getLives();
+                    this._moneyLabel.text = "Money: " + scoreBoard.getMoney();
+                    //console.log("hehe");
+                    console.log("enemies killed-On-total: " + collision.getEnemyKilledCount() + " - " + waveManager.getCurrentNumberOfEnemy() + " - " + waveManager.getTotalNumberOfEnemy());
                 }
-                // update labels
-                this._livesLabel.text = "Lives: " + scoreBoard.getLives();
-                this._moneyLabel.text = "Money: " + scoreBoard.getMoney();
+                else {
+                    // show next level button, change state to next level
+                    // +-=-==--=-=-=--=-=-=
+                    console.log("Level Complete, need to go to next level");
+                }
             }
             else {
                 this._gameOverLabel.visible = true;
