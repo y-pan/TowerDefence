@@ -11,6 +11,7 @@ var managers;
     var WaveManager = (function () {
         /**For each game level, manage how many enemies, how fast it launches enemies, enumies are predefined, instantiate it then update it, object will use global enemies and add to createjs.Container(currentLevel)*/
         function WaveManager(level) {
+            this._enemyKilledOrEscaped = 0;
             this._level = level ? level : 1;
             //this._isLevelCompleted = false;
             this._isWaveReady = true;
@@ -22,12 +23,18 @@ var managers;
             this._setEnemyColdTimeByLevel(); // set cold time for enemy, or frequency 
             this._newEnemyGoes = false;
         }
+        WaveManager.prototype.getEnemyKilledOrEscaped = function () {
+            return this._enemyKilledOrEscaped;
+        };
+        WaveManager.prototype.addEnemyKilledOrEscaped = function () {
+            this._enemyKilledOrEscaped++;
+        };
         /**Get the total number of enemy for current level, use it in level-main to know if level completed by if(deadEnemyCount >= wavemanager.getTotalNumberOfEnemy()), then level completed */
         WaveManager.prototype.getTotalNumberOfEnemy = function () {
             return this._totalNumberOfEnemy;
         };
         WaveManager.prototype._setTotalNumberOfEnemyByLevel = function () {
-            this._totalNumberOfEnemy = 10 * this._level; //40
+            this._totalNumberOfEnemy = 20 * this._level; //40
         };
         WaveManager.prototype._setEnemyColdTimeByLevel = function () {
             switch (this._level) {
@@ -44,7 +51,6 @@ var managers;
         };
         WaveManager.prototype.update = function () {
             // check if it is time to add enemy to screen
-            // why there is an extra one coming out??????????????????
             if (this._currentNumberOfEnemy < this._totalNumberOfEnemy) {
                 if (this._checkTimeToGo()) {
                     this._newEnemyGoes = false;
@@ -75,12 +81,6 @@ var managers;
             }
             return this._isTimeToGo;
         };
-        /*
-        private _generateWave(): void {
-            if (this._isEnemyReady) {
-                this._pushNewEnemy();
-            }
-        }*/
         WaveManager.prototype._pushNewEnemy = function () {
             enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 30, 128, 10, 64, 64, 1, config.DIRECTION_DOWN));
         };

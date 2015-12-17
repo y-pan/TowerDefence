@@ -38,6 +38,7 @@
             this._orignalLives = this._lives;// for reset to reuse
             
             this._speed = speed;
+            this._oldSpeed = this._speed; // used to recover the speed when the dead enemy goAgain()
             this._direction = direction;
 
             this._width = width ? width : 64;
@@ -56,6 +57,7 @@
         public getMoney(): number { return this._money; }
 
         public goAgain(): void {
+            this._speed = this._oldSpeed;
             this._isDead = false;
             this.x = this._orignalX;
             this.y = this._orignalY;
@@ -70,19 +72,21 @@
 
         
         //！！！！！！！！！！！！！！！！！！！
-        public dieOrRecycle():void {
+        public dieOrRecycle(): void {
+            this._speed = 0;
             this._isDead = true;
             //this._lives = this._orignalLives;
             this.x = this._orignalX;
             this.y = -1000;
             this._direction = config.DIRECTION_DOWN;
+            waveManager.addEnemyKilledOrEscaped(); // to add 1 to wavemanager._enemyKilledOrEscaped
         }
 
 
 
         public update():void {
             this._moveWith_Speed_Drection();   
-            if (this.y >= canvasHeight || this.x >= canvasWidth) {
+            if (this.y >= canvasHeight || this.x >= canvasWidth) { // assume that final point(heart) is only at the right or down side of screen 
                 this._doAttack();
                 this.dieOrRecycle();
             }           

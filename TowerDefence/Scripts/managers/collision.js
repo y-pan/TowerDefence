@@ -9,9 +9,10 @@ var managers;
      * History: 1.0
      */
     var Collision = (function () {
+        //private _NumberOfEnemyKilledOrEscaped: number;
         /**Empty constructor*/
         function Collision() {
-            this._enemyKilledCount = 0;
+            //this._NumberOfEnemyKilledOrEscaped = 0;
         }
         Collision.prototype.updateBulletVsEnemy = function (bullet, enemy) {
             this._checkCollision(bullet, enemy);
@@ -30,9 +31,10 @@ var managers;
                 }
             }
         };
-        Collision.prototype.getEnemyKilledCount = function () {
+        /*
+        public getEnemyKilledCount(): number {
             return this._enemyKilledCount;
-        };
+        }*/
         Collision.prototype._checkCollision = function (bullet, enemy) {
             // check the distance between enemy and bullet
             if (this._distance(bullet.getPosition(), enemy.getPosition()) <
@@ -41,8 +43,7 @@ var managers;
                 // reset bullet, reset enemy if enemy is 0 at life
                 bullet.recycle();
                 if (enemy.getLives() <= 0) {
-                    enemy.dieOrRecycle();
-                    this._enemyKilledCount++;
+                    enemy.dieOrRecycle(); // inside enemy.dieOrRecycle() will increase wavemanager.enemyKilledOrEscaped, to be used for judging if level completed
                     scoreBoard.addMoney(enemy.getMoney());
                 }
             }

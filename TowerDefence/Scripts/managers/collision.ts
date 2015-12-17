@@ -10,10 +10,10 @@ module managers {
  */
     export class Collision {
 
-        private _enemyKilledCount: number;
+        //private _NumberOfEnemyKilledOrEscaped: number;
         /**Empty constructor*/
         constructor() {
-            this._enemyKilledCount = 0;
+            //this._NumberOfEnemyKilledOrEscaped = 0;
         }
 
         public updateBulletVsEnemy(bullet: objects.Bullet, enemy: objects.Enemy): void {
@@ -39,10 +39,10 @@ module managers {
                 }
             }
         }
-
+        /*
         public getEnemyKilledCount(): number {
             return this._enemyKilledCount;
-        }
+        }*/
         private _checkCollision(bullet: objects.Bullet, enemy: objects.Enemy): void {
             // check the distance between enemy and bullet
        
@@ -56,8 +56,7 @@ module managers {
 
                 if (enemy.getLives() <= 0) {
                     
-                    enemy.dieOrRecycle();
-                    this._enemyKilledCount++;
+                    enemy.dieOrRecycle(); // inside enemy.dieOrRecycle() will increase wavemanager.enemyKilledOrEscaped, to be used for judging if level completed
                     scoreBoard.addMoney(enemy.getMoney());
                 }
             } 

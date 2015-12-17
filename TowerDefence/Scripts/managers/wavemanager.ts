@@ -24,17 +24,27 @@
         private _nowTime: number;
         
         private _totalNumberOfEnemy: number; // how many enemies for this level
-        //private _enemyDeadCount: number; // how many enemies killed
+        private _enemyKilledOrEscaped: number; // how many enemies killed or escaped, increase by 1 when enemy.dieOrRecycle() called by collision
         private _currentNumberOfEnemy: number // how many enemies went out
 
         private _isTimeToGo: boolean;
         private _newEnemyGoes: boolean;
 
         private _isLevelCompleted: boolean;
+
+
+        public getEnemyKilledOrEscaped(): number {
+            return this._enemyKilledOrEscaped;
+        }
+        public addEnemyKilledOrEscaped(): void {
+            this._enemyKilledOrEscaped++;
+        }
+
         
         /**For each game level, manage how many enemies, how fast it launches enemies, enumies are predefined, instantiate it then update it, object will use global enemies and add to createjs.Container(currentLevel)*/
-
         constructor(level: number) {
+
+            this._enemyKilledOrEscaped = 0;
 
             this._level = level ? level : 1;
 
@@ -59,8 +69,9 @@
         }
 
         private _setTotalNumberOfEnemyByLevel(): void {
-            this._totalNumberOfEnemy = 10 * this._level;//40
+            this._totalNumberOfEnemy = 20 * this._level;//40
         }
+             
 
         private _setEnemyColdTimeByLevel(): void {
             switch (this._level) {
@@ -77,10 +88,9 @@
         }
 
 
-        public update(): void {
-            
+        public update(): void {        
+                
             // check if it is time to add enemy to screen
-            // why there is an extra one coming out??????????????????
             if (this._currentNumberOfEnemy < this._totalNumberOfEnemy) { // if still enemies to be sent out
                 
                 if (this._checkTimeToGo()) {// if time to go, then either reuse one, or create new one
@@ -100,8 +110,7 @@
 
                     this._currentNumberOfEnemy++; 
                 }
-            }
-            
+            }            
         }
 
         public getCurrentNumberOfEnemy(): number {
@@ -117,13 +126,7 @@
             }
             return this._isTimeToGo;
         }
-        /*
-        private _generateWave(): void {
-            if (this._isEnemyReady) {
-                this._pushNewEnemy();
-            }
-        }*/
-
+        
         private _pushNewEnemy(): void {
             enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 30, 128, 10, 64, 64, 1, config.DIRECTION_DOWN));             
         }

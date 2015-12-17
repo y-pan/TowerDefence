@@ -9,6 +9,8 @@
  */
     export class Level1 extends objects.Scene {
 
+        // to do: add labels for restAnemyNumber
+
         // PRIVATE VAR
         private _background: objects.Background;
         private _menu: createjs.Bitmap;
@@ -77,16 +79,8 @@
             
             directionTiles.push(new objects.DirectionTile("direction_right", config.DIRECTION_RIGHT, 120, 420));
             directionTiles.push(new objects.DirectionTile("direction_right", config.DIRECTION_RIGHT, 320, 48));
-
             directionTiles.push(new objects.DirectionTile("direction_up", config.DIRECTION_UP, 320, 420));
-            //directionTiles.push(new objects.DirectionTile("direction_left", config.DIRECTION_LEFT, 600, 100));
             directionTiles.push(new objects.DirectionTile("direction_down", config.DIRECTION_DOWN, 570, 48));
-            //directionTiles.push(new objects.DirectionTile("direction_down", config.DIRECTION_DOWN, 100, 24));
-           /*
-            for (var i = 0; i < directionTiles.length; i++) {
-                // if comment this out, won't show but the functionality exits
-                this.addChild(directionTiles[i]);
-            }*/
 
             weaponButtons.push(new objects.WeaponButton(config.TowerType_1, 1));
             weaponButtons.push(new objects.WeaponButton(config.TowerType_2, 2));
@@ -124,7 +118,8 @@
             //console.log("In update: enemies k-On-t: " + collision.getEnemyKilledCount() + " - " + waveManager.getCurrentNumberOfEnemy() + " - " + waveManager.getTotalNumberOfEnemy());
                         
             if (scoreBoard.getLives() > 0) {
-                if (waveManager.getTotalNumberOfEnemy() > collision.getEnemyKilledCount()) {
+
+                if (waveManager.getTotalNumberOfEnemy() > waveManager.getEnemyKilledOrEscaped()) {
 
                     waveManager.update();// reuse enemy if necessary, or add enemy to enemies array
 
@@ -161,7 +156,7 @@
                     this._livesLabel.text = "Lives: " + scoreBoard.getLives();
                     this._moneyLabel.text = "Money: " + scoreBoard.getMoney();
                     //console.log("hehe");
-                    console.log("enemies killed-On-total: " + collision.getEnemyKilledCount() + " - " + waveManager.getCurrentNumberOfEnemy() + " - " + waveManager.getTotalNumberOfEnemy());
+                    console.log("enemies k.esc-On-total: " + waveManager.getEnemyKilledOrEscaped() + " - " + waveManager.getCurrentNumberOfEnemy() + " - " + waveManager.getTotalNumberOfEnemy());
 
                 } else { // all enemies completed, level completed, go to next level
 

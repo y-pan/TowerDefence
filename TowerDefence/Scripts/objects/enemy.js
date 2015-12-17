@@ -25,6 +25,7 @@ var objects;
             this._lives = lives;
             this._orignalLives = this._lives; // for reset to reuse
             this._speed = speed;
+            this._oldSpeed = this._speed; // used to recover the speed when the dead enemy goAgain()
             this._direction = direction;
             this._width = width ? width : 64;
             this._height = height ? height : 64;
@@ -37,6 +38,7 @@ var objects;
         }
         Enemy.prototype.getMoney = function () { return this._money; };
         Enemy.prototype.goAgain = function () {
+            this._speed = this._oldSpeed;
             this._isDead = false;
             this.x = this._orignalX;
             this.y = this._orignalY;
@@ -48,11 +50,13 @@ var objects;
         };
         //！！！！！！！！！！！！！！！！！！！
         Enemy.prototype.dieOrRecycle = function () {
+            this._speed = 0;
             this._isDead = true;
             //this._lives = this._orignalLives;
             this.x = this._orignalX;
             this.y = -1000;
             this._direction = config.DIRECTION_DOWN;
+            waveManager.addEnemyKilledOrEscaped(); // to add 1 to wavemanager._enemyKilledOrEscaped
         };
         Enemy.prototype.update = function () {
             this._moveWith_Speed_Drection();
