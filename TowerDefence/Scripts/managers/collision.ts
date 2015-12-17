@@ -10,11 +10,8 @@ module managers {
  */
     export class Collision {
 
-        //private _NumberOfEnemyKilledOrEscaped: number;
         /**Empty constructor*/
-        constructor() {
-            //this._NumberOfEnemyKilledOrEscaped = 0;
-        }
+        constructor() { }
 
         public updateBulletVsEnemy(bullet: objects.Bullet, enemy: objects.Enemy): void {
             this._checkCollision(bullet, enemy);    

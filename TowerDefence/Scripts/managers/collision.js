@@ -9,10 +9,8 @@ var managers;
      * History: 1.0
      */
     var Collision = (function () {
-        //private _NumberOfEnemyKilledOrEscaped: number;
         /**Empty constructor*/
         function Collision() {
-            //this._NumberOfEnemyKilledOrEscaped = 0;
         }
         Collision.prototype.updateBulletVsEnemy = function (bullet, enemy) {
             this._checkCollision(bullet, enemy);

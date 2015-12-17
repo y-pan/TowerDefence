@@ -52,7 +52,6 @@ var objects;
         Enemy.prototype.dieOrRecycle = function () {
             this._speed = 0;
             this._isDead = true;
-            //this._lives = this._orignalLives;
             this.x = this._orignalX;
             this.y = -1000;
             this._direction = config.DIRECTION_DOWN;
@@ -60,7 +59,7 @@ var objects;
         };
         Enemy.prototype.update = function () {
             this._moveWith_Speed_Drection();
-            if (this.y >= canvasHeight || this.x >= canvasWidth) {
+            if (this.y >= canvasHeight - 64 || this.x >= canvasWidth) {
                 this._doAttack();
                 this.dieOrRecycle();
             }

@@ -75,7 +75,6 @@
         public dieOrRecycle(): void {
             this._speed = 0;
             this._isDead = true;
-            //this._lives = this._orignalLives;
             this.x = this._orignalX;
             this.y = -1000;
             this._direction = config.DIRECTION_DOWN;
@@ -86,7 +85,7 @@
 
         public update():void {
             this._moveWith_Speed_Drection();   
-            if (this.y >= canvasHeight || this.x >= canvasWidth) { // assume that final point(heart) is only at the right or down side of screen 
+            if (this.y >= canvasHeight - 64 || this.x >= canvasWidth) { // assume that final point(heart) is only at the right or down side of screen 
                 this._doAttack();
                 this.dieOrRecycle();
             }           

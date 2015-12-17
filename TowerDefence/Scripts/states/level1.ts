@@ -14,11 +14,10 @@
         // PRIVATE VAR
         private _background: objects.Background;
         private _menu: createjs.Bitmap;
-       
         private _live: number;
         
         //label
-        //private _scoreLabel: objects.Label;
+        private _restEnemiesLabel: objects.Label;
         private _livesLabel: objects.Label;
         private _moneyLabel: objects.Label;
         private _playAgainButton: objects.Button;
@@ -51,11 +50,12 @@
             this.addChild(this._background);
             
             // labels
-            this._livesLabel = new objects.Label("Lives: " + scoreBoard.getLives().toString(), "15px Showcard Gothic", "#fff", 5, 10, false);
+            this._livesLabel = new objects.Label("Lives: " + scoreBoard.getLives().toString(), "15px Showcard Gothic", "#00f", 5, 10, false);
             this.addChild(this._livesLabel);
-            //this._scoreLabel = new objects.Label("Score: " + scoreBoard.getScore().toString(), "30px Showcard Gothic", "#000", 150, 10, false);
+            this._restEnemiesLabel = new objects.Label("Enemies: " + (waveManager.getTotalNumberOfEnemy() - waveManager.getCurrentNumberOfEnemy()), "15px Showcard Gothic", "#f00", 5, 50, false);
+            this.addChild(this._restEnemiesLabel);
 
-            this._moneyLabel = new objects.Label("Money: " + scoreBoard.getMoney().toString(), "15px Showcard Gothic", "#fff", 5, 60, false);
+            this._moneyLabel = new objects.Label("Money: " + scoreBoard.getMoney().toString(), "15px Showcard Gothic", "#0ff", 5, 30, false);
             this.addChild(this._moneyLabel);
             //"Tower Defence","30px Showcard Gothic", "#000", canvasWidth*.5, 50,true
 
@@ -115,7 +115,6 @@
         }
 
         public update(): void {        
-            //console.log("In update: enemies k-On-t: " + collision.getEnemyKilledCount() + " - " + waveManager.getCurrentNumberOfEnemy() + " - " + waveManager.getTotalNumberOfEnemy());
                         
             if (scoreBoard.getLives() > 0) {
 
@@ -157,6 +156,7 @@
                     this._moneyLabel.text = "Money: " + scoreBoard.getMoney();
                     //console.log("hehe");
                     console.log("enemies k.esc-On-total: " + waveManager.getEnemyKilledOrEscaped() + " - " + waveManager.getCurrentNumberOfEnemy() + " - " + waveManager.getTotalNumberOfEnemy());
+                    this._restEnemiesLabel.text = "Enemies: " + (waveManager.getTotalNumberOfEnemy() - waveManager.getCurrentNumberOfEnemy());
 
                 } else { // all enemies completed, level completed, go to next level
 
