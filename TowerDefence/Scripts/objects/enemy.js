@@ -15,7 +15,7 @@ var objects;
      */
     var Enemy = (function (_super) {
         __extends(Enemy, _super);
-        /** direction: up -1, down 1, west -2, east 2*/
+        /** direction: up -1, down 1, west -2, east 2. Assume that escapePoint(heart) is only at the right or down side of screen. However it's better to make an object for escapePoint and check collision between enemy and escapePoint, so that escapePoint can be anywhere*/
         function Enemy(atlas, imageString, lives, x, y, width, height, speed, direction) {
             _super.call(this, atlas, imageString);
             this.x = x;
@@ -72,7 +72,6 @@ var objects;
             }
         };
         Enemy.prototype._updateLifeBar = function () {
-            //console.log(this._lifeBarBorder.x + ", " + this._lifeBarBorder.y + " | " + this._lifeBar.x + ", " + this._lifeBar.y);
             this._lifeBar.graphics.clear();
             this._lifeBarBorder.graphics.clear();
             if (this._lives >= this._orignalLives * .8) {

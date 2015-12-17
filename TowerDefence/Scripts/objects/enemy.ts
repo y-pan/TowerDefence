@@ -29,7 +29,7 @@
         protected _lifeBar: createjs.Shape;
         protected _lifeBarBorder: createjs.Shape;
 
-        /** direction: up -1, down 1, west -2, east 2*/
+        /** direction: up -1, down 1, west -2, east 2. Assume that escapePoint(heart) is only at the right or down side of screen. However it's better to make an object for escapePoint and check collision between enemy and escapePoint, so that escapePoint can be anywhere*/
         constructor(atlas: createjs.SpriteSheet, imageString: string, lives: number, x: number, y: number, width: number, height: number, speed:number, direction:number) {
             super(atlas, imageString);
 
@@ -110,8 +110,7 @@
         }
 
         private _updateLifeBar(): void {
-                
-            //console.log(this._lifeBarBorder.x + ", " + this._lifeBarBorder.y + " | " + this._lifeBar.x + ", " + this._lifeBar.y);
+
             this._lifeBar.graphics.clear();
             this._lifeBarBorder.graphics.clear();
 
