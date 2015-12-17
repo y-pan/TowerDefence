@@ -25,6 +25,10 @@
         protected _attack: number;
         protected _money: number;
 
+        // lifeBar
+        protected _lifeBar: createjs.Shape;
+        protected _lifeBarBorder: createjs.Shape;
+
         /** direction: up -1, down 1, west -2, east 2*/
         constructor(atlas: createjs.SpriteSheet, imageString: string, lives: number, x: number, y: number, width: number, height: number, speed:number, direction:number) {
             super(atlas, imageString);
@@ -51,7 +55,17 @@
 
             this._money = 50;
 
+            this._lifeBarBorder = new createjs.Shape();
+            this._lifeBarBorder.graphics.beginStroke("#fff").drawRect(this.x - this._width + 10, this.y - this._height, this._orignalLives, 4);            
+
+            this._lifeBar = new createjs.Shape();
+            this._lifeBar.graphics.beginFill("#0f5").drawRect(this.x - this._width + 10, this.y - this._height, this._lives, 4);        
+            currentLevel.addChild(this._lifeBar);
+            currentLevel.addChild(this._lifeBarBorder);
+
             currentLevel.addChild(this);
+
+           
         }
 
         public getMoney(): number { return this._money; }
@@ -61,34 +75,57 @@
             this._isDead = false;
             this.x = this._orignalX;
             this.y = this._orignalY;
-            this._lives = this._orignalLives;           
-
+            this._lives = this._orignalLives;         
         }
 
-        // ！！！！！！！！！！！！！！！！！！！
         public getIsDead(): boolean {
             return this._isDead;
         }
 
-        
-        //！！！！！！！！！！！！！！！！！！！
+
         public dieOrRecycle(): void {
             this._speed = 0;
             this._isDead = true;
             this.x = this._orignalX;
             this.y = -1000;
             this._direction = config.DIRECTION_DOWN;
+
+            this._updateLifeBar();
+
             waveManager.addEnemyKilledOrEscaped(); // to add 1 to wavemanager._enemyKilledOrEscaped
+
         }
 
 
 
-        public update():void {
+        public update(): void {
+            this._updateLifeBar(); 
             this._moveWith_Speed_Drection();   
+            //this._updateLifeBar();              
+
             if (this.y >= canvasHeight - 64 || this.x >= canvasWidth) { // assume that final point(heart) is only at the right or down side of screen 
                 this._doAttack();
                 this.dieOrRecycle();
-            }           
+            }         
+        }
+
+        private _updateLifeBar(): void {
+                
+            //console.log(this._lifeBarBorder.x + ", " + this._lifeBarBorder.y + " | " + this._lifeBar.x + ", " + this._lifeBar.y);
+            this._lifeBar.graphics.clear();
+            this._lifeBarBorder.graphics.clear();
+
+            if (this._lives >= this._orignalLives * .8) {
+                this._lifeBar.graphics.beginFill("#0f5").drawRect(this.x - this._width + 10, this.y - this._height, this._lives, 4);
+            } else if (this._lives >= this._orignalLives * .4) {
+                this._lifeBar.graphics.beginFill("#ff0").drawRect(this.x - this._width + 10, this.y - this._height, this._lives, 4);
+            } else {
+                this._lifeBar.graphics.beginFill("#f00").drawRect(this.x - this._width + 10, this.y - this._height, this._lives, 4);
+            }
+
+            
+            this._lifeBarBorder.graphics.beginStroke("#fff").drawRect(this.x - this._width + 10, this.y - this._height, this._orignalLives, 4);    
+            
         }
 
         private _doAttack(): void {

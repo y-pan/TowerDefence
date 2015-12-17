@@ -34,6 +34,12 @@ var objects;
             this._attack = 10;
             this._isDead = false;
             this._money = 50;
+            this._lifeBarBorder = new createjs.Shape();
+            this._lifeBarBorder.graphics.beginStroke("#fff").drawRect(this.x - this._width + 10, this.y - this._height, this._orignalLives, 4);
+            this._lifeBar = new createjs.Shape();
+            this._lifeBar.graphics.beginFill("#0f5").drawRect(this.x - this._width + 10, this.y - this._height, this._lives, 4);
+            currentLevel.addChild(this._lifeBar);
+            currentLevel.addChild(this._lifeBarBorder);
             currentLevel.addChild(this);
         }
         Enemy.prototype.getMoney = function () { return this._money; };
@@ -44,25 +50,41 @@ var objects;
             this.y = this._orignalY;
             this._lives = this._orignalLives;
         };
-        // ！！！！！！！！！！！！！！！！！！！
         Enemy.prototype.getIsDead = function () {
             return this._isDead;
         };
-        //！！！！！！！！！！！！！！！！！！！
         Enemy.prototype.dieOrRecycle = function () {
             this._speed = 0;
             this._isDead = true;
             this.x = this._orignalX;
             this.y = -1000;
             this._direction = config.DIRECTION_DOWN;
+            this._updateLifeBar();
             waveManager.addEnemyKilledOrEscaped(); // to add 1 to wavemanager._enemyKilledOrEscaped
         };
         Enemy.prototype.update = function () {
+            this._updateLifeBar();
             this._moveWith_Speed_Drection();
+            //this._updateLifeBar();              
             if (this.y >= canvasHeight - 64 || this.x >= canvasWidth) {
                 this._doAttack();
                 this.dieOrRecycle();
             }
+        };
+        Enemy.prototype._updateLifeBar = function () {
+            //console.log(this._lifeBarBorder.x + ", " + this._lifeBarBorder.y + " | " + this._lifeBar.x + ", " + this._lifeBar.y);
+            this._lifeBar.graphics.clear();
+            this._lifeBarBorder.graphics.clear();
+            if (this._lives >= this._orignalLives * .8) {
+                this._lifeBar.graphics.beginFill("#0f5").drawRect(this.x - this._width + 10, this.y - this._height, this._lives, 4);
+            }
+            else if (this._lives >= this._orignalLives * .4) {
+                this._lifeBar.graphics.beginFill("#ff0").drawRect(this.x - this._width + 10, this.y - this._height, this._lives, 4);
+            }
+            else {
+                this._lifeBar.graphics.beginFill("#f00").drawRect(this.x - this._width + 10, this.y - this._height, this._lives, 4);
+            }
+            this._lifeBarBorder.graphics.beginStroke("#fff").drawRect(this.x - this._width + 10, this.y - this._height, this._orignalLives, 4);
         };
         Enemy.prototype._doAttack = function () {
             scoreBoard.removeLives(this._attack);
