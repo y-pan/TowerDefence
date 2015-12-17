@@ -30,6 +30,8 @@ var stage;
 var stats;
 var state;
 var currentState;
+var mapSting; // define what are one the ground, by this string array
+var mapSetter; // generate tiles on the ground, using string array
 var scoreBoard;
 var collision;
 var waveManager;
@@ -52,6 +54,8 @@ var over;
 var manifest = [
     { id: "background_1", src: "../../Assets/images/background_1.png" },
     { id: "menu_bar", src: "../../Assets/images/menu_bar.png" },
+    { id: "path", src: "../../Assets/images/path.png" },
+    { id: "grass", src: "../../Assets/images/grass.png" },
     { id: "start_button", src: "../../Assets/images/start_button.png" },
     { id: "menu_button", src: "../../Assets/images/menu_button.png" },
     { id: "next_button", src: "../../Assets/images/next_button.png" },

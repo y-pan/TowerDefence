@@ -7,27 +7,21 @@
  * Description: DirectionTile object to set enemy's moving direction when collision occurs 
  * History: 1.0
  */
-    export class DirectionTile extends createjs.Bitmap {
+    export class DirectionTile extends objects.Tile {
 
-        private _direction: number;
-        private _width: number;
-        private _height: number;
+        protected _direction: number;
         
-        public tag: string;
 
-        constructor(pathString: string, direction: number, x: number, y: number) {
-            super(assets.getResult(pathString));       
-            
-            this._width = this.getBounds().width;
-            this._height = this.getBounds().height;
+        /**object has direction to be used by collision to set direction to enemy, inherits from tile */
+        constructor(pathString: string, tag: number, x: number, y: number, direction: number) {
+            super(pathString, tag, x, y);      
+             
             this.regX = this._width * .5;
             this.regY = this._height * .5;
             this._direction = direction;
 
             this.x = x;
             this.y = y;            
-            this.tag = "DIRECTION";
-            //alert(this._width + "|" + this._height);
         }
 
         // maybe put this in globle collsion ?

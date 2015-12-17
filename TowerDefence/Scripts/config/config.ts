@@ -14,6 +14,11 @@ module config {
     export var STATE_LEVEL3: number = 3;
     export var STATE_OVER: number = 4;
 
+    // tile tag string
+    export var TILE_BLANK: number = 0;
+    export var TILE_PATH: number = 1;
+    export var TILE_DIRECTION: number = 2;
+    export var TILE_MENU: number = 3;
     // direction
     export var DIRECTION_UP: number = -1;
     export var DIRECTION_DOWN: number = 1;

@@ -26,6 +26,7 @@
 /// <reference path="../objects/bullet.ts" />
 /// <reference path="../objects/tower.ts" />
 
+/// <reference path="../objects/tile.ts" />
 
 /// <reference path="../objects/directiontile.ts" />
 
@@ -48,6 +49,10 @@ var stats: Stats;
 var state: number;
 var currentState: objects.Scene;
 
+var mapString: Array<String>;  // define what are one the ground, by this string array
+var mapSetter: any; // generate tiles on the ground, using string array
+var directionTiles: objects.DirectionTile[];
+
 var scoreBoard: managers.ScoreBoard;
 var collision: managers.Collision;
 var waveManager: managers.WaveManager;
@@ -58,7 +63,7 @@ var bullets3: objects.Bullet[];
 
 var enemies: objects.Enemy[];
 var towers: objects.Tower[];
-var directionTiles: objects.DirectionTile[];
+
 var weaponButtons: objects.WeaponButton[];
 
 var canvasWidth: number = 640;
@@ -79,6 +84,9 @@ var manifest = [
 
     { id: "background_1", src: "../../Assets/images/background_1.png" },
     { id: "menu_bar", src: "../../Assets/images/menu_bar.png" },
+
+    { id: "path", src: "../../Assets/images/path.png" },
+    { id: "grass", src: "../../Assets/images/grass.png" },
 
     { id: "start_button", src: "../../Assets/images/start_button.png" },
     { id: "menu_button", src: "../../Assets/images/menu_button.png" },

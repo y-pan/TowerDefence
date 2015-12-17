@@ -30,6 +30,59 @@
 
         // PUBLIC 
         public start(): void {
+
+            // mapString
+            mapString = new Array<String>();
+            mapString = [
+                "", "", "", "D", "",  "",  "", "", "", "", "", "", "", "", "", "",
+                "", "", "", "P", "",  "",  "R", "P", "P", "P", "P", "P", "D", "", "", "",
+                "", "", "", "P", "",  "",  "P", "", "", "", "", "", "", "P", "", "",
+                "", "", "", "P", "",  "",  "P", "", "", "", "", "", "", "P", "", "",
+                "", "", "", "P", "",  "",  "P", "", "", "", "", "", "", "P", "", "",
+                "", "", "", "P", "",  "",  "P", "", "", "", "", "", "", "P", "", "",
+
+                "", "", "", "P", "",  "",  "P", "", "", "", "", "", "", "P", "", "",
+                "", "", "", "P", "",  "",  "P", "", "", "", "", "", "", "P", "", "",
+                "", "", "", "P", "",  "",  "P", "", "", "", "", "", "", "P", "", "",
+                "", "", "", "P", "",  "",  "P", "", "", "", "", "", "", "P", "", "",
+                "", "", "", "R", "P", "P", "U", "", "", "", "", "", "", "P", "", "",
+
+                "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M", "M",
+
+            ];
+
+            //
+            for (var i = 0; i < mapString.length; i++) {
+                switch (mapString[i]) {
+                    case "":
+                    case "B":
+                        // add new blank tile to level 
+                        // only blank tile can be placed a tower!!!  use an indepent array?
+                        // in tower drag/drop event detect the blank area;
+                        break;
+                    case "P":
+                        // add path tile to level;
+                        break;
+                    case "D":
+                        // add new DOWN directiontile to level
+                        // add to directionTiles, to be used for collision
+                        break;
+                    case "U":
+                        // add new UP directiontile to level
+                        // add to directionTiles, to be used for collision
+                        break;
+                    case "L":
+                        // add new LEFT directiontile to level
+                        // add to directionTiles, to be used for collision
+                        break;
+                    case "R":
+                        // add new RIGHT directiontile to level
+                        // add to directionTiles, to be used for collision
+                        break;
+                }
+            };
+
+
             createjs.Sound.play("Forest-Chase", null, null, null, 1, null, null);
             createjs.Sound.play("horn",null,700);
             weaponButtons = [];

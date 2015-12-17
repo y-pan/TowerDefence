@@ -13,6 +13,11 @@ var config;
     config.STATE_LEVEL2 = 2;
     config.STATE_LEVEL3 = 3;
     config.STATE_OVER = 4;
+    // tile tag string
+    config.TILE_BLANK = 0;
+    config.TILE_PATH = 1;
+    config.TILE_DIRECTION = 2;
+    config.TILE_MENU = 3;
     // direction
     config.DIRECTION_UP = -1;
     config.DIRECTION_DOWN = 1;
