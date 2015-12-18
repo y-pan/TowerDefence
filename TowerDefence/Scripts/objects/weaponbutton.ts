@@ -14,7 +14,11 @@ module objects {
         protected _rangePreview: createjs.Shape;
         protected _towerType: string;
         protected _isDragging: boolean;
-        protected _gridNumber: number;
+        //protected _gridNumber: number;
+
+        protected _blankTileX: number;
+        protected _blankTileY: number;
+        protected _blankTileIndex: number; // -1 mean blanktile not available, cannot built tower
 
         /**Added this weaponbutton object to currentLevel by its constructor.
          * example: ("ta1",1)
@@ -23,8 +27,7 @@ module objects {
             super(towerType + 1, 32, 455, config.TileWidth, config.TileHeight, true);
 
             this._towerType = towerType;
-            //this._gridNumber = gridNumber ? gridNumber : 1;
-            //this._setGridPosition();
+
             this.x = x;
             this.y = y;
 
@@ -40,29 +43,35 @@ module objects {
 
         pressmoveWeaponButton(event: createjs.MouseEvent): void {            
             this._movePreview();
+            //this._showPreviewColor();
         }
+
         pressupWeaponButton(event: createjs.MouseEvent): void {
-            if (this._isDragging) {
+            if (this._isDragging && this._blankTileIndex >= 0) {
                 if (scoreBoard.getMoney() >= config.TowerCost_Build) {
-                    this._createTower();   
-                    createjs.Sound.play("powerUp");                 
+
+
+                    this._createTower(this._blankTileX, this._blankTileY);
+                    createjs.Sound.play("powerUp");
                     scoreBoard.removeMoney(config.TowerCost_Build);
-                }
-                this._resetPreview();
-                this._isDragging = false;
+                    blankTiles.splice(this._blankTileIndex, 1);                         
+                    this._blankTileIndex = -1;
+                }                
             }
+            this._resetPreview();
+            this._isDragging = false;
         }
 
         // ------------------------------------ PRIVATE ------------------------------
 
-        private _createTower(): void {
-            towers.push(new objects.Tower(assets.getResult(this._towerType + 1), this._towerType, this._towerPreview.x, this._towerPreview.y));
+        private _createTower(x:number, y:number): void {
+            towers.push(new objects.Tower(assets.getResult(this._towerType + 1), this._towerType, x, y));
         }
 
         private _resetPreview(): void {
-            this._towerPreview.x = -100;
+            this._towerPreview.x = -500;
             this._towerPreview.y = 0;
-            this._rangePreview.x = -100;
+            this._rangePreview.x = -500;
             this._rangePreview.y = 0;
         }
 
@@ -73,9 +82,9 @@ module objects {
             this._towerPreview.regX = config.TileWidth * .5;
             this._towerPreview.regY = config.TileHeight * .5;
 
-            // fire range preview
+            // fire range preview  rgba(f,f,f,0.1)
             this._rangePreview = new createjs.Shape();
-            this._rangePreview.graphics.setStrokeStyle(1).beginStroke("rgba(0,0,0,1)").drawCircle(this._towerPreview.x + config.FireRange_1, this._towerPreview.y + config.FireRange_1, config.FireRange_1);
+            this._rangePreview.graphics.setStrokeStyle(1).beginStroke("rgba(255,255,255,1)").beginFill("rgba(255,255,255,0.3)").drawCircle(this._towerPreview.x + config.FireRange_1, this._towerPreview.y + config.FireRange_1, config.FireRange_1);
 
             this._rangePreview.alpha = 1;
             this._rangePreview.regX = config.FireRange_1;
@@ -92,46 +101,41 @@ module objects {
             this._towerPreview.x = stage.mouseX;
             this._towerPreview.y = stage.mouseY;
             this._rangePreview.x = stage.mouseX;
-            this._rangePreview.y = stage.mouseY;
+            this._rangePreview.y = stage.mouseY;    
+            
+            this._showPreviewColor_detectBlankTile();      
+            
         }
 
-        /*
-        private _setGridPosition(): void {
-            switch (this._gridNumber) {
-                case 1:
-                    this.x = 32;
-                    break;
-                case 2:
-                    this.x = 96;
-                    break;
-                case 3:
-                    this.x = 160;
-                    break;
-                case 4:
-                    this.x = 224;
-                    break;
-                case 5:
-                    this.x = 288;
-                    break;
-                case 6:
-                    this.x = 352;
-                    break;
-                case 7:
-                    this.x = 416;
-                    break;
-                case 8:
-                    this.x = 544;
-                    break;
-                case 9:
-                    this.x = 608;
-                    break;
-                case 10:
-                    this.x = 672;
-                    break;
+        private _showPreviewColor_detectBlankTile(): void {
+
+            var isAvailable: boolean = false;
+
+            for (var i = 0; i < blankTiles.length && !isAvailable; i++) {
+                var tx = blankTiles[i].x;
+                var ty = blankTiles[i].y;
+                var hw = config.TileWidth * .5;
+                var hh = config.TileHeight * .5;
+
+                if (this._towerPreview.x > tx - hw && this._towerPreview.x < tx + hw && this._towerPreview.y > ty - hh && this._towerPreview.y < ty + hh) {
+                    isAvailable = true;
+                    this._blankTileX = tx;
+                    this._blankTileY = ty;
+                    this._blankTileIndex = i;
+                }     
             }
-            this.y = 455;
-        }
-        */
+                        
+            if (isAvailable) {
+                console.log("available");
+                this._rangePreview.visible = true;
 
+            } else {
+                console.log("NOT available");
+                this._rangePreview.visible = false;
+                this._blankTileIndex = -1; // means not available
+                
+            }
+        }
+      
     }
 }

@@ -60,7 +60,7 @@ var objects;
         /**Create a circle where the center is tower, radius is fireRange, and add it to current scene*/
         Tower.prototype.createRangeCircle = function () {
             this._rangeCircle = new createjs.Shape();
-            this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(0,0,0,1)").drawCircle(this.x, this.y, this.getFireRange());
+            this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(255,0,0,1)").drawCircle(this.x, this.y, this.getFireRange()); //.beginStroke("rgba(255,255,255,1)")
             this._rangeCircle.alpha = 0;
             currentLevel.addChild(this._rangeCircle);
         };
@@ -101,7 +101,8 @@ var objects;
         };
         Tower.prototype.updateRangeCircle = function () {
             this._rangeCircle.graphics.clear();
-            this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(0,0,0,1)").drawCircle(this.x, this.y, this.getFireRange());
+            this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(255,0,0,1)").drawCircle(this.x, this.y, this.getFireRange());
+            //.beginStroke("rgba(0,0,0,1)").beginFill("rgba(0,0,100,0.3)")
         };
         Tower.prototype.updateFireRange = function () {
             switch (this._level) {

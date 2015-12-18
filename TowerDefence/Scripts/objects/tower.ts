@@ -76,6 +76,7 @@
             this._rangeCircle.alpha = 1;    
             //console.log("_needToUpdateCircle:" +this._needToUpdateCircle);   
         }
+
         outTower(event: createjs.MouseEvent): void {
             //event.currentTarget.alpha = 1;
             this._rangeCircle.alpha = 0;
@@ -90,7 +91,7 @@
         /**Create a circle where the center is tower, radius is fireRange, and add it to current scene*/
         public createRangeCircle(): void {
             this._rangeCircle = new createjs.Shape();
-            this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(0,0,0,1)").drawCircle(this.x, this.y, this.getFireRange());
+            this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(255,0,0,1)").drawCircle(this.x, this.y, this.getFireRange());//.beginStroke("rgba(255,255,255,1)")
             this._rangeCircle.alpha = 0;
             currentLevel.addChild(this._rangeCircle);
         }
@@ -140,7 +141,8 @@
 
         public updateRangeCircle(): void {
             this._rangeCircle.graphics.clear();
-            this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(0,0,0,1)").drawCircle(this.x, this.y, this.getFireRange());
+            this._rangeCircle.graphics.setStrokeStyle(1).beginStroke("rgba(255,0,0,1)").drawCircle(this.x, this.y, this.getFireRange());
+            //.beginStroke("rgba(0,0,0,1)").beginFill("rgba(0,0,100,0.3)")
         }
 
         public updateFireRange(): void {
