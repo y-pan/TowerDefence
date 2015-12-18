@@ -15,15 +15,17 @@ var objects;
      */
     var Tower = (function (_super) {
         __extends(Tower, _super);
-        /**This constructor will automatically add this object to the global currentLevel, which is objects.Scene extends createjs.Container*/
+        /**This constructor will automatically add this object to the global currentLevel, which is objects.Scene extends createjs.Container.
+         * Example: (assets.getResult(this._towerType + "1"), this._towerType, this._towerPreview.x, this._towerPreview.y)
+         */
         function Tower(imageString, towerType, x, y) {
             _super.call(this, imageString);
             this._imageString = imageString;
             this._towerType = towerType;
             this.x = x;
             this.y = y;
-            this._width = 50;
-            this._height = 50;
+            this._width = config.TileWidth;
+            this._height = config.TileHeight;
             this.regX = this._width * .5;
             this.regY = this._height * .5;
             this._level = config.TowerLevel_1;

@@ -52,7 +52,8 @@ var currentState: objects.Scene;
 var mapString: Array<String>;  // define what are one the ground, by this string array
 var mapSetter: any; // generate tiles on the ground, using string array
 var directionTiles: objects.DirectionTile[];
-
+var blankTiles: objects.Tile[]; // to store blankTiles, when drag/drop to add a new tower, check if within anyone of blankTiles, tower has to be one the blankTile.
+var startTile: objects.DirectionTile; // special one, just to initialize enemy's direction;
 var scoreBoard: managers.ScoreBoard;
 var collision: managers.Collision;
 var waveManager: managers.WaveManager;
@@ -87,6 +88,7 @@ var manifest = [
 
     { id: "path", src: "../../Assets/images/path.png" },
     { id: "grass", src: "../../Assets/images/grass.png" },
+    { id: "startPoint", src: "../../Assets/images/startPoint.png" },
 
     { id: "start_button", src: "../../Assets/images/start_button.png" },
     { id: "menu_button", src: "../../Assets/images/menu_button.png" },
@@ -121,23 +123,15 @@ var manifest = [
     { id: "powerUp", src: "../../Assets/audio/powerUp.mp3" }    
 ];
 
-// data for spriteSheet
 redDragonData = {
     "images": [
         "../../Assets/images/redDragon.png"
     ],
-    "frames": [
-        [0, 0, 64, 64, 0, 32, 32],
-        [64, 0, 64, 64, 0, 32, 32],
-        [128, 0, 64, 64, 0, 32, 32],
-        [192, 0, 64, 64, 0, 32, 32]
-    ],
+    "frames": { width: 40, height: 40, count: 4, spacing: 0, margin: 0 },
     "animations": {
-        fly: [0, 3, true, 0.2]
+        "fly": [0, 1, 0.2]
     }
 };
-
-
 function preload(): void {
     assets = new createjs.LoadQueue();
     assets.installPlugin(createjs.Sound);

@@ -15,13 +15,15 @@ var objects;
      */
     var GameObject = (function (_super) {
         __extends(GameObject, _super);
-        function GameObject(atlas, imageString) {
-            _super.call(this, atlas, imageString);
-            this._tag = imageString;
-            this._width = this.getBounds().width;
-            this._height = this.getBounds().height;
+        function GameObject(atlas, animation, x, y) {
+            _super.call(this, atlas, animation);
+            //this._tag = imageString;
+            this._width = config.TileWidth;
+            this._height = config.TileHeight;
             this.regX = this._width * .5;
             this.regY = this._height * .5;
+            this.x = x;
+            this.y = y;
             //this._isColliding = false;
         }
         /** Get position of object */

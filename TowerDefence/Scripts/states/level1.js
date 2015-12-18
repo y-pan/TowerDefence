@@ -20,21 +20,116 @@ var states;
         }
         // PUBLIC 
         Level1.prototype.start = function () {
+            // mapString
+            mapString = new Array();
+            mapString = [
+                " ", " ", " ", "sd", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ",
+                " ", " ", " ", "p", " ", " ", "r", "p", "p", "p", "p", "p", "p", "d", " ", " ",
+                " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
+                " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
+                " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
+                " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
+                " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
+                " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
+                " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
+                " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
+                " ", " ", " ", "r", "p", "p", "u", " ", " ", " ", " ", " ", " ", "e", " ", " ",
+                "m1", "m2", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
+            ];
+            // arrange tiles
+            blankTiles = new Array();
+            directionTiles = [];
+            weaponButtons = [];
+            for (var i = 0; i < mapString.length; i++) {
+                // set the x,y coordinates for tile, according to i(index)
+                var gridY = 0, gridX = 0;
+                gridY = Math.floor(i / config.TileNumInRow); // config.TileNumInRow = 16
+                gridX = i % config.TileNumInRow;
+                var y = gridY * config.TileHeight + config.TileHeight * .5; // 
+                var x = gridX * config.TileWidth + config.TileWidth * .5;
+                //console.log("grid:["+gridY+"|"+gridX+"] x,y:"+x+","+y);
+                switch (mapString[i]) {
+                    // blank=grass
+                    case " ":
+                        // add new blank tile to level 
+                        // only blank tile can be placed a tower, store in blankTiles
+                        // in tower drag/drop event detect the blank area;                        
+                        blankTiles.push(new objects.Tile("grass", config.TILE_BLANK, x, y, true));
+                        this.addChild(blankTiles[blankTiles.length - 1]);
+                        break;
+                    // direction
+                    case "d":
+                        // add new DOWN directiontile to level
+                        // add to directionTiles, to be used for collision
+                        directionTiles.push(new objects.DirectionTile("direction_down", config.TILE_DIRECTION, x, y, config.DIRECTION_DOWN, true));
+                        this.addChild(directionTiles[directionTiles.length - 1]);
+                        break;
+                    case "u":
+                        // add new UP directiontile to level
+                        // add to directionTiles, to be used for collision
+                        directionTiles.push(new objects.DirectionTile("direction_up", config.TILE_DIRECTION, x, y, config.DIRECTION_UP, true));
+                        this.addChild(directionTiles[directionTiles.length - 1]);
+                        break;
+                    case "l":
+                        // add new LEFT directiontile to level
+                        // add to directionTiles, to be used for collision
+                        directionTiles.push(new objects.DirectionTile("direction_left", config.TILE_DIRECTION, x, y, config.DIRECTION_LEFT, true));
+                        this.addChild(directionTiles[directionTiles.length - 1]);
+                        break;
+                    case "r":
+                        // add new RIGHT directiontile to level
+                        // add to directionTiles, to be used for collision
+                        directionTiles.push(new objects.DirectionTile("direction_right", config.TILE_DIRECTION, x, y, config.DIRECTION_RIGHT, true));
+                        this.addChild(directionTiles[directionTiles.length - 1]);
+                        break;
+                    // menu => weaponButton, drag/drop to build tower
+                    case "m1":
+                        weaponButtons.push(new objects.WeaponButton(config.TowerType_1, x, y));
+                        break;
+                    case "m2":
+                        weaponButtons.push(new objects.WeaponButton(config.TowerType_2, x, y));
+                        break;
+                    // start piont with direction
+                    case "sd":
+                        // START-down point for enemy, it has direction to initialize enemy's direction, while no need to be added to directionTiles to check collision
+                        startTile = new objects.DirectionTile("startPoint", config.TILE_START, x, y, config.DIRECTION_DOWN, true);
+                        this.addChild(startTile);
+                        break;
+                    case "su":
+                        // START-up point for enemy, it has direction to initialize enemy's direction, while no need to be added to directionTiles to check collision
+                        startTile = new objects.DirectionTile("startPoint", config.TILE_START, x, y, config.DIRECTION_UP, true);
+                        this.addChild(startTile);
+                        break;
+                    case "sl":
+                        // START-left point for enemy, it has direction to initialize enemy's direction, while no need to be added to directionTiles to check collision
+                        startTile = new objects.DirectionTile("startPoint", config.TILE_START, x, y, config.DIRECTION_LEFT, true);
+                        this.addChild(startTile);
+                        break;
+                    case "sr":
+                        // START-right point for enemy, it has direction to initialize enemy's direction, while no need to be added to directionTiles to check collision
+                        startTile = new objects.DirectionTile("startPoint", config.TILE_START, x, y, config.DIRECTION_RIGHT, true);
+                        this.addChild(startTile);
+                        break;
+                    // path
+                    case "p":
+                        // add path tile to level;
+                        this.addChild(new objects.Tile("path", config.TILE_PATH, x, y, true));
+                        break;
+                }
+            }
+            ;
+            console.log("startPoint: " + startTile.x + "," + startTile.y + "reg:" + startTile.regX + "," + startTile.regY);
             createjs.Sound.play("Forest-Chase", null, null, null, 1, null, null);
             createjs.Sound.play("horn", null, 700);
-            weaponButtons = [];
             towers = [];
             enemies = [];
             bullets1 = [];
             bullets2 = [];
             bullets3 = [];
-            directionTiles = [];
+            //directionTiles = [];
             collision = new managers.Collision();
             scoreBoard = new managers.ScoreBoard(100, 500, 1);
             waveManager = new managers.WaveManager(scoreBoard.getLevel());
-            // background
-            this._background = new objects.Background("background_1");
-            this.addChild(this._background);
             // labels
             this._livesLabel = new objects.Label("Lives: " + scoreBoard.getLives().toString(), "15px Showcard Gothic", "#00f", 5, 10, false);
             this.addChild(this._livesLabel);
@@ -42,7 +137,6 @@ var states;
             this.addChild(this._restEnemiesLabel);
             this._moneyLabel = new objects.Label("Money: " + scoreBoard.getMoney().toString(), "15px Showcard Gothic", "#0ff", 5, 30, false);
             this.addChild(this._moneyLabel);
-            //"Tower Defence","30px Showcard Gothic", "#000", canvasWidth*.5, 50,true
             // bullet arrays
             bullets1.push(new objects.Bullet(assets.getResult("bullet1"), "bullet", -30, -30, 5, 4, 8, 8, true));
             this.addChild(bullets1[0]);
@@ -50,17 +144,6 @@ var states;
             this.addChild(bullets2[0]);
             bullets3.push(new objects.Bullet(assets.getResult("bullet3"), "bullet", -30, -30, 15, 4, 8, 8, true));
             this.addChild(bullets3[0]);
-            this._menu = new createjs.Bitmap(assets.getResult("menu_bar"));
-            this._menu.x = 0;
-            this._menu.y = 432;
-            this.addChild(this._menu);
-            // direction tiles
-            directionTiles.push(new objects.DirectionTile("direction_right", config.DIRECTION_RIGHT, 120, 420));
-            directionTiles.push(new objects.DirectionTile("direction_right", config.DIRECTION_RIGHT, 320, 48));
-            directionTiles.push(new objects.DirectionTile("direction_up", config.DIRECTION_UP, 320, 420));
-            directionTiles.push(new objects.DirectionTile("direction_down", config.DIRECTION_DOWN, 570, 48));
-            weaponButtons.push(new objects.WeaponButton(config.TowerType_1, 1));
-            weaponButtons.push(new objects.WeaponButton(config.TowerType_2, 2));
             // for game over
             this._gameOverLabel = new objects.Label("Game Over", "30px Consolas", "#0ff", 450, 100, true);
             this._gameOverLabel.textAlign = "center";
@@ -111,7 +194,7 @@ var states;
                     this._livesLabel.text = "Lives: " + scoreBoard.getLives();
                     this._moneyLabel.text = "Money: " + scoreBoard.getMoney();
                     //console.log("hehe");
-                    console.log("enemies k.esc-On-total: " + waveManager.getEnemyKilledOrEscaped() + " - " + waveManager.getCurrentNumberOfEnemy() + " - " + waveManager.getTotalNumberOfEnemy());
+                    //console.log("enemies k.esc-On-total: " + waveManager.getEnemyKilledOrEscaped() + " - " + waveManager.getCurrentNumberOfEnemy() + " - " + waveManager.getTotalNumberOfEnemy());
                     this._restEnemiesLabel.text = "Enemies: " + (waveManager.getTotalNumberOfEnemy() - waveManager.getCurrentNumberOfEnemy());
                 }
                 else {

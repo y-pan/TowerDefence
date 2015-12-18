@@ -7,14 +7,18 @@ var objects;
 (function (objects) {
     var Tile = (function (_super) {
         __extends(Tile, _super);
-        /**General Tile object, to be inherited by direction tile */
-        function Tile(pathString, tag, x, y) {
+        /**General Tile object, to be inherited by direction tile, width and height are same with config.TileWidth, TileHeight*/
+        function Tile(pathString, tag, x, y, isCenterd) {
             _super.call(this, assets.getResult(pathString));
             this._tag = tag ? tag : config.TILE_BLANK;
+            this._width = config.TileWidth;
+            this._height = config.TileHeight;
             this.x = x;
             this.y = y;
-            this._width = 40;
-            this._height = 40;
+            if (isCenterd) {
+                this.regX = this._width * .5;
+                this.regY = this._height * .5;
+            }
         }
         return Tile;
     })(createjs.Bitmap);

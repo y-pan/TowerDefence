@@ -128,7 +128,7 @@
         }
         
         private _pushNewEnemy(): void {
-            enemies.push(new objects.Enemy(redDragonAtlas, "redDragon", 30, 128, 10, 64, 64, 1, config.DIRECTION_DOWN));             
+            enemies.push(new objects.Enemy(redDragonAtlas, "fly", 30, startTile.x, startTile.y, 1, startTile.getDirection()));             
         }
     }
 } 

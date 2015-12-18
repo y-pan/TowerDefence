@@ -16,6 +16,7 @@
 /// <reference path="../objects/enemy.ts" />
 /// <reference path="../objects/bullet.ts" />
 /// <reference path="../objects/tower.ts" />
+/// <reference path="../objects/tile.ts" />
 /// <reference path="../objects/directiontile.ts" />
 /// <reference path="../managers/scoreboard.ts" />
 /// <reference path="../objects/scene.ts" />
@@ -30,8 +31,11 @@ var stage;
 var stats;
 var state;
 var currentState;
-var mapSting; // define what are one the ground, by this string array
+var mapString; // define what are one the ground, by this string array
 var mapSetter; // generate tiles on the ground, using string array
+var directionTiles;
+var blankTiles; // to store blankTiles, when drag/drop to add a new tower, check if within anyone of blankTiles, tower has to be one the blankTile.
+var startTile; // special one, just to initialize enemy's direction;
 var scoreBoard;
 var collision;
 var waveManager;
@@ -40,7 +44,6 @@ var bullets2;
 var bullets3;
 var enemies;
 var towers;
-var directionTiles;
 var weaponButtons;
 var canvasWidth = 640;
 var canvasHeight = 480;
@@ -56,6 +59,7 @@ var manifest = [
     { id: "menu_bar", src: "../../Assets/images/menu_bar.png" },
     { id: "path", src: "../../Assets/images/path.png" },
     { id: "grass", src: "../../Assets/images/grass.png" },
+    { id: "startPoint", src: "../../Assets/images/startPoint.png" },
     { id: "start_button", src: "../../Assets/images/start_button.png" },
     { id: "menu_button", src: "../../Assets/images/menu_button.png" },
     { id: "next_button", src: "../../Assets/images/next_button.png" },
@@ -80,19 +84,13 @@ var manifest = [
     { id: "Forest-Chase", src: "../../Assets/audio/Forest-Chase.mp3" },
     { id: "powerUp", src: "../../Assets/audio/powerUp.mp3" }
 ];
-// data for spriteSheet
 redDragonData = {
     "images": [
         "../../Assets/images/redDragon.png"
     ],
-    "frames": [
-        [0, 0, 64, 64, 0, 32, 32],
-        [64, 0, 64, 64, 0, 32, 32],
-        [128, 0, 64, 64, 0, 32, 32],
-        [192, 0, 64, 64, 0, 32, 32]
-    ],
+    "frames": { width: 40, height: 40, count: 4, spacing: 0, margin: 0 },
     "animations": {
-        fly: [0, 3, true, 0.2]
+        "fly": [0, 1, 0.2]
     }
 };
 function preload() {

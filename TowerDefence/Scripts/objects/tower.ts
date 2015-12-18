@@ -30,7 +30,9 @@
 
         protected _rangeCircle: createjs.Shape;
        
-        /**This constructor will automatically add this object to the global currentLevel, which is objects.Scene extends createjs.Container*/
+        /**This constructor will automatically add this object to the global currentLevel, which is objects.Scene extends createjs.Container.
+         * Example: (assets.getResult(this._towerType + "1"), this._towerType, this._towerPreview.x, this._towerPreview.y)
+         */
         constructor(imageString:any, towerType:string, x: number, y: number) {
             super(imageString);
 
@@ -38,8 +40,10 @@
             this._towerType = towerType;
             this.x = x;
             this.y = y;
-            this._width = 50;
-            this._height = 50;
+            
+            this._width = config.TileWidth;
+            this._height = config.TileHeight;
+            
             this.regX = this._width * .5;
             this.regY = this._height * .5;
             this._level = config.TowerLevel_1;

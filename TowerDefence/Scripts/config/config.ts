@@ -14,11 +14,12 @@ module config {
     export var STATE_LEVEL3: number = 3;
     export var STATE_OVER: number = 4;
 
-    // tile tag string
+    // tile tag/type string
     export var TILE_BLANK: number = 0;
     export var TILE_PATH: number = 1;
     export var TILE_DIRECTION: number = 2;
     export var TILE_MENU: number = 3;
+    export var TILE_START: number = 4;
     // direction
     export var DIRECTION_UP: number = -1;
     export var DIRECTION_DOWN: number = 1;
@@ -45,4 +46,11 @@ module config {
     export var FireColdTime_1: number = 80;
     export var FireCodeTime_2: number = 70;
     export var FireCodeTime_3: number = 50;
+
+    // size of tile image
+    export var TileWidth: number = 40;
+    export var TileHeight: number = 40;
+    export var TileNumInRow: number = 640 / TileWidth; // canvas Width 640
+    export var TileNumInCol: number = 480 / TileHeight; // canvas height 480
+   
 } 

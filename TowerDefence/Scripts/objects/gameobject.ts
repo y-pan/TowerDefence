@@ -16,15 +16,18 @@
         protected _tag: string;
 
 
-        constructor(atlas:createjs.SpriteSheet, imageString: string) {
+        constructor(atlas:createjs.SpriteSheet, animation: string, x:number, y:number) {
 
-            super(atlas, imageString);
+            super(atlas, animation);
 
-            this._tag = imageString;
-            this._width = this.getBounds().width;
-            this._height = this.getBounds().height;
+            //this._tag = imageString;
+            this._width = config.TileWidth;
+            this._height = config.TileHeight;
             this.regX = this._width * .5;
             this.regY = this._height * .5;
+
+            this.x = x;
+            this.y = y;
             //this._isColliding = false;
 
         }
@@ -57,10 +60,6 @@
         public getName(): string {
             return this._tag;
         }
-
-        
-
-
 
     }
 }

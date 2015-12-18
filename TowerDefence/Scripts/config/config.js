@@ -13,11 +13,12 @@ var config;
     config.STATE_LEVEL2 = 2;
     config.STATE_LEVEL3 = 3;
     config.STATE_OVER = 4;
-    // tile tag string
+    // tile tag/type string
     config.TILE_BLANK = 0;
     config.TILE_PATH = 1;
     config.TILE_DIRECTION = 2;
     config.TILE_MENU = 3;
+    config.TILE_START = 4;
     // direction
     config.DIRECTION_UP = -1;
     config.DIRECTION_DOWN = 1;
@@ -39,5 +40,10 @@ var config;
     config.FireColdTime_1 = 80;
     config.FireCodeTime_2 = 70;
     config.FireCodeTime_3 = 50;
+    // size of tile image
+    config.TileWidth = 40;
+    config.TileHeight = 40;
+    config.TileNumInRow = 640 / config.TileWidth; // canvas Width 640
+    config.TileNumInCol = 480 / config.TileHeight; // canvas height 480
 })(config || (config = {}));
 //# sourceMappingURL=config.js.map

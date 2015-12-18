@@ -12,16 +12,17 @@
         protected _lives: number;
         protected _speed: number;
         protected _oldSpeed: number;
+        //protected _originalDirection: number;// no need to store it since it is in the globle startTile
         protected _direction: number;
-        protected _width: number;
-        protected _height: number;
+        //protected _width: number;
+        //protected _height: number;
         protected _isDead: boolean;
         protected _nextPosition: createjs.Point; // for tank and bullet to track ememy
 
         protected _orignalLives: number;
         protected _orignalX: number;
         protected _orignalY: number;
-      
+       
         protected _attack: number;
         protected _money: number;
 
@@ -30,13 +31,13 @@
         protected _lifeBarBorder: createjs.Shape;
 
         /** direction: up -1, down 1, west -2, east 2. Assume that escapePoint(heart) is only at the right or down side of screen. However it's better to make an object for escapePoint and check collision between enemy and escapePoint, so that escapePoint can be anywhere*/
-        constructor(atlas: createjs.SpriteSheet, imageString: string, lives: number, x: number, y: number, width: number, height: number, speed:number, direction:number) {
-            super(atlas, imageString);
+        constructor(atlas: createjs.SpriteSheet, animation: string, lives: number, x: number, y: number, speed:number, direction:number) {
+            super(atlas, animation, x, y);
 
-            this.x = x;
-            this.y = y;
-            this._orignalX = this.x;
-            this._orignalY = this.y;     
+            //this.x = x;
+            //this.y = y;
+            this._orignalX = x;
+            this._orignalY = y;     
                   
             this._lives = lives;
             this._orignalLives = this._lives;// for reset to reuse
@@ -44,11 +45,6 @@
             this._speed = speed;
             this._oldSpeed = this._speed; // used to recover the speed when the dead enemy goAgain()
             this._direction = direction;
-
-            this._width = width ? width : 64;
-            this._height = height ? height : 64;
-            this.regX = this._width * .5;
-            this.regY = this._height * .5;
             
             this._attack = 10;
             this._isDead = false;
@@ -56,16 +52,14 @@
             this._money = 50;
 
             this._lifeBarBorder = new createjs.Shape();
-            this._lifeBarBorder.graphics.beginStroke("#fff").drawRect(this.x - this._width + 10, this.y - this._height, this._orignalLives, 4);            
+            this._lifeBarBorder.graphics.beginStroke("#fff").drawRect(this.x - this._orignalLives * .5, this.y - this._height * .5 - 4, this._orignalLives, 4);            
 
             this._lifeBar = new createjs.Shape();
-            this._lifeBar.graphics.beginFill("#0f5").drawRect(this.x - this._width + 10, this.y - this._height, this._lives, 4);        
+            this._lifeBar.graphics.beginFill("#0f5").drawRect(this.x - this._orignalLives * .5, this.y - this._height * .5 - 4, this._lives, 4);        
             currentLevel.addChild(this._lifeBar);
             currentLevel.addChild(this._lifeBarBorder);
 
             currentLevel.addChild(this);
-
-           
         }
 
         public getMoney(): number { return this._money; }
@@ -103,7 +97,8 @@
             this._moveWith_Speed_Drection();   
             //this._updateLifeBar();              
 
-            if (this.y >= canvasHeight - 64 || this.x >= canvasWidth) { // assume that final point(heart) is only at the right or down side of screen 
+            // ????????????????
+            if (this.y >= canvasHeight|| this.x >= canvasWidth) { // assume that final point(heart) is only at the right or down side of screen 
                 this._doAttack();
                 this.dieOrRecycle();
             }         
@@ -115,21 +110,22 @@
             this._lifeBarBorder.graphics.clear();
 
             if (this._lives >= this._orignalLives * .8) {
-                this._lifeBar.graphics.beginFill("#0f5").drawRect(this.x - this._width + 10, this.y - this._height, this._lives, 4);
+                this._lifeBar.graphics.beginFill("#0f5").drawRect(this.x - this._orignalLives * .5, this.y - this._height * .5 - 4, this._lives, 4);
             } else if (this._lives >= this._orignalLives * .4) {
-                this._lifeBar.graphics.beginFill("#ff0").drawRect(this.x - this._width + 10, this.y - this._height, this._lives, 4);
+                this._lifeBar.graphics.beginFill("#ff0").drawRect(this.x - this._orignalLives * .5, this.y - this._height * .5 - 4, this._lives, 4);
             } else {
-                this._lifeBar.graphics.beginFill("#f00").drawRect(this.x - this._width + 10, this.y - this._height, this._lives, 4);
+                this._lifeBar.graphics.beginFill("#f00").drawRect(this.x - this._orignalLives * .5, this.y - this._height * .5 - 4, this._lives, 4);
             }
 
             
-            this._lifeBarBorder.graphics.beginStroke("#fff").drawRect(this.x - this._width + 10, this.y - this._height, this._orignalLives, 4);    
+            this._lifeBarBorder.graphics.beginStroke("#fff").drawRect(this.x - this._orignalLives * .5, this.y - this._height * .5 - 4, this._orignalLives, 4);    
             
         }
 
         private _doAttack(): void {
             scoreBoard.removeLives(this._attack);
         }
+
         private _moveWith_Speed_Drection(): void {
             switch (this._direction) {
                 case config.DIRECTION_DOWN:
@@ -186,9 +182,6 @@
         public slowSpeed(percentage: number, period: number): void {
 
             this._speed *= percentage;
-            
         }
-        
-
     }
 } 

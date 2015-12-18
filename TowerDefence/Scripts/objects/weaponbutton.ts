@@ -19,13 +19,15 @@ module objects {
         /**Added this weaponbutton object to currentLevel by its constructor.
          * example: ("ta1",1)
          */
-        constructor(towerType: string, gridNumber:number) {
-            super(towerType + 1, 32, 455, 50, 50, true);
+        constructor(towerType: string, x:number,y:number) {
+            super(towerType + 1, 32, 455, config.TileWidth, config.TileHeight, true);
 
             this._towerType = towerType;
-            this._gridNumber = gridNumber ? gridNumber : 1;
-            this._setGridPosition();
-            
+            //this._gridNumber = gridNumber ? gridNumber : 1;
+            //this._setGridPosition();
+            this.x = x;
+            this.y = y;
+
             this._createPreview();
             this._isDragging = false;
 
@@ -68,8 +70,8 @@ module objects {
 
             // tower preview
             this._towerPreview = new createjs.Bitmap(assets.getResult(this._towerType + 1));
-            this._towerPreview.regX = 25;
-            this._towerPreview.regY = 25;
+            this._towerPreview.regX = config.TileWidth * .5;
+            this._towerPreview.regY = config.TileHeight * .5;
 
             // fire range preview
             this._rangePreview = new createjs.Shape();
@@ -93,6 +95,7 @@ module objects {
             this._rangePreview.y = stage.mouseY;
         }
 
+        /*
         private _setGridPosition(): void {
             switch (this._gridNumber) {
                 case 1:
@@ -128,5 +131,7 @@ module objects {
             }
             this.y = 455;
         }
+        */
+
     }
 }

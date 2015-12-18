@@ -16,28 +16,24 @@ var objects;
     var Enemy = (function (_super) {
         __extends(Enemy, _super);
         /** direction: up -1, down 1, west -2, east 2. Assume that escapePoint(heart) is only at the right or down side of screen. However it's better to make an object for escapePoint and check collision between enemy and escapePoint, so that escapePoint can be anywhere*/
-        function Enemy(atlas, imageString, lives, x, y, width, height, speed, direction) {
-            _super.call(this, atlas, imageString);
-            this.x = x;
-            this.y = y;
-            this._orignalX = this.x;
-            this._orignalY = this.y;
+        function Enemy(atlas, animation, lives, x, y, speed, direction) {
+            _super.call(this, atlas, animation, x, y);
+            //this.x = x;
+            //this.y = y;
+            this._orignalX = x;
+            this._orignalY = y;
             this._lives = lives;
             this._orignalLives = this._lives; // for reset to reuse
             this._speed = speed;
             this._oldSpeed = this._speed; // used to recover the speed when the dead enemy goAgain()
             this._direction = direction;
-            this._width = width ? width : 64;
-            this._height = height ? height : 64;
-            this.regX = this._width * .5;
-            this.regY = this._height * .5;
             this._attack = 10;
             this._isDead = false;
             this._money = 50;
             this._lifeBarBorder = new createjs.Shape();
-            this._lifeBarBorder.graphics.beginStroke("#fff").drawRect(this.x - this._width + 10, this.y - this._height, this._orignalLives, 4);
+            this._lifeBarBorder.graphics.beginStroke("#fff").drawRect(this.x - this._orignalLives * .5, this.y - this._height * .5 - 4, this._orignalLives, 4);
             this._lifeBar = new createjs.Shape();
-            this._lifeBar.graphics.beginFill("#0f5").drawRect(this.x - this._width + 10, this.y - this._height, this._lives, 4);
+            this._lifeBar.graphics.beginFill("#0f5").drawRect(this.x - this._orignalLives * .5, this.y - this._height * .5 - 4, this._lives, 4);
             currentLevel.addChild(this._lifeBar);
             currentLevel.addChild(this._lifeBarBorder);
             currentLevel.addChild(this);
@@ -66,7 +62,8 @@ var objects;
             this._updateLifeBar();
             this._moveWith_Speed_Drection();
             //this._updateLifeBar();              
-            if (this.y >= canvasHeight - 64 || this.x >= canvasWidth) {
+            // ????????????????
+            if (this.y >= canvasHeight || this.x >= canvasWidth) {
                 this._doAttack();
                 this.dieOrRecycle();
             }
@@ -75,15 +72,15 @@ var objects;
             this._lifeBar.graphics.clear();
             this._lifeBarBorder.graphics.clear();
             if (this._lives >= this._orignalLives * .8) {
-                this._lifeBar.graphics.beginFill("#0f5").drawRect(this.x - this._width + 10, this.y - this._height, this._lives, 4);
+                this._lifeBar.graphics.beginFill("#0f5").drawRect(this.x - this._orignalLives * .5, this.y - this._height * .5 - 4, this._lives, 4);
             }
             else if (this._lives >= this._orignalLives * .4) {
-                this._lifeBar.graphics.beginFill("#ff0").drawRect(this.x - this._width + 10, this.y - this._height, this._lives, 4);
+                this._lifeBar.graphics.beginFill("#ff0").drawRect(this.x - this._orignalLives * .5, this.y - this._height * .5 - 4, this._lives, 4);
             }
             else {
-                this._lifeBar.graphics.beginFill("#f00").drawRect(this.x - this._width + 10, this.y - this._height, this._lives, 4);
+                this._lifeBar.graphics.beginFill("#f00").drawRect(this.x - this._orignalLives * .5, this.y - this._height * .5 - 4, this._lives, 4);
             }
-            this._lifeBarBorder.graphics.beginStroke("#fff").drawRect(this.x - this._width + 10, this.y - this._height, this._orignalLives, 4);
+            this._lifeBarBorder.graphics.beginStroke("#fff").drawRect(this.x - this._orignalLives * .5, this.y - this._height * .5 - 4, this._orignalLives, 4);
         };
         Enemy.prototype._doAttack = function () {
             scoreBoard.removeLives(this._attack);
