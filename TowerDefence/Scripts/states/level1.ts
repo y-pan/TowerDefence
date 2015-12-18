@@ -154,9 +154,9 @@
                 }
             };
 
-            console.log("startPoint: " + startTile.x + "," + startTile.y + "reg:" + startTile.regX +","+ startTile.regY);
+            //console.log("startPoint: " + startTile.x + "," + startTile.y + "reg:" + startTile.regX +","+ startTile.regY);
 
-            createjs.Sound.play("Forest-Chase", null, null, null, 1, null, null);
+            createjs.Sound.play("Forest-Chase", null, null, null, 1, 0.1, null);
             createjs.Sound.play("horn",null,700);
             
             towers = [];

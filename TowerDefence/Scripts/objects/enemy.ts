@@ -128,6 +128,7 @@
         }
 
         private _doAttack(): void {
+            createjs.Sound.play("dingdong");
             scoreBoard.removeLives(this._attack);
         }
 

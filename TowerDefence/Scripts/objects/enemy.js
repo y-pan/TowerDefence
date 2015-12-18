@@ -88,6 +88,7 @@ var objects;
             this._lifeBarBorder.graphics.beginStroke("#fff").drawRect(this.x - this._orignalLives * .5, this.y - this._height * .5 - 4, this._orignalLives, 4);
         };
         Enemy.prototype._doAttack = function () {
+            createjs.Sound.play("dingdong");
             scoreBoard.removeLives(this._attack);
         };
         Enemy.prototype._moveWith_Speed_Drection = function () {

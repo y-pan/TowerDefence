@@ -59,6 +59,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\audio\blop.mp3" />
+    <Content Include="Assets\audio\dingdong.mp3" />
     <Content Include="Assets\audio\Forest-Chase.mp3" />
     <Content Include="Assets\audio\horn.mp3" />
     <Content Include="Assets\audio\powerUp.mp3" />

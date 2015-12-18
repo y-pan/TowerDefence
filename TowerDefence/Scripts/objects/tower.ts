@@ -267,7 +267,9 @@
         private _shoot(): void {
             this._nowTicks = createjs.Ticker.getTicks();
             if (this._nowTicks - this._oldTicks >= this._coldTime) {
+                
                 this._shootBullet();
+                createjs.Sound.play("blop",null,null,null,null,0.3);
             }
         }
         private _shootBullet(): void {

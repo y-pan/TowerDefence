@@ -119,6 +119,10 @@ module objects {
 
                 if (this._towerPreview.x > tx - hw && this._towerPreview.x < tx + hw && this._towerPreview.y > ty - hh && this._towerPreview.y < ty + hh) {
                     isAvailable = true;
+                    //this._towerPreview.x = tx; // skipping too much, seems not visual comfortable
+                    //this._towerPreview.y = ty;
+                    this._rangePreview.x = tx;
+                    this._rangePreview.y = ty;
                     this._blankTileX = tx;
                     this._blankTileY = ty;
                     this._blankTileIndex = i;

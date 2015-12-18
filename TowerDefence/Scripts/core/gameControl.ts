@@ -122,7 +122,11 @@ var manifest = [
     { id: "horn", src: "../../Assets/audio/horn.mp3" },
     { id: "ta_buttonPress", src: "../../Assets/audio/ta_buttonPress.mp3" },
     { id: "Forest-Chase", src: "../../Assets/audio/Forest-Chase.mp3" },
-    { id: "powerUp", src: "../../Assets/audio/powerUp.mp3" }    
+    { id: "powerUp", src: "../../Assets/audio/powerUp.mp3" },
+    { id: "dingdong", src: "../../Assets/audio/dingdong.mp3" },
+    { id: "blop", src: "../../Assets/audio/blop.mp3" }
+
+    
 ];
 
 redDragonData = {
