@@ -66,7 +66,6 @@
     <Content Include="Assets\audio\powerUp.mp3" />
     <Content Include="Assets\audio\ta_buttonPress.mp3" />
     <Content Include="Assets\images\again_button.png" />
-    <Content Include="Assets\images\background_1.png" />
     <Content Include="Assets\images\bullet1.png" />
     <Content Include="Assets\images\bullet2.png" />
     <Content Include="Assets\images\bullet3.png" />
@@ -77,7 +76,6 @@
     <Content Include="Assets\images\exit_button.png" />
     <Content Include="Assets\images\grass.png" />
     <Content Include="Assets\images\home.png" />
-    <Content Include="Assets\images\menu_bar.png" />
     <Content Include="Assets\images\menu_button.png" />
     <Content Include="Assets\images\next_button.png" />
     <Content Include="Assets\images\path.png" />
