@@ -36,6 +36,7 @@ var mapSetter; // generate tiles on the ground, using string array
 var directionTiles;
 var blankTiles; // to store blankTiles, when drag/drop to add a new tower, check if within anyone of blankTiles, tower has to be one the blankTile.
 var startTile; // special one, just to initialize enemy's direction;
+var homeTile; // special one, enemy will detect collision between enemy and homeTile 
 var scoreBoard;
 var collision;
 var waveManager;
@@ -60,6 +61,7 @@ var manifest = [
     { id: "path", src: "../../Assets/images/path.png" },
     { id: "grass", src: "../../Assets/images/grass.png" },
     { id: "startPoint", src: "../../Assets/images/startPoint.png" },
+    { id: "home", src: "../../Assets/images/home.png" },
     { id: "start_button", src: "../../Assets/images/start_button.png" },
     { id: "menu_button", src: "../../Assets/images/menu_button.png" },
     { id: "next_button", src: "../../Assets/images/next_button.png" },

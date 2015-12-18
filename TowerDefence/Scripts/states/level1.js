@@ -33,7 +33,7 @@ var states;
                 " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
                 " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
                 " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
-                " ", " ", " ", "r", "p", "p", "u", " ", " ", " ", " ", " ", " ", "e", " ", " ",
+                " ", " ", " ", "r", "p", "p", "u", " ", " ", " ", " ", " ", " ", "h", " ", " ",
                 "m1", "m2", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
             ];
             // arrange tiles
@@ -109,6 +109,10 @@ var states;
                         // START-right point for enemy, it has direction to initialize enemy's direction, while no need to be added to directionTiles to check collision
                         startTile = new objects.DirectionTile("startPoint", config.TILE_START, x, y, config.DIRECTION_RIGHT, true);
                         this.addChild(startTile);
+                        break;
+                    case "h":
+                        homeTile = new objects.Tile("home", config.TILE_PATH, x, y, true);
+                        this.addChild(homeTile);
                         break;
                     // path
                     case "p":

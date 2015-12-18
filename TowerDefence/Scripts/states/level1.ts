@@ -44,7 +44,7 @@
                 " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
                 " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
                 " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
-                " ", " ", " ", "r", "p", "p", "u", " ", " ", " ", " ", " ", " ", "e", " ", " ",
+                " ", " ", " ", "r", "p", "p", "u", " ", " ", " ", " ", " ", " ", "h", " ", " ",
                 "m1", "m2", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
 
             ];
@@ -142,6 +142,10 @@
                         this.addChild(startTile);
                         break;
 
+                    case "h":
+                        homeTile = new objects.Tile("home", config.TILE_PATH, x, y, true);
+                        this.addChild(homeTile);
+                        break;
                     // path
                     case "p":
                         // add path tile to level;
@@ -160,6 +164,7 @@
             bullets1 = [];
             bullets2 = [];
             bullets3 = [];
+
             //directionTiles = [];
 
             collision = new managers.Collision();

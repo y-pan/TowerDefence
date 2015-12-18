@@ -97,11 +97,16 @@
             this._moveWith_Speed_Drection();   
             //this._updateLifeBar();              
 
-            // ????????????????
+            // check if get to homeTile, this can be put in collision as well
+            if (this.x > homeTile.x - 5 && this.x < homeTile.x + 5 && this.y > homeTile.y - 5 && this.y < homeTile.y + 5) {
+                this._doAttack();
+                this.dieOrRecycle();
+            }
+            /*
             if (this.y >= canvasHeight|| this.x >= canvasWidth) { // assume that final point(heart) is only at the right or down side of screen 
                 this._doAttack();
                 this.dieOrRecycle();
-            }         
+            }     */    
         }
 
         private _updateLifeBar(): void {
