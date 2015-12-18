@@ -9,11 +9,8 @@
  */
     export class Level1 extends objects.Scene {
 
-        // to do: add labels for restAnemyNumber
-
         // PRIVATE VAR
-        private _background: objects.Background;
-        //private _menu: createjs.Bitmap;
+
         private _live: number;
         
         //label
@@ -21,7 +18,9 @@
         private _livesLabel: objects.Label;
         private _moneyLabel: objects.Label;
         private _playAgainButton: objects.Button;
-
+        private _levelLabel: objects.Label; 
+        private _nextButton: objects.Button;
+        private _exitButton: objects.Button;
         // game over
         private _gameOverLabel: objects.Label;
 
@@ -30,6 +29,9 @@
 
         // PUBLIC 
         public start(): void {
+            
+             //*************************************** change this each level *************
+            scoreBoard = new managers.ScoreBoard(100, 500, 1);
 
             // mapString
             mapString = new Array<String>();
@@ -45,10 +47,13 @@
                 " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
                 " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
                 " ", " ", " ", "r", "p", "p", "u", " ", " ", " ", " ", " ", " ", "h", " ", " ",
-                "m1", "m2", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
+                "m1", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
 
             ];
-            
+             // ********************************************************************************
+
+            collision = new managers.Collision();
+            waveManager = new managers.WaveManager(scoreBoard.getLevel());
 
             // arrange tiles
             blankTiles = new Array<objects.Tile>();
@@ -66,7 +71,7 @@
 
                 var y = gridY * config.TileHeight + config.TileHeight * .5; // 
                 var x = gridX * config.TileWidth + config.TileWidth * .5;
-                //console.log("grid:["+gridY+"|"+gridX+"] x,y:"+x+","+y);
+               
                 switch (mapString[i]) {                   
                     
                     // blank=grass
@@ -80,9 +85,7 @@
 
                     // direction
                     case "d":
-                        // add new DOWN directiontile to level
-                        // add to directionTiles, to be used for collision
-                        directionTiles.push(new objects.DirectionTile("direction_down", config.TILE_DIRECTION, x, y, config.DIRECTION_DOWN,true));
+                        directionTiles.push(new objects.DirectionTile("direction_down", config.TILE_DIRECTION, x, y, config.DIRECTION_DOWN, true));//direction_down
                         this.addChild(directionTiles[directionTiles.length - 1]);
                         break;
 
@@ -154,8 +157,7 @@
                 }
             };
 
-            //console.log("startPoint: " + startTile.x + "," + startTile.y + "reg:" + startTile.regX +","+ startTile.regY);
-
+           
             createjs.Sound.play("Forest-Chase", null, null, null, 1, 0.1, null);
             createjs.Sound.play("horn",null,700);
             
@@ -164,22 +166,18 @@
             bullets1 = [];
             bullets2 = [];
             bullets3 = [];
-
-            //directionTiles = [];
-
-            collision = new managers.Collision();
-            scoreBoard = new managers.ScoreBoard(100,500,1);
-        
-            waveManager = new managers.WaveManager(scoreBoard.getLevel());
             
             // labels
+            
             this._livesLabel = new objects.Label("Lives: " + scoreBoard.getLives().toString(), "15px Showcard Gothic", "#00f", 5, 10, false);
             this.addChild(this._livesLabel);
-            this._restEnemiesLabel = new objects.Label("Enemies: " + (waveManager.getTotalNumberOfEnemy() - waveManager.getCurrentNumberOfEnemy()), "15px Showcard Gothic", "#f00", 5, 50, false);
-            this.addChild(this._restEnemiesLabel);
-
             this._moneyLabel = new objects.Label("Money: " + scoreBoard.getMoney().toString(), "15px Showcard Gothic", "#0ff", 5, 30, false);
             this.addChild(this._moneyLabel);
+
+            this._levelLabel = new objects.Label("Level: " + scoreBoard.getLevel(), "15px Showcard Gothic", "#00f", 550, 10, false);
+            this.addChild(this._levelLabel);
+            this._restEnemiesLabel = new objects.Label("Enemies: " + (waveManager.getTotalNumberOfEnemy() - waveManager.getCurrentNumberOfEnemy()), "15px Showcard Gothic", "#f00", 530, 30, false);
+            this.addChild(this._restEnemiesLabel);
 
             // bullet arrays
             
@@ -193,9 +191,9 @@
             this.addChild(bullets3[0]);
 
             // for game over
-            this._gameOverLabel = new objects.Label("Game Over", "30px Consolas", "#0ff", 450, 100, true);
+            this._gameOverLabel = new objects.Label("Game Over", "30px Showcard Gothic", "#000", 320, 100,true);
 
-            this._gameOverLabel.textAlign = "center";
+            //this._gameOverLabel.textAlign = "center";
             this.addChild(this._gameOverLabel);
             this._gameOverLabel.visible = false;
 
@@ -205,19 +203,38 @@
             this._playAgainButton.visible = false;
             this.addChild(this._playAgainButton);
 
+            // nextbutton
+            this._nextButton = new objects.Button("next_button", 320, 280, null, null, true);
+            this._nextButton.on("click", this._clickNextButton, this);
+            this._nextButton.visible = false;
+            this.addChild(this._nextButton);
+
+            // exitButton
+            this._exitButton = new objects.Button("exit_button", 320, 350, null, null, true);
+            this._exitButton.on("click", this._clickExitButton, this);
+            this._exitButton.visible = false;
+            this.addChild(this._exitButton);
 
             stage.addChild(this);
 
         }//end of start
 
-
-        private _clickPlayAgainButton(event: createjs.MouseEvent): void {
-            this._resetGame();
+        private _clickExitButton(event: createjs.MouseEvent): void {
+            console.log("trying to close window");
+            window.close();
         }
 
-        private _resetGame(): void {
-            
-            changeState(states.Level1);
+        private _clickNextButton(event: createjs.MouseEvent): void {
+            this._loadGame(config.STATE_LEVEL2);
+        }
+        private _clickPlayAgainButton(event: createjs.MouseEvent): void {
+            this._loadGame(config.STATE_LEVEL1);
+        }
+
+        private _loadGame(level:number): void {
+            state = level;
+            changeState(state);
+    
         }
 
         public update(): void {        
@@ -260,25 +277,21 @@
                     // update labels
                     this._livesLabel.text = "Lives: " + scoreBoard.getLives();
                     this._moneyLabel.text = "Money: " + scoreBoard.getMoney();
-                    //console.log("hehe");
-                    //console.log("enemies k.esc-On-total: " + waveManager.getEnemyKilledOrEscaped() + " - " + waveManager.getCurrentNumberOfEnemy() + " - " + waveManager.getTotalNumberOfEnemy());
+
                     this._restEnemiesLabel.text = "Enemies: " + (waveManager.getTotalNumberOfEnemy() - waveManager.getCurrentNumberOfEnemy());
 
-                } else { // all enemies completed, level completed, go to next level
-
-                    // show next level button, change state to next level
-                    // +-=-==--=-=-=--=-=-=
+                } else { 
+                    // level passed                  
                     console.log("Level Complete, need to go to next level");
-
+                    this._nextButton.visible = true;
                 }
-                
-                // check if level complete
+               
             } else {
+                // game over
                 this._gameOverLabel.visible = true;
                 this._playAgainButton.visible = true;
+                this._exitButton.visible = true;
             }
-            
-            // gameover or next level
             
         }// end of update 
 

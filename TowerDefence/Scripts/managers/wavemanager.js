@@ -20,7 +20,7 @@ var managers;
             this._isTimeToGo = false;
             this._setTotalNumberOfEnemyByLevel(); // set total number of emeies for this level
             this._currentNumberOfEnemy = 0; // current number of enemies that sent out
-            this._setEnemyColdTimeByLevel(); // set cold time for enemy, or frequency 
+            this._setEnemyColdTimeAndLivesByLevel(); // set cold time for enemy, or frequency 
             this._newEnemyGoes = false;
         }
         WaveManager.prototype.getEnemyKilledOrEscaped = function () {
@@ -36,16 +36,19 @@ var managers;
         WaveManager.prototype._setTotalNumberOfEnemyByLevel = function () {
             this._totalNumberOfEnemy = 20 * this._level; //40
         };
-        WaveManager.prototype._setEnemyColdTimeByLevel = function () {
+        WaveManager.prototype._setEnemyColdTimeAndLivesByLevel = function () {
             switch (this._level) {
                 case 1:
                     this._enemyColdTime = 200;
+                    this._enemyLives = 30;
                     break;
                 case 2:
                     this._enemyColdTime = 120;
+                    this._enemyLives = 40;
                     break;
                 case 3:
                     this._enemyColdTime = 80;
+                    this._enemyLives = 80;
                     break;
             }
         };
@@ -82,7 +85,7 @@ var managers;
             return this._isTimeToGo;
         };
         WaveManager.prototype._pushNewEnemy = function () {
-            enemies.push(new objects.Enemy(redDragonAtlas, "fly", 30, startTile.x, startTile.y, 1, startTile.getDirection()));
+            enemies.push(new objects.Enemy(redDragonAtlas, "fly", this._enemyLives, startTile.x, startTile.y, 1, startTile.getDirection()));
         };
         return WaveManager;
     })();

@@ -156,6 +156,7 @@ function init(): void {
     createjs.Ticker.on("tick", gameLoop);
     setupStats();
 
+    // config.STATE_MENU;
     state = config.STATE_MENU;
     changeState(state);
 }
@@ -175,7 +176,7 @@ function setupStats(): void {
     stats.domElement.style.top = "0px";
     document.body.appendChild(stats.domElement);
 }
-
+/**Example: changeState()*/
 function changeState(_state:any): void {
     state = _state;
     switch (_state) {

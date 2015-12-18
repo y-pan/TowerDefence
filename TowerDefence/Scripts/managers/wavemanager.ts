@@ -18,7 +18,7 @@
         private _isWaveReady: boolean;
         private _isEnemyReady: boolean;
         
-
+        private _enemyLives: number;
         private _enemyColdTime: number;
         private _oldTime: number;
         private _nowTime: number;
@@ -59,7 +59,7 @@
             this._setTotalNumberOfEnemyByLevel(); // set total number of emeies for this level
             this._currentNumberOfEnemy = 0; // current number of enemies that sent out
 
-            this._setEnemyColdTimeByLevel(); // set cold time for enemy, or frequency 
+            this._setEnemyColdTimeAndLivesByLevel(); // set cold time for enemy, or frequency 
             this._newEnemyGoes = false;
         }
         
@@ -73,20 +73,24 @@
         }
              
 
-        private _setEnemyColdTimeByLevel(): void {
+        private _setEnemyColdTimeAndLivesByLevel(): void {
             switch (this._level) {
                 case 1:
                     this._enemyColdTime = 200;
+                    this._enemyLives = 30;
                     break;
                 case 2:
                     this._enemyColdTime = 120;
+                    this._enemyLives = 40;
                     break;
                 case 3:
                     this._enemyColdTime = 80;
+                    this._enemyLives = 80;
                     break;
             }
         }
 
+    
 
         public update(): void {        
                 
@@ -128,7 +132,7 @@
         }
         
         private _pushNewEnemy(): void {
-            enemies.push(new objects.Enemy(redDragonAtlas, "fly", 30, startTile.x, startTile.y, 1, startTile.getDirection()));             
+            enemies.push(new objects.Enemy(redDragonAtlas, "fly", this._enemyLives, startTile.x, startTile.y, 1, startTile.getDirection()));             
         }
     }
 } 

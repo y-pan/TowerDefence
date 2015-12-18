@@ -112,6 +112,7 @@ function init() {
     createjs.Ticker.setFPS(60);
     createjs.Ticker.on("tick", gameLoop);
     setupStats();
+    // config.STATE_MENU;
     state = config.STATE_MENU;
     changeState(state);
 }
@@ -129,6 +130,7 @@ function setupStats() {
     stats.domElement.style.top = "0px";
     document.body.appendChild(stats.domElement);
 }
+/**Example: changeState()*/
 function changeState(_state) {
     state = _state;
     switch (_state) {

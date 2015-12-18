@@ -45,6 +45,7 @@ var objects;
             this.x = this._orignalX;
             this.y = this._orignalY;
             this._lives = this._orignalLives;
+            this._direction = startTile.getDirection();
         };
         Enemy.prototype.getIsDead = function () {
             return this._isDead;
@@ -54,7 +55,7 @@ var objects;
             this._isDead = true;
             this.x = this._orignalX;
             this.y = -1000;
-            this._direction = config.DIRECTION_DOWN;
+            this._direction = startTile.getDirection();
             this._updateLifeBar();
             waveManager.addEnemyKilledOrEscaped(); // to add 1 to wavemanager._enemyKilledOrEscaped
         };

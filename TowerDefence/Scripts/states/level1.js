@@ -20,6 +20,8 @@ var states;
         }
         // PUBLIC 
         Level1.prototype.start = function () {
+            //*************************************** change this each level *************
+            scoreBoard = new managers.ScoreBoard(100, 500, 1);
             // mapString
             mapString = new Array();
             mapString = [
@@ -34,8 +36,11 @@ var states;
                 " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
                 " ", " ", " ", "p", " ", " ", "p", " ", " ", " ", " ", " ", " ", "p", " ", " ",
                 " ", " ", " ", "r", "p", "p", "u", " ", " ", " ", " ", " ", " ", "h", " ", " ",
-                "m1", "m2", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
+                "m1", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
             ];
+            // ********************************************************************************
+            collision = new managers.Collision();
+            waveManager = new managers.WaveManager(scoreBoard.getLevel());
             // arrange tiles
             blankTiles = new Array();
             directionTiles = [];
@@ -47,7 +52,6 @@ var states;
                 gridX = i % config.TileNumInRow;
                 var y = gridY * config.TileHeight + config.TileHeight * .5; // 
                 var x = gridX * config.TileWidth + config.TileWidth * .5;
-                //console.log("grid:["+gridY+"|"+gridX+"] x,y:"+x+","+y);
                 switch (mapString[i]) {
                     // blank=grass
                     case " ":
@@ -59,9 +63,7 @@ var states;
                         break;
                     // direction
                     case "d":
-                        // add new DOWN directiontile to level
-                        // add to directionTiles, to be used for collision
-                        directionTiles.push(new objects.DirectionTile("direction_down", config.TILE_DIRECTION, x, y, config.DIRECTION_DOWN, true));
+                        directionTiles.push(new objects.DirectionTile("direction_down", config.TILE_DIRECTION, x, y, config.DIRECTION_DOWN, true)); //direction_down
                         this.addChild(directionTiles[directionTiles.length - 1]);
                         break;
                     case "u":
@@ -122,7 +124,6 @@ var states;
                 }
             }
             ;
-            //console.log("startPoint: " + startTile.x + "," + startTile.y + "reg:" + startTile.regX +","+ startTile.regY);
             createjs.Sound.play("Forest-Chase", null, null, null, 1, 0.1, null);
             createjs.Sound.play("horn", null, 700);
             towers = [];
@@ -130,17 +131,15 @@ var states;
             bullets1 = [];
             bullets2 = [];
             bullets3 = [];
-            //directionTiles = [];
-            collision = new managers.Collision();
-            scoreBoard = new managers.ScoreBoard(100, 500, 1);
-            waveManager = new managers.WaveManager(scoreBoard.getLevel());
             // labels
             this._livesLabel = new objects.Label("Lives: " + scoreBoard.getLives().toString(), "15px Showcard Gothic", "#00f", 5, 10, false);
             this.addChild(this._livesLabel);
-            this._restEnemiesLabel = new objects.Label("Enemies: " + (waveManager.getTotalNumberOfEnemy() - waveManager.getCurrentNumberOfEnemy()), "15px Showcard Gothic", "#f00", 5, 50, false);
-            this.addChild(this._restEnemiesLabel);
             this._moneyLabel = new objects.Label("Money: " + scoreBoard.getMoney().toString(), "15px Showcard Gothic", "#0ff", 5, 30, false);
             this.addChild(this._moneyLabel);
+            this._levelLabel = new objects.Label("Level: " + scoreBoard.getLevel(), "15px Showcard Gothic", "#00f", 550, 10, false);
+            this.addChild(this._levelLabel);
+            this._restEnemiesLabel = new objects.Label("Enemies: " + (waveManager.getTotalNumberOfEnemy() - waveManager.getCurrentNumberOfEnemy()), "15px Showcard Gothic", "#f00", 530, 30, false);
+            this.addChild(this._restEnemiesLabel);
             // bullet arrays
             bullets1.push(new objects.Bullet(assets.getResult("bullet1"), "bullet", -30, -30, 5, 4, 8, 8, true));
             this.addChild(bullets1[0]);
@@ -149,8 +148,8 @@ var states;
             bullets3.push(new objects.Bullet(assets.getResult("bullet3"), "bullet", -30, -30, 15, 4, 8, 8, true));
             this.addChild(bullets3[0]);
             // for game over
-            this._gameOverLabel = new objects.Label("Game Over", "30px Consolas", "#0ff", 450, 100, true);
-            this._gameOverLabel.textAlign = "center";
+            this._gameOverLabel = new objects.Label("Game Over", "30px Showcard Gothic", "#000", 320, 100, true);
+            //this._gameOverLabel.textAlign = "center";
             this.addChild(this._gameOverLabel);
             this._gameOverLabel.visible = false;
             // playAgainButton
@@ -158,13 +157,31 @@ var states;
             this._playAgainButton.on("click", this._clickPlayAgainButton, this);
             this._playAgainButton.visible = false;
             this.addChild(this._playAgainButton);
+            // nextbutton
+            this._nextButton = new objects.Button("next_button", 320, 280, null, null, true);
+            this._nextButton.on("click", this._clickNextButton, this);
+            this._nextButton.visible = false;
+            this.addChild(this._nextButton);
+            // exitButton
+            this._exitButton = new objects.Button("exit_button", 320, 350, null, null, true);
+            this._exitButton.on("click", this._clickExitButton, this);
+            this._exitButton.visible = false;
+            this.addChild(this._exitButton);
             stage.addChild(this);
         }; //end of start
-        Level1.prototype._clickPlayAgainButton = function (event) {
-            this._resetGame();
+        Level1.prototype._clickExitButton = function (event) {
+            console.log("trying to close window");
+            window.close();
         };
-        Level1.prototype._resetGame = function () {
-            changeState(states.Level1);
+        Level1.prototype._clickNextButton = function (event) {
+            this._loadGame(config.STATE_LEVEL2);
+        };
+        Level1.prototype._clickPlayAgainButton = function (event) {
+            this._loadGame(config.STATE_LEVEL1);
+        };
+        Level1.prototype._loadGame = function (level) {
+            state = level;
+            changeState(state);
         };
         Level1.prototype.update = function () {
             if (scoreBoard.getLives() > 0) {
@@ -197,21 +214,20 @@ var states;
                     // update labels
                     this._livesLabel.text = "Lives: " + scoreBoard.getLives();
                     this._moneyLabel.text = "Money: " + scoreBoard.getMoney();
-                    //console.log("hehe");
-                    //console.log("enemies k.esc-On-total: " + waveManager.getEnemyKilledOrEscaped() + " - " + waveManager.getCurrentNumberOfEnemy() + " - " + waveManager.getTotalNumberOfEnemy());
                     this._restEnemiesLabel.text = "Enemies: " + (waveManager.getTotalNumberOfEnemy() - waveManager.getCurrentNumberOfEnemy());
                 }
                 else {
-                    // show next level button, change state to next level
-                    // +-=-==--=-=-=--=-=-=
+                    // level passed                  
                     console.log("Level Complete, need to go to next level");
+                    this._nextButton.visible = true;
                 }
             }
             else {
+                // game over
                 this._gameOverLabel.visible = true;
                 this._playAgainButton.visible = true;
+                this._exitButton.visible = true;
             }
-            // gameover or next level
         }; // end of update 
         return Level1;
     })(objects.Scene);

@@ -69,7 +69,8 @@
             this._isDead = false;
             this.x = this._orignalX;
             this.y = this._orignalY;
-            this._lives = this._orignalLives;         
+            this._lives = this._orignalLives;     
+            this._direction = startTile.getDirection();    
         }
 
         public getIsDead(): boolean {
@@ -82,7 +83,7 @@
             this._isDead = true;
             this.x = this._orignalX;
             this.y = -1000;
-            this._direction = config.DIRECTION_DOWN;
+            this._direction = startTile.getDirection();
 
             this._updateLifeBar();
 
